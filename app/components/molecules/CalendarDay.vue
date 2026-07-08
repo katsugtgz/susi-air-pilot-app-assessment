@@ -9,8 +9,6 @@
  *     if count_logbooks === count_schedules → green tick
  *     else                                   → number badge with count_schedules
  */
-import { computed } from 'vue'
-import Icon from '~/components/atoms/Icon.vue'
 
 interface Props {
   date?: string // ISO yyyy-mm-dd, optional (out-of-month cells may omit)
@@ -70,6 +68,12 @@ const isComplete = computed(() => props.countSchedules > 0 && props.countLogbook
   font-size: var(--fs-base-sm);
   font-weight: var(--fw-medium);
   box-shadow: var(--shadow-xs);
+  cursor: pointer;
+  transition: transform 0.05s ease;
+
+  &:active:not(.calendar-day--out) {
+    transform: scale(0.97);
+  }
 
   // When a color is set, tint the bg lightly and use a stronger bottom band
   // for legibility against the brand palette.
