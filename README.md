@@ -8,7 +8,7 @@ A mobile-first Nuxt 4 web app for Susi Air pilots. Three primary surfaces — Si
 
 ## Live demo
 
-- **App:** add Vercel URL here after `vercel --prod`
+- **App:** [https://susi-air-pilot-app-assessment.vercel.app/](https://susi-air-pilot-app-assessment.vercel.app/)
 - **Storybook:** add Chromatic / Vercel-storybook URL here
 
 Both are deployable from this repo via the included `vercel.json`.
