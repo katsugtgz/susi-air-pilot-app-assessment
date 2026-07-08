@@ -3,7 +3,6 @@
  * ProgressBar
  * Linear variant of ProgressRing. Same threshold semantics.
  */
-import { computed } from 'vue'
 
 interface Props {
   value: number

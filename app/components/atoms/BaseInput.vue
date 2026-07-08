@@ -4,7 +4,6 @@
  * Label + text/password/email input with error state and password reveal toggle.
  * v-model compatibility via modelValue/modelModifiers (Vue 3 default).
  */
-import { ref, computed } from 'vue'
 interface Props {
   modelValue?: string
   type?: 'text' | 'email' | 'password' | 'tel' | 'number'

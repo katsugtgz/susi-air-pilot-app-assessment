@@ -3,7 +3,6 @@
  * Avatar
  * Shows an image when src is provided, otherwise initials derived from name.
  */
-import { ref, computed } from 'vue'
 
 interface Props {
   src?: string

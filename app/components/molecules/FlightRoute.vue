@@ -3,7 +3,6 @@
  * FlightRoute
  * Departure → Arrival block: ICAO + city name on each side, plane icon between.
  */
-import Icon from '~/components/atoms/Icon.vue'
 
 interface Airport {
   icao: string

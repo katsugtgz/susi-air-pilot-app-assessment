@@ -3,8 +3,6 @@
  * FormField
  * Wraps BaseInput with optional action button + hint/error text slot.
  */
-import BaseInput from '~/components/atoms/BaseInput.vue'
-import BaseButton from '~/components/atoms/BaseButton.vue'
 
 interface Props {
   modelValue?: string
@@ -39,7 +37,7 @@ const emit = defineEmits<{
       :required="required"
       :autocomplete="autocomplete"
       :name="name"
-      @update:model-value="(v) => emit('update:modelValue', v)"
+      @update:model-value="(v: string) => emit('update:modelValue', v)"
     />
     <BaseButton
       v-if="actionLabel"

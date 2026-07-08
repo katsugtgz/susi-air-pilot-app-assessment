@@ -4,10 +4,6 @@
  * Row showing a document label + expiry date + status badge. Status is derived
  * from useDocumentExpiry (pure function under the hood, easy to test).
  */
-import { computed } from 'vue'
-import Badge from '~/components/atoms/Badge.vue'
-import Icon from '~/components/atoms/Icon.vue'
-import { computeDocumentExpiry } from '~/composables/useDocumentExpiry'
 
 interface Props {
   label: string

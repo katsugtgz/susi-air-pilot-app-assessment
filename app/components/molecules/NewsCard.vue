@@ -4,7 +4,6 @@
  * Compact card for the Latest News carousel. Image header, category chip,
  * title, and optional meta (date / read time).
  */
-import Chip from '~/components/atoms/Chip.vue'
 
 interface Props {
   category?: string

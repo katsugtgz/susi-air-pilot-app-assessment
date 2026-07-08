@@ -3,7 +3,6 @@
  * BottomNavItem
  * Single tab item for the bottom navigation bar.
  */
-import Icon from '~/components/atoms/Icon.vue'
 
 interface Props {
   label: string
