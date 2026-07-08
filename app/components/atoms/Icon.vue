@@ -5,7 +5,6 @@
  * inside the brief's "1.5–2px stroke, line-style only" requirement.
  */
 import * as icons from '@lucide/vue'
-import { computed } from 'vue'
 
 interface Props {
   name: string
@@ -21,19 +20,17 @@ const props = withDefaults(defineProps<Props>(), {
 
 const resolved = computed(() => {
   // lucide exports are PascalCase, e.g. `Plane`, `AlertTriangle`. Allow
-  // both kebab (`alert-triangle`) and PascalCase from the caller.
-  const cand = Object.keys(icons)
+  // kebab (`alert-triangle`), snake, and PascalCase from the caller.
+  const table = icons as Record<string, any>
   const pascal = props.name
     .split(/[-_]/)
     .map((s) => s.charAt(0).toUpperCase() + s.slice(1))
     .join('')
-  return (
-    (icons as Record<string, any>)[pascal] ||
-    (icons as Record<string, any>)[props.name] ||
-    cand.find((k) => k.toLowerCase() === props.name.toLowerCase())
-      ? (icons as Record<string, any>)[cand.find((k) => k.toLowerCase() === props.name.toLowerCase())!]
-      : null
-  )
+  if (table[pascal]) return table[pascal]
+  if (table[props.name]) return table[props.name]
+  // Case-insensitive fallback (e.g. caller passed "homeicon").
+  const key = Object.keys(table).find((k) => k.toLowerCase() === props.name.toLowerCase())
+  return key ? table[key] : null
 })
 </script>
 
