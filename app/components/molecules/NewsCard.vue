@@ -77,6 +77,16 @@ defineEmits<{ (e: 'click'): void }>()
     flex-direction: column;
     gap: var(--space-2);
   }
+  
+  &__category {
+    width: fit-content;
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-secondary);
+    background: var(--color-surface-alt);
+    padding: 2px var(--space-2);
+    border-radius: var(--radius-full);
+  }
 
   &__title {
     margin: 0;
