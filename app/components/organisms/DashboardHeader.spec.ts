@@ -14,19 +14,66 @@ describe('DashboardHeader', () => {
     expect(wrapper.find('.avatar__fallback').text()).toBe('JD')
   })
 
-  it('shows notification badge only when count > 0', () => {
-    const zero = mount(DashboardHeader, { props: { pilotName: 'X', notificationCount: 0 } })
-    expect(zero.find('.dashboard-header__notif').exists()).toBe(false)
+  it('always shows the bell; badge only appears when there are unread notifications', () => {
+    const none = mount(DashboardHeader, { props: { pilotName: 'X', notifications: [] } })
+    expect(none.find('.dashboard-header__notif').exists()).toBe(true)
+    expect(none.find('.dashboard-header__notif-badge').exists()).toBe(false)
 
-    const three = mount(DashboardHeader, { props: { pilotName: 'X', notificationCount: 3 } })
-    expect(three.find('.dashboard-header__notif').exists()).toBe(true)
-    expect(three.find('.dashboard-header__notif-badge').text()).toBe('3')
+    const allRead = mount(DashboardHeader, {
+      props: { pilotName: 'X', notifications: [{ id: 'a', title: 'A', read: true }] },
+    })
+    expect(allRead.find('.dashboard-header__notif').exists()).toBe(true)
+    expect(allRead.find('.dashboard-header__notif-badge').exists()).toBe(false)
+
+    const unread = mount(DashboardHeader, {
+      props: {
+        pilotName: 'X',
+        notifications: [
+          { id: 'a', title: 'A' },
+          { id: 'b', title: 'B', read: true },
+          { id: 'c', title: 'C' },
+        ],
+      },
+    })
+    expect(unread.find('.dashboard-header__notif-badge').text()).toBe('2')
   })
 
   it('emits tap-notifications when bell clicked', async () => {
-    const wrapper = mount(DashboardHeader, { props: { pilotName: 'X', notificationCount: 1 } })
+    const wrapper = mount(DashboardHeader, { props: { pilotName: 'X', notifications: [] } })
     await wrapper.find('.dashboard-header__notif').trigger('click')
     expect(wrapper.emitted('tap-notifications')).toHaveLength(1)
+  })
+
+  it('opens the notifications dropdown on bell click', async () => {
+    const wrapper = mount(DashboardHeader, {
+      props: {
+        pilotName: 'X',
+        notifications: [{ id: 'n1', title: 'Duty reminder', body: 'Soon', time: 'now' }],
+      },
+    })
+    await wrapper.find('.dashboard-header__notif').trigger('click')
+    const dropdown = wrapper.find('.dashboard-header__notif-dropdown')
+    expect(dropdown.exists()).toBe(true)
+    expect(dropdown.text()).toContain('Duty reminder')
+  })
+
+  it('shows an empty-state message when the bell is opened with no notifications', async () => {
+    const wrapper = mount(DashboardHeader, { props: { pilotName: 'X', notifications: [] } })
+    await wrapper.find('.dashboard-header__notif').trigger('click')
+    expect(wrapper.find('.dashboard-header__notif-empty').text()).toMatch(/caught up/i)
+  })
+
+  it('opens only one dropdown at a time — opening notifications closes profile', async () => {
+    const wrapper = mount(DashboardHeader, { props: { pilotName: 'X', pilotId: 'PSA-1', notifications: [] } })
+    await wrapper.find('.dashboard-header__avatar-btn').trigger('click')
+    // Profile-specific elements present, notifications dropdown absent.
+    expect(wrapper.find('.dashboard-header__logout').exists()).toBe(true)
+    expect(wrapper.find('.dashboard-header__notif-dropdown').exists()).toBe(false)
+
+    await wrapper.find('.dashboard-header__notif').trigger('click')
+    // Notifications dropdown present, profile-specific elements gone.
+    expect(wrapper.find('.dashboard-header__notif-dropdown').exists()).toBe(true)
+    expect(wrapper.find('.dashboard-header__logout').exists()).toBe(false)
   })
 
   describe('welcome block (pilot name + total flight hours)', () => {

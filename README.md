@@ -2,7 +2,7 @@
 
 A mobile-first Nuxt 4 web app for Susi Air pilots. Three primary surfaces — Sign In, Home (dashboard), Schedule (calendar) — wired against three JSON mocks. No backend; all data is read from `app/assets/data/`. Built as a technical test for Susi Air's pilot companion app brief.
 
-**Status:** production-ready. 311 unit/component specs + 128 Storybook smoke tests passing, ~98% statement coverage, installable PWA, deployable to Vercel out of the box.
+**Status:** production-ready. 314 unit/component specs + 128 Storybook smoke tests passing, ~98% statement coverage, installable PWA, deployable to Vercel out of the box.
 
 ---
 
