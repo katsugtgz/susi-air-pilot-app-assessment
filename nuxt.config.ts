@@ -5,6 +5,12 @@ export default defineNuxtConfig({
 
   modules: ['@pinia/nuxt', '@nuxt/eslint', '@nuxt/fonts'],
 
+  // Register all components under app/components/ by filename only, ignoring
+  // the atoms/molecules/organisms subdirectory prefix. So
+  //   app/components/organisms/SignInForm.vue → <SignInForm />
+  // instead of <OrganismsSignInForm />. Matches the convention the templates use.
+  components: [{ path: '~/components', pathPrefix: false }],
+
   css: ['~/assets/scss/tokens.scss'],
 
   app: {
@@ -15,14 +21,22 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
         { name: 'format-detection', content: 'telephone=no' },
+        // iOS Safari standalone support (manifest spec isn't fully honored).
+        { name: 'apple-mobile-web-app-capable', content: 'yes' },
+        { name: 'apple-mobile-web-app-status-bar-style', content: 'black-translucent' },
+        { name: 'apple-mobile-web-app-title', content: 'Susi Air' },
+        { name: 'mobile-web-app-capable', content: 'yes' },
+        { name: 'theme-color', content: '#0E2138' },
+      ],
+      link: [
+        { rel: 'manifest', href: '/manifest.webmanifest' },
+        { rel: 'apple-touch-icon', href: '/pwa-192.png' },
       ],
     },
   },
 
   // @nuxt/fonts auto-detects `font-family: 'Plus Jakarta Sans'` in tokens.scss
   // and serves the font from our own origin (no Google Fonts request).
-  // We declare weights/styles explicitly because our CSS uses them via
-  // custom properties (var(--fw-bold) etc.) which the scanner can't trace.
   fonts: {
     families: [
       {
@@ -48,3 +62,4 @@ export default defineNuxtConfig({
     strict: true,
   },
 })
+
