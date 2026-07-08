@@ -1,13 +1,31 @@
 import { fileURLToPath } from 'node:url'
 import { defineConfig } from 'vitest/config'
 import vue from '@vitejs/plugin-vue'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
 
 export default defineConfig({
-  plugins: [vue()],
+  plugins: [
+    vue(),
+    // Mirror Nuxt's auto-imports so component <script setup> blocks can drop
+    // the explicit `import { ref, computed } from 'vue'` + component imports.
+    AutoImport({
+      imports: ['vue'],
+      dirs: ['app/composables', 'app/stores'],
+      dts: false,
+      vueTemplate: true,
+    }),
+    Components({
+      dirs: ['app/components'],
+      directoryAsNamespace: false,
+      dts: false,
+    }),
+  ],
   test: {
     environment: 'happy-dom',
     globals: true,
     include: ['app/**/*.spec.ts'],
+    setupFiles: ['./tests/setup-canvas-mock.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],
