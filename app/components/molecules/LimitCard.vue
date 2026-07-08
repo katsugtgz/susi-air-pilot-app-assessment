@@ -4,8 +4,7 @@
  * One of the 4 daily/weekly/monthly/annual limit cards on the dashboard.
  * Uses ProgressRing as the central visual.
  */
-import { computed } from 'vue'
-import ProgressRing from '~/components/atoms/ProgressRing.vue'
+import { formatHours, formatHoursOrMinutes, roundHours } from '~/utils/format'
 
 interface Props {
   label: string
@@ -30,6 +29,13 @@ const state = computed<'safe' | 'warning' | 'danger'>(() => {
 })
 
 const remaining = computed(() => Math.max(0, props.limit - props.value))
+
+// Display formatters — keeps raw values precise upstream while avoiding
+// IEEE-754 noise like "24.599999999999998h" in the UI.
+const _valueText = computed(() => formatHours(props.value, props.unit))
+// Remaining switches to minutes under 1h so "0.7h left" reads as "42m left".
+const remainingText = computed(() => formatHoursOrMinutes(remaining.value, props.unit))
+const limitText = computed(() => formatHours(props.limit, props.unit))
 </script>
 
 <template>
@@ -41,13 +47,14 @@ const remaining = computed(() => Math.max(0, props.limit - props.value))
       :label="label"
       :warning-threshold="warningThreshold"
       :danger-threshold="dangerThreshold"
+      :format-value="(n: number) => String(roundHours(n))"
     />
     <div class="limit-card__meta">
       <span class="limit-card__remaining">
-        <span class="limit-card__remaining-value">{{ remaining }}{{ unit }}</span>
+        <span class="limit-card__remaining-value">{{ remainingText }}</span>
         <span class="limit-card__remaining-label">left</span>
       </span>
-      <span class="limit-card__limit">of {{ limit }}{{ unit }}</span>
+      <span class="limit-card__limit">of {{ limitText }}</span>
     </div>
   </div>
 </template>
@@ -62,7 +69,7 @@ const remaining = computed(() => Math.max(0, props.limit - props.value))
   border-radius: var(--radius-card);
   padding: var(--space-4) var(--space-3);
   box-shadow: var(--shadow-sm);
-  min-width: 140px;
+  min-width: 0;
 
   &--warning {
     box-shadow: var(--shadow-sm), 0 0 0 1px rgba(245, 158, 11, 0.2);
