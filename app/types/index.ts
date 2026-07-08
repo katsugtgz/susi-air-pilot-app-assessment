@@ -82,3 +82,14 @@ export interface NavItem {
   to: string
   badge?: number | string
 }
+
+/** Notification bell entry (DashboardHeader dropdown). */
+export interface NotificationItem {
+  id: string
+  title: string
+  body?: string
+  /** Short relative or absolute time label, e.g. "5m ago", "Today, 09:14". */
+  time?: string
+  read?: boolean
+  variant?: 'info' | 'success' | 'warning' | 'danger'
+}

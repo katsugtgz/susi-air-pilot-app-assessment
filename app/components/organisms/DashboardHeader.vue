@@ -2,12 +2,14 @@
 /**
  * DashboardHeader
  * Sticky app-bar for the dashboard. Per brief: brand logo + welcome message
- * with pilot name + total flight hours + avatar + notification bell with
- * optional badge.
+ * with pilot name + total flight hours + avatar + notification bell.
  *
- * Avatar click toggles a profile dropdown showing pilot name, ID, and a
- * logout action. Dropdown closes on outside click, Escape, or logout.
+ * The bell is always visible; its unread badge is hidden when there are
+ * no unread notifications. Both the bell and the avatar open their own
+ * dropdown panels — opening one closes the other (single activeDropdown).
+ * Dropdowns close on outside click, Escape, or option-specific action.
  */
+import type { NotificationItem } from '~/types'
 
 interface Props {
   pilotName?: string
@@ -15,10 +17,11 @@ interface Props {
   pilotAvatar?: string
   /** Total accumulated flight hours — surfaced as a glanceable stat. */
   totalFlightHours?: number
-  notificationCount?: number
+  /** Bell dropdown entries. Unread count is derived from `read: false`. */
+  notifications?: NotificationItem[]
 }
 const props = withDefaults(defineProps<Props>(), {
-  notificationCount: 0,
+  notifications: () => [],
 })
 
 const emit = defineEmits<{
@@ -44,17 +47,22 @@ const formattedHours = computed(() => {
   return `${str}h`
 })
 
-// Profile dropdown state.
-const dropdownOpen = ref(false)
+const unreadCount = computed(() => props.notifications.filter((n) => !n.read).length)
+
+// Single source of truth for which dropdown (if any) is open. The bell and
+// the avatar are mutually exclusive — opening one closes the other.
+type DropdownKey = 'profile' | 'notifications'
+const activeDropdown = ref<DropdownKey | null>(null)
 const headerRef = ref<HTMLElement | null>(null)
 
-function toggleDropdown() {
-  dropdownOpen.value = !dropdownOpen.value
-  if (dropdownOpen.value) emit('tap-avatar')
+function toggleDropdown(which: DropdownKey) {
+  activeDropdown.value = activeDropdown.value === which ? null : which
+  if (activeDropdown.value === 'profile') emit('tap-avatar')
+  else if (activeDropdown.value === 'notifications') emit('tap-notifications')
 }
 
 function closeDropdown() {
-  dropdownOpen.value = false
+  activeDropdown.value = null
 }
 
 function onLogout() {
@@ -63,7 +71,7 @@ function onLogout() {
 }
 
 function onDocumentClick(event: MouseEvent) {
-  if (!dropdownOpen.value) return
+  if (activeDropdown.value === null) return
   if (!headerRef.value) return
   if (!headerRef.value.contains(event.target as Node)) {
     closeDropdown()
@@ -71,9 +79,17 @@ function onDocumentClick(event: MouseEvent) {
 }
 
 function onKeydown(event: KeyboardEvent) {
-  if (event.key === 'Escape' && dropdownOpen.value) {
+  if (event.key === 'Escape' && activeDropdown.value !== null) {
     closeDropdown()
   }
+}
+
+// Variant → icon mapping for notification list items.
+const ICON_BY_VARIANT: Record<NonNullable<NotificationItem['variant']>, string> = {
+  info: 'info',
+  success: 'check-circle',
+  warning: 'alert-triangle',
+  danger: 'alert-octagon',
 }
 
 onMounted(() => {
@@ -93,16 +109,58 @@ onUnmounted(() => {
       <div class="dashboard-header__brand">
         <BrandLogo :height="26" />
       </div>
-      <button
-        v-if="notificationCount > 0 || $slots['notif-slot']"
-        type="button"
-        class="dashboard-header__notif"
-        :aria-label="`Notifications (${notificationCount} unread)`"
-        @click="$emit('tap-notifications')"
-      >
-        <Icon name="bell" :size="22" />
-        <span v-if="notificationCount > 0" class="dashboard-header__notif-badge">{{ notificationCount }}</span>
-      </button>
+
+      <!-- Bell — always visible. Badge hides when no unread notifications. -->
+      <div class="dashboard-header__notif-wrap">
+        <button
+          type="button"
+          class="dashboard-header__notif"
+          :aria-label="`Notifications${unreadCount > 0 ? ` (${unreadCount} unread)` : ''}`"
+          :aria-expanded="activeDropdown === 'notifications'"
+          aria-haspopup="menu"
+          @click="toggleDropdown('notifications')"
+        >
+          <Icon name="bell" :size="22" />
+          <span v-if="unreadCount > 0" class="dashboard-header__notif-badge">{{ unreadCount }}</span>
+        </button>
+
+        <Transition name="dropdown">
+          <div
+            v-if="activeDropdown === 'notifications'"
+            class="dashboard-header__dropdown dashboard-header__notif-dropdown"
+            role="menu"
+            aria-label="Notifications"
+          >
+            <div class="dashboard-header__dropdown-header dashboard-header__notif-header">
+              <p class="dashboard-header__notif-title">Notifications</p>
+              <span v-if="unreadCount > 0" class="dashboard-header__notif-count">{{ unreadCount }} new</span>
+            </div>
+            <div class="dashboard-header__dropdown-divider" />
+            <div class="dashboard-header__notif-list">
+              <p v-if="notifications.length === 0" class="dashboard-header__notif-empty">
+                You're all caught up.
+              </p>
+              <article
+                v-for="item in notifications"
+                :key="item.id"
+                class="dashboard-header__notif-item"
+                :class="{ 'dashboard-header__notif-item--unread': !item.read }"
+                role="menuitem"
+              >
+                <span class="dashboard-header__notif-icon" :class="`dashboard-header__notif-icon--${item.variant ?? 'info'}`">
+                  <Icon :name="ICON_BY_VARIANT[item.variant ?? 'info']" :size="16" />
+                </span>
+                <div class="dashboard-header__notif-content">
+                  <p class="dashboard-header__notif-item-title">{{ item.title }}</p>
+                  <p v-if="item.body" class="dashboard-header__notif-item-body">{{ item.body }}</p>
+                  <p v-if="item.time" class="dashboard-header__notif-item-time">{{ item.time }}</p>
+                </div>
+                <span v-if="!item.read" class="dashboard-header__notif-dot" aria-label="Unread" />
+              </article>
+            </div>
+          </div>
+        </Transition>
+      </div>
 
       <!-- Avatar trigger + profile dropdown -->
       <div class="dashboard-header__avatar-wrap">
@@ -110,16 +168,16 @@ onUnmounted(() => {
           type="button"
           class="dashboard-header__avatar-btn"
           aria-label="Open profile menu"
-          :aria-expanded="dropdownOpen"
+          :aria-expanded="activeDropdown === 'profile'"
           aria-haspopup="menu"
-          @click="toggleDropdown"
+          @click="toggleDropdown('profile')"
         >
           <Avatar :src="pilotAvatar" :name="pilotName" :initials="initials" size="md" />
         </button>
 
         <Transition name="dropdown">
           <div
-            v-if="dropdownOpen"
+            v-if="activeDropdown === 'profile'"
             class="dashboard-header__dropdown"
             role="menu"
             aria-label="Profile menu"
@@ -171,6 +229,10 @@ onUnmounted(() => {
     flex: 1;
     display: flex;
     align-items: center;
+  }
+
+  &__notif-wrap {
+    position: relative;
   }
 
   &__notif {
@@ -276,6 +338,148 @@ onUnmounted(() => {
     border: 1px solid var(--color-border);
     overflow: hidden;
     z-index: 20;
+  }
+
+  // Notifications dropdown — wider than profile, scrollable list.
+  &__notif-dropdown {
+    // Width: ideal 320px, bounded to viewport on small screens. `width`
+    // (not min-width) is the controlling dimension — we override the
+    // inherited `min-width: 220px` from `__dropdown` so CSS doesn't
+    // force a too-wide floor on phones.
+    width: min(320px, calc(100vw - var(--space-4) * 2));
+    min-width: 0;
+
+    // The dropdown is anchored to `.dashboard-header__notif-wrap`, which
+    // sits LEFT of the avatar — its right edge is at
+    //   viewport_right - header_padding - avatar_width - flex_gap
+    // Without a shift, a 320px-wide dropdown extends past the LEFT edge
+    // of the viewport on narrow phones (anything < 388px). We shift the
+    // right edge by (avatar_width + flex_gap) so it aligns with the
+    // avatar's right edge — i.e. the header's right padding — giving the
+    // dropdown the full (viewport - 2*padding) of room on its left.
+    right: calc(-1 * (40px + var(--space-3)));
+  }
+
+  &__notif-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  &__notif-title {
+    margin: 0;
+    font-size: var(--fs-md);
+    font-weight: var(--fw-bold);
+    color: var(--color-text-primary);
+  }
+
+  &__notif-count {
+    font-size: var(--fs-xs);
+    color: var(--color-text-secondary);
+    font-weight: var(--fw-semibold);
+  }
+
+  &__notif-list {
+    // Cap by both a fixed max and viewport height — prevents the
+    // dropdown from running off the bottom of short / landscape phones.
+    max-height: min(360px, 50vh);
+    overflow-y: auto;
+    // Prevent horizontal scroll on 390px screens.
+    overscroll-behavior: contain;
+  }
+
+  &__notif-empty {
+    margin: 0;
+    padding: var(--space-4) var(--space-3);
+    text-align: center;
+    font-size: var(--fs-base-sm);
+    color: var(--color-text-muted);
+  }
+
+  &__notif-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-3);
+    border-bottom: 1px solid var(--color-border);
+    transition: background 0.12s ease;
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:hover {
+      background: var(--color-surface-alt);
+    }
+
+    &--unread {
+      background: rgba(14, 33, 56, 0.025);
+    }
+  }
+
+  &__notif-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: var(--radius-full);
+    flex-shrink: 0;
+
+    &--info {
+      color: var(--color-text-secondary);
+      background: var(--color-surface-alt);
+    }
+    &--success {
+      color: var(--color-success);
+      background: rgba(16, 137, 62, 0.08);
+    }
+    &--warning {
+      color: var(--color-warning);
+      background: rgba(245, 158, 11, 0.08);
+    }
+    &--danger {
+      color: var(--color-red);
+      background: rgba(230, 55, 87, 0.08);
+    }
+  }
+
+  &__notif-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  &__notif-item-title {
+    margin: 0;
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-primary);
+    line-height: 1.3;
+  }
+
+  &__notif-item-body {
+    margin: 0;
+    font-size: var(--fs-base-sm);
+    color: var(--color-text-secondary);
+    line-height: 1.35;
+  }
+
+  &__notif-item-time {
+    margin: 2px 0 0;
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+  }
+
+  &__notif-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: var(--radius-full);
+    background: var(--color-red);
+    margin-top: 6px;
+    flex-shrink: 0;
   }
 
   &__dropdown-header {
