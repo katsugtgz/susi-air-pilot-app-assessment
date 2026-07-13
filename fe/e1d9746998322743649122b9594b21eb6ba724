@@ -1,0 +1,36 @@
+AGENTS.md
+  s_8759ac076886df::t_9d06277688974a 1-112
+README.md
+  s_5973537a5c42e0::t_cc56e6e90054e9 1,3,5-41,47-49,51
+app/composables/AGENTS.md
+  s_8759ac076886df::t_295bb3f2e719f7 1-32,43-57
+  s_8759ac076886df::t_f05d7684f4b335 33-42
+app/stores/AGENTS.md
+  s_8759ac076886df::t_34bafd4c62f075 33-41
+  s_8759ac076886df::t_cabb76132fe781 1-10,16,19-32,42-57
+  s_8759ac076886df::t_c59dde6377dee2 11-15,17-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "fee1d9746998322743649122b9594b21eb6ba724",
+  "prompts": {},
+  "sessions": {
+    "s_5973537a5c42e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0802370f-d25c-4ebb-acf4-c106a9038e83",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_8759ac076886df": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a25a5a75ffeoxOzUF2t34Rskr",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
