@@ -14,3 +14,8 @@ coverage
 .vscode
 .fleet
 .vercel
+
+# Agent artifacts (not project code)
+.omo
+.tokensave
+MEMORY.md
