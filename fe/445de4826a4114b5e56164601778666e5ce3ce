@@ -1,0 +1,68 @@
+app/components/AGENTS.md
+  s_8759ac076886df::t_c0cce365bff6a2 1-47,51,57,61-77
+  s_8759ac076886df::t_2ed5c7ca79b00c 48-50,52-56,58-60
+nuxt.config.ts
+  s_2abb5ed3dcad54::t_8dcc0015b976e2 14
+app/pages/home.vue
+  s_2abb5ed3dcad54::t_ce8880de8650a9 92-96,98-106,110-119,121,125-135,138-146,202-242,249-267
+  s_5973537a5c42e0::t_b52c350f8286b3 243-248
+app/components/molecules/BottomNavItem.vue
+  s_2abb5ed3dcad54::t_bc4dc4c04a3440 27-31,38-84
+app/components/molecules/LimitCard.vue
+  s_2abb5ed3dcad54::t_9906b1ab063643 39-48,64-65,67-74,131-166
+  s_2abb5ed3dcad54::t_55babdd971b081 66
+.storybook/preview.ts
+  s_2abb5ed3dcad54::t_2383ec01df5491 3
+app/components/molecules/RangeToggleGroup.vue
+  s_2abb5ed3dcad54::t_ed04f0f88b0f07 29-73,77-78,96,106-107,118,134-169
+app/components/organisms/FlightHoursTrendChart.vue
+  s_2abb5ed3dcad54::t_8ce908c6d7f460 42-50,86-89
+app/app.vue
+  s_2abb5ed3dcad54::t_050d5133ca4e45 8-13,18-21,24-28,32-50
+app/components/atoms/ProgressRing.vue
+  s_2abb5ed3dcad54::t_e7102b6a263fa7 46-56,84-85,87-95,159-194
+  s_2abb5ed3dcad54::t_dd86a63ed41584 86
+app/components/molecules/NewsCard.vue
+  s_2abb5ed3dcad54::t_7219b77895f9fd 24
+app/components/atoms/Icon.vue
+  s_2abb5ed3dcad54::t_38b083aa57bbd9 6-10,12-52,69,76
+app/assets/css/transitions-root.css
+  s_2abb5ed3dcad54::t_e34baf4a1bbfae 1-204
+app/pages/schedule.vue
+  s_5973537a5c42e0::t_bbf71681c2873f 283-288
+  s_2abb5ed3dcad54::t_2c2f8bd9b73926 38-44,47-58,154-155,207-209,211-221,227-282,289-307
+app/components/organisms/DashboardHeader.vue
+  s_2abb5ed3dcad54::t_06baa8aa93e5a2 124-128,215-261
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "fe445de4826a4114b5e56164601778666e5ce3ce",
+  "prompts": {},
+  "sessions": {
+    "s_2abb5ed3dcad54": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dc1-378d-7d01-bf56-55e1cc34cda7",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_5973537a5c42e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0802370f-d25c-4ebb-acf4-c106a9038e83",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_8759ac076886df": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a25a5a75ffeoxOzUF2t34Rskr",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
