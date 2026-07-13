@@ -1,0 +1,19 @@
+doctor.config.json
+  s_fef7d87784985a::t_56faf6f1b44767 1-11
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "7263d5c8653ae66e3e7bf2da4faf3d19832c68b8",
+  "prompts": {},
+  "sessions": {
+    "s_fef7d87784985a": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dde-7af4-74bc-a892-2852b5afb3ed",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
