@@ -89,50 +89,61 @@ const upcomingArrival = computed(() => {
     />
 
     <section class="home-page__section">
-      <template v-if="loading">
-        <div class="home-page__skeleton-card">
-          <Skeleton variant="rect" :height="140" />
-        </div>
-      </template>
-      <UpcomingFlightCard
-        v-else-if="schedulesStore.nextUpcomingSchedule"
-        :schedule="schedulesStore.nextUpcomingSchedule"
-        :departure="upcomingDeparture"
-        :arrival="upcomingArrival"
-      />
-    </section>
-
-    <section class="home-page__section">
-      <template v-if="loading">
-        <h2 class="home-page__skeleton-title"><Skeleton variant="text" :width="120" :height="18" /></h2>
-        <div class="home-page__skeleton-news">
-          <Skeleton variant="rect" :height="220" radius="14" />
-          <Skeleton variant="rect" :height="220" radius="14" />
-        </div>
-      </template>
-      <LatestNewsCarousel v-else :items="newsStore.items" />
-    </section>
-
-    <section class="home-page__section">
-      <template v-if="loading">
-        <div class="home-page__skeleton-hours">
-          <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-          <Skeleton variant="rect" :height="180" />
-          <div class="home-page__skeleton-cards">
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
+      <div class="t-skel" :class="{ 'is-revealed': !loading }">
+        <div class="t-skel-skeleton is-pulsing">
+          <div class="home-page__skeleton-card">
             <Skeleton variant="rect" :height="140" />
           </div>
         </div>
-      </template>
-      <HoursToLimitSection
-        v-else
-        :flight-hours="flightHoursStore.flightHours"
-        :limits="flightHoursStore.limits"
-        :chart-bounds="flightHoursStore.chartBounds"
-        :today="FLIGHT_HOURS_TODAY"
-      />
+        <div class="t-skel-content">
+          <UpcomingFlightCard
+            v-if="schedulesStore.nextUpcomingSchedule"
+            :schedule="schedulesStore.nextUpcomingSchedule"
+            :departure="upcomingDeparture"
+            :arrival="upcomingArrival"
+          />
+        </div>
+      </div>
+    </section>
+
+    <section class="home-page__section">
+      <div class="t-skel" :class="{ 'is-revealed': !loading }">
+        <div class="t-skel-skeleton is-pulsing">
+          <h2 class="home-page__skeleton-title"><Skeleton variant="text" :width="120" :height="18" /></h2>
+          <div class="home-page__skeleton-news">
+            <Skeleton variant="rect" :height="220" radius="14" />
+            <Skeleton variant="rect" :height="220" radius="14" />
+          </div>
+        </div>
+        <div class="t-skel-content">
+          <LatestNewsCarousel :items="newsStore.items" />
+        </div>
+      </div>
+    </section>
+
+    <section class="home-page__section">
+      <div class="t-skel" :class="{ 'is-revealed': !loading }">
+        <div class="t-skel-skeleton is-pulsing">
+          <div class="home-page__skeleton-hours">
+            <Skeleton variant="rect" :height="40" radius="24" :width="220" />
+            <Skeleton variant="rect" :height="180" />
+            <div class="home-page__skeleton-cards">
+              <Skeleton variant="rect" :height="140" />
+              <Skeleton variant="rect" :height="140" />
+              <Skeleton variant="rect" :height="140" />
+              <Skeleton variant="rect" :height="140" />
+            </div>
+          </div>
+        </div>
+        <div class="t-skel-content">
+          <HoursToLimitSection
+            :flight-hours="flightHoursStore.flightHours"
+            :limits="flightHoursStore.limits"
+            :chart-bounds="flightHoursStore.chartBounds"
+            :today="FLIGHT_HOURS_TODAY"
+          />
+        </div>
+      </div>
     </section>
 
     <section class="home-page__section">
@@ -187,5 +198,71 @@ const upcomingArrival = computed(() => {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: var(--space-3);
   }
+}
+
+/*
+ * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
+ * The transition / opacity / filter logic + --reveal-* / --pulse-* tokens
+ * follow the reference. The stacking primitive is a single grid cell
+ * (grid-area: 1 / 1) instead of position:absolute so the in-flow content
+ * always reserves the slot height → the skeleton ↔ content swap is
+ * layout-free (no reflow on reveal). Content sits on z-index: 2.
+ */
+.t-skel {
+  display: grid;
+}
+.t-skel-skeleton,
+.t-skel-content {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.t-skel-skeleton {
+  z-index: 1;
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel-content {
+  z-index: 2;
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel.is-revealed .t-skel-skeleton {
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+}
+.t-skel.is-revealed .t-skel-content {
+  opacity: 1;
+  filter: blur(0);
+}
+// The invisible layer must not swallow taps: content sits above the skeleton
+// (z-index 2) even while opacity: 0, and opacity doesn't disable hit-testing.
+.t-skel:not(.is-revealed) .t-skel-content,
+.t-skel.is-revealed .t-skel-skeleton {
+  pointer-events: none;
+}
+.t-skel.is-resetting .t-skel-skeleton,
+.t-skel.is-resetting .t-skel-content {
+  transition: none !important;
+}
+
+.t-skel-skeleton.is-pulsing > * {
+  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
+}
+@keyframes t-skel-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: var(--pulse-min); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-skel-skeleton, .t-skel-content {
+    transition: none !important;
+  }
+  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
 }
 </style>

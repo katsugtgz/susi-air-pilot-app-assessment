@@ -121,7 +121,11 @@ onUnmounted(() => {
           @click="toggleDropdown('notifications')"
         >
           <Icon name="bell" :size="22" />
-          <span v-if="unreadCount > 0" class="dashboard-header__notif-badge">{{ unreadCount }}</span>
+          <span
+            v-if="unreadCount > 0"
+            class="dashboard-header__notif-badge t-badge"
+            data-open="true"
+          >{{ unreadCount }}</span>
         </button>
 
         <Transition name="dropdown">
@@ -208,6 +212,53 @@ onUnmounted(() => {
 </template>
 
 <style scoped lang="scss">
+/* transitions.dev — notification badge (03-notification-badge.md), pasted
+   verbatim. The badge element is v-if'd (spec: absent when no unread), so it
+   mounts with data-open="true" and the slide-in keyframe plays on appearance.
+   Reads --badge-* tokens from transitions-root.css. The component's BEM rule
+   below wins positioning (later in source) while t-badge supplies the motion. */
+@keyframes t-badge-slide-in {
+  from { transform: translate(var(--badge-offset-x), var(--badge-offset-y)); }
+  to   { transform: translate(0, 0); }
+}
+
+.t-badge {
+  position: absolute;
+  top: -6px;
+  right: -8px;
+  pointer-events: none;
+  will-change: transform;
+}
+.t-badge[data-open="true"] {
+  animation: t-badge-slide-in var(--badge-slide-dur) var(--badge-slide-ease);
+}
+
+.t-badge-dot {
+  display: block;
+  transform-origin: center;
+  transform: scale(1);
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    transform var(--badge-pop-dur)  var(--badge-pop-ease),
+    opacity   var(--badge-fade-dur) var(--badge-pop-ease),
+    filter    var(--badge-pop-dur)  var(--badge-pop-ease);
+  will-change: transform, opacity, filter;
+}
+.t-badge[data-open="false"] .t-badge-dot {
+  transform: scale(0);
+  opacity: 0;
+  filter: blur(var(--badge-blur));
+  transition:
+    transform var(--badge-pop-close-dur)  var(--badge-close-ease),
+    opacity   var(--badge-fade-close-dur) var(--badge-close-ease),
+    filter    var(--badge-pop-close-dur)  var(--badge-close-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-badge, .t-badge-dot { animation: none !important; transition: none !important; }
+}
+
 .dashboard-header {
   display: flex;
   flex-direction: column;

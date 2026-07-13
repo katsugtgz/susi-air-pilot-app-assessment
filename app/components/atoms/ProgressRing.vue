@@ -43,6 +43,17 @@ const state = computed<'safe' | 'warning' | 'danger'>(() => {
 const valueText = computed(() =>
   typeof props.formatValue === 'function' ? props.formatValue(props.value) : String(props.value),
 )
+
+// Per-character split for the transitions.dev `t-digit-group` pop-in. The
+// value span is :key'd on valueText so Vue re-mounts the group (replaying
+// the keyframe) whenever the value changes.
+const valueChars = computed(() => valueText.value.split(''))
+// Last two chars ride in 1× / 2× --digit-stagger behind the leading digits.
+function digitStagger(i: number, total: number): string | undefined {
+  if (i === total - 2) return '1'
+  if (i === total - 1) return '2'
+  return undefined
+}
 </script>
 
 <template>
@@ -70,7 +81,18 @@ const valueText = computed(() =>
       />
     </svg>
     <div class="progress-ring__center">
-      <span class="progress-ring__value-text">{{ valueText }}<span v-if="unit" class="progress-ring__unit">{{ unit }}</span></span>
+      <span
+        :key="valueText"
+        class="progress-ring__value-text t-digit-group is-animating"
+      >
+        <span
+          v-for="(ch, i) in valueChars"
+          :key="i"
+          class="t-digit"
+          :data-stagger="digitStagger(i, valueChars.length)"
+        >{{ ch }}</span
+        ><span v-if="unit" class="progress-ring__unit">{{ unit }}</span>
+      </span>
       <span v-if="label" class="progress-ring__label">{{ label }}</span>
     </div>
   </div>
@@ -133,5 +155,41 @@ const valueText = computed(() =>
     color: var(--color-text-secondary);
     margin-top: 2px;
   }
+}
+
+/* transitions.dev — number pop-in (02-number-pop-in.md), pasted verbatim.
+   Reads --digit-* motion tokens from transitions-root.css. */
+@keyframes t-digit-pop-in {
+  0%   {
+    transform: translate(
+      calc(var(--digit-distance) * var(--digit-dir-x)),
+      calc(var(--digit-distance) * var(--digit-dir-y))
+    );
+    opacity: 0;
+    filter: blur(var(--digit-blur));
+  }
+  100% { transform: translate(0, 0); opacity: 1; filter: blur(0); }
+}
+
+.t-digit-group {
+  display: inline-flex;
+  align-items: baseline;
+}
+.t-digit {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.t-digit-group.is-animating .t-digit {
+  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+.t-digit-group.is-animating .t-digit[data-stagger="1"] {
+  animation-delay: var(--digit-stagger);
+}
+.t-digit-group.is-animating .t-digit[data-stagger="2"] {
+  animation-delay: calc(var(--digit-stagger) * 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-digit-group .t-digit { animation: none !important; }
 }
 </style>

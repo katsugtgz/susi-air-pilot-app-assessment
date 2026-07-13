@@ -1,5 +1,6 @@
 import type { Preview } from '@storybook/vue3'
 import '../app/assets/scss/tokens.scss'
+import '../app/assets/css/transitions-root.css'
 
 const preview: Preview = {
   parameters: {
