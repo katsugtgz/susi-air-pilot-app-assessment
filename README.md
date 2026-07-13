@@ -44,7 +44,7 @@ Everything below this section is upstream's architecture and holds unchanged —
 
 ## Live demo
 
-- **This fork (app):** deployed on Vercel — see the repo's Deployments / the URL in the project description.
+- **This fork (app):** [https://susi-air-pilot-app-assessment-nu.vercel.app/](https://susi-air-pilot-app-assessment-nu.vercel.app/)
 - **Upstream app:** [https://susi-air-pilot-app-assessment.vercel.app/](https://susi-air-pilot-app-assessment.vercel.app/)
 - **Upstream Storybook:** [https://susi-air-pilot-app-assessment-story.vercel.app/](https://susi-air-pilot-app-assessment-story.vercel.app/)
 
