@@ -21,7 +21,7 @@ defineEmits<{ (e: 'click'): void }>()
   <article class="news-card" @click="$emit('click')">
     <div v-if="imageUrl || $slots.image" class="news-card__media">
       <slot name="image">
-        <img v-if="imageUrl" :src="imageUrl" :alt="title" />
+        <img v-if="imageUrl" :src="imageUrl" :alt="title" loading="lazy" decoding="async" />
       </slot>
     </div>
     <div class="news-card__body">

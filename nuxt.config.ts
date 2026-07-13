@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   // instead of <OrganismsSignInForm />. Matches the convention the templates use.
   components: [{ path: '~/components', pathPrefix: false }],
 
-  css: ['~/assets/scss/tokens.scss'],
+  css: ['~/assets/scss/tokens.scss', '~/assets/css/transitions-root.css'],
 
   app: {
     head: {

@@ -36,6 +36,16 @@ const _valueText = computed(() => formatHours(props.value, props.unit))
 // Remaining switches to minutes under 1h so "0.7h left" reads as "42m left".
 const remainingText = computed(() => formatHoursOrMinutes(remaining.value, props.unit))
 const limitText = computed(() => formatHours(props.limit, props.unit))
+
+// Per-character split for the transitions.dev `t-digit-group` pop-in. The
+// remaining-value span is :key'd on remainingText so Vue re-mounts the
+// group (replaying the keyframe) whenever the value changes.
+const remainingChars = computed(() => remainingText.value.split(''))
+function digitStagger(i: number, total: number): string | undefined {
+  if (i === total - 2) return '1'
+  if (i === total - 1) return '2'
+  return undefined
+}
 </script>
 
 <template>
@@ -51,7 +61,17 @@ const limitText = computed(() => formatHours(props.limit, props.unit))
     />
     <div class="limit-card__meta">
       <span class="limit-card__remaining">
-        <span class="limit-card__remaining-value">{{ remainingText }}</span>
+        <span
+          :key="remainingText"
+          class="limit-card__remaining-value t-digit-group is-animating"
+        >
+          <span
+            v-for="(ch, i) in remainingChars"
+            :key="i"
+            class="t-digit"
+            :data-stagger="digitStagger(i, remainingChars.length)"
+          >{{ ch }}</span>
+        </span>
         <span class="limit-card__remaining-label">left</span>
       </span>
       <span class="limit-card__limit">of {{ limitText }}</span>
@@ -107,5 +127,41 @@ const limitText = computed(() => formatHours(props.limit, props.unit))
     font-size: var(--fs-xs);
     color: var(--color-text-muted);
   }
+}
+
+/* transitions.dev — number pop-in (02-number-pop-in.md), pasted verbatim.
+   Reads --digit-* motion tokens from transitions-root.css. */
+@keyframes t-digit-pop-in {
+  0%   {
+    transform: translate(
+      calc(var(--digit-distance) * var(--digit-dir-x)),
+      calc(var(--digit-distance) * var(--digit-dir-y))
+    );
+    opacity: 0;
+    filter: blur(var(--digit-blur));
+  }
+  100% { transform: translate(0, 0); opacity: 1; filter: blur(0); }
+}
+
+.t-digit-group {
+  display: inline-flex;
+  align-items: baseline;
+}
+.t-digit {
+  display: inline-block;
+  will-change: transform, opacity, filter;
+}
+.t-digit-group.is-animating .t-digit {
+  animation: t-digit-pop-in var(--digit-dur) var(--digit-ease) both;
+}
+.t-digit-group.is-animating .t-digit[data-stagger="1"] {
+  animation-delay: var(--digit-stagger);
+}
+.t-digit-group.is-animating .t-digit[data-stagger="2"] {
+  animation-delay: calc(var(--digit-stagger) * 2);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-digit-group .t-digit { animation: none !important; }
 }
 </style>

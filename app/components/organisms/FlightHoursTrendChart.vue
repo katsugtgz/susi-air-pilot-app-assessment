@@ -39,6 +39,15 @@ const props = withDefaults(defineProps<Props>(), { unit: 'h', height: 180 })
 const labels = computed(() => props.series.map((p) => shortDate(p.date)))
 const dataValues = computed(() => props.series.map((p) => p.value))
 
+// Respect prefers-reduced-motion: a 0-duration animation (none) when the user
+// has asked for less motion. Guarded for SSR — window/matchMedia are absent on
+// the server (chart.js is client-rendered anyway, but this computed may run
+// during SSR setup), so we default to motion-enabled there.
+const prefersReducedMotion = computed(() => {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') return false
+  return window.matchMedia('(prefers-reduced-motion: reduce)').matches
+})
+
 const chartData = computed<ChartData<'line'>>(() => ({
   labels: labels.value,
   datasets: [
@@ -74,7 +83,10 @@ const chartData = computed<ChartData<'line'>>(() => ({
 const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
   maintainAspectRatio: false,
-  animation: { duration: 0 },
+  animation: {
+    duration: prefersReducedMotion.value ? 0 : 300,
+    easing: 'easeOutQuart',
+  },
   interaction: { mode: 'index', intersect: false },
   plugins: {
     legend: { display: false },

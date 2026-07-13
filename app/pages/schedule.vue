@@ -35,24 +35,27 @@ function closeModal() {
       <h1 class="schedule-page__title">Schedule</h1>
     </header>
 
-    <template v-if="loading">
-      <div class="schedule-page__skeleton-grid">
-        <Skeleton variant="rect" :height="40" />
-        <div class="schedule-page__skeleton-cells">
-          <Skeleton v-for="i in 42" :key="i" variant="rect" :height="56" radius="12" />
+    <div class="t-skel" :class="{ 'is-revealed': !loading }">
+      <div class="t-skel-skeleton is-pulsing">
+        <div class="schedule-page__skeleton-grid">
+          <Skeleton variant="rect" :height="40" />
+          <div class="schedule-page__skeleton-cells">
+            <Skeleton v-for="i in 42" :key="i" variant="rect" :height="56" radius="12" />
+          </div>
         </div>
       </div>
-    </template>
-    <ScheduleCalendarGrid
-      v-else
-      class="schedule-page__grid"
-      :schedules="schedulesStore.schedules"
-      :legend="schedulesStore.legend"
-      :year-month="yearMonth"
-      :today="schedulesStore.today"
-      @update:year-month="yearMonth = $event"
-      @select-date="onSelectDate"
-    />
+      <div class="t-skel-content">
+        <ScheduleCalendarGrid
+          class="schedule-page__grid"
+          :schedules="schedulesStore.schedules"
+          :legend="schedulesStore.legend"
+          :year-month="yearMonth"
+          :today="schedulesStore.today"
+          @update:year-month="yearMonth = $event"
+          @select-date="onSelectDate"
+        />
+      </div>
+    </div>
 
     <ScheduleLegend
       v-if="!loading"
@@ -148,6 +151,8 @@ function closeModal() {
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-md);
     overflow: hidden;
+    transform-origin: center;
+    will-change: transform, opacity;
   }
 
   &__modal-header {
@@ -199,12 +204,105 @@ function closeModal() {
   }
 }
 
-.modal-enter-active,
+.modal-enter-active {
+  transition: opacity var(--modal-open-dur) var(--modal-ease);
+}
 .modal-leave-active {
-  transition: opacity 0.15s ease;
+  transition: opacity var(--modal-close-dur) var(--modal-ease);
+}
+.modal-enter-active .schedule-page__modal {
+  transition:
+    transform var(--modal-open-dur) var(--modal-ease),
+    opacity   var(--modal-open-dur) var(--modal-ease);
+}
+.modal-leave-active .schedule-page__modal {
+  transition:
+    transform var(--modal-close-dur) var(--modal-ease),
+    opacity   var(--modal-close-dur) var(--modal-ease);
 }
 .modal-enter-from,
 .modal-leave-to {
   opacity: 0;
+}
+.modal-enter-from .schedule-page__modal {
+  transform: scale(var(--modal-scale));
+  opacity: 0;
+}
+.modal-leave-to .schedule-page__modal {
+  transform: scale(var(--modal-scale-close));
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-enter-active,
+  .modal-leave-active,
+  .modal-enter-active .schedule-page__modal,
+  .modal-leave-active .schedule-page__modal {
+    transition: none !important;
+  }
+}
+
+/*
+ * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
+ * Transition / opacity / filter logic + --reveal-* / --pulse-* tokens follow
+ * the reference; layers share a single grid cell (grid-area: 1 / 1) so the
+ * in-flow content reserves the slot height and the crossfade is layout-free.
+ */
+.t-skel {
+  display: grid;
+}
+.t-skel-skeleton,
+.t-skel-content {
+  grid-area: 1 / 1;
+  min-width: 0;
+}
+.t-skel-skeleton {
+  z-index: 1;
+  opacity: 1;
+  filter: blur(0);
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel-content {
+  z-index: 2;
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+  transition:
+    opacity var(--reveal-dur) var(--reveal-ease),
+    filter  var(--reveal-dur) var(--reveal-ease);
+}
+.t-skel.is-revealed .t-skel-skeleton {
+  opacity: 0;
+  filter: blur(var(--reveal-blur));
+}
+.t-skel.is-revealed .t-skel-content {
+  opacity: 1;
+  filter: blur(0);
+}
+// The invisible layer must not swallow taps: content sits above the skeleton
+// (z-index 2) even while opacity: 0, and opacity doesn't disable hit-testing.
+.t-skel:not(.is-revealed) .t-skel-content,
+.t-skel.is-revealed .t-skel-skeleton {
+  pointer-events: none;
+}
+.t-skel.is-resetting .t-skel-skeleton,
+.t-skel.is-resetting .t-skel-content {
+  transition: none !important;
+}
+
+.t-skel-skeleton.is-pulsing > * {
+  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
+}
+@keyframes t-skel-pulse {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: var(--pulse-min); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-skel-skeleton, .t-skel-content {
+    transition: none !important;
+  }
+  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
 }
 </style>
