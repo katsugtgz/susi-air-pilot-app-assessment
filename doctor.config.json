@@ -1,0 +1,11 @@
+{
+  "$schema": "https://react.doctor/schema/config.json",
+  "ignore": {
+    "files": [
+      "app/app.vue",
+      "app/pages/**",
+      "app/layouts/**",
+      "app/plugins/**"
+    ]
+  }
+}
