@@ -1,17 +1,54 @@
-# Susi Air Pilot Companion App
+# Susi Air Pilot Companion App — Enhanced Fork
 
-A mobile-first Nuxt 4 web app for Susi Air pilots. Three primary surfaces — Sign In, Home (dashboard), Schedule (calendar) — wired against three JSON mocks. No backend; all data is read from `app/assets/data/`. Built as a technical test for Susi Air's pilot companion app brief.
+> **Fork of [arifineu/susi-air-pilot-app-assessment](https://github.com/arifineu/susi-air-pilot-app-assessment)** (upstream `main` @ `f7181c7`) that adds a motion-design layer, a real bundle-size fix, and accessibility hardening — with **zero regressions**: all 314 upstream specs still pass unchanged, typecheck clean.
 
-**Status:** production-ready. 314 unit/component specs + 128 Storybook smoke tests passing, ~98% statement coverage, installable PWA, deployable to Vercel out of the box.
+A mobile-first Nuxt 4 web app for Susi Air pilots. Three primary surfaces — Sign In, Home (dashboard), Schedule (calendar) — wired against three JSON mocks. No backend; all data is read from `app/assets/data/`. Originally built as a technical test for Susi Air's pilot companion app brief.
+
+---
+
+## TL;DR — what changed vs upstream
+
+Upstream shipped a functionally complete, well-tested app whose UI *snaps*: page changes are a bare 0.15s opacity fade, limit-card values jump, skeletons cut straight to content, and the range toggle just swaps a background. Its own README lists "Animated limit-card transitions" as a known trade-off. This fork closes that gap — plus two things a README can't excuse: the entire Lucide icon library was being bundled for ~17 icons, and there was no `prefers-reduced-motion` support anywhere.
+
+### Why it's better
+
+| | Upstream `main` | This fork |
+|---|---|---|
+| **Icon bundle** | `import * as icons from '@lucide/vue'` — defeats tree-shaking, bundles the whole icon set | Explicit named-import map (17 icons) — only what's rendered ships |
+| **Motion** | Single 0.15s opacity fade on pages; everything else snaps | Token-driven motion system (vendored [transitions.dev](https://transitions.dev) layer) across 8 surfaces |
+| **Skeleton → content** | Hard `v-if` cut | Layout-free crossfade (grid-cell stacking — content reserves height, no reflow) |
+| **Reduced motion** | Not handled | Every animation has a `prefers-reduced-motion` fallback |
+| **Images** | Eager-loaded news images | `loading="lazy" decoding="async"` |
+| **Tests** | 314 specs, ~98% coverage | Same 314 specs, untouched and passing |
+
+### Changelog
+
+- **feat(motion):** vendored transitions.dev semantic token layer (`app/assets/css/transitions-root.css`) — all durations/easings/distances via `var()`, no hardcoded ms
+- **feat(motion):** page/layout transitions upgraded to directional fade + slide + blur (`app.vue`)
+- **feat(motion):** per-digit pop-in on LimitCard remaining value + ProgressRing center value, staggered last two digits
+- **feat(motion):** skeleton → content crossfade on Home & Schedule, single-grid-cell stacking so the swap causes zero layout shift
+- **feat(motion):** sliding active pill on the 1w/1m/3m/6m/1y range toggle (measured transform, CSS-owned tween)
+- **feat(motion):** notification-badge slide-in (header bell + bottom-nav badges)
+- **feat(motion):** tap-a-date modal backdrop-fade + dialog-scale
+- **feat(motion):** chart range changes animate (300ms easeOutQuart; 0 under reduced motion, SSR-guarded)
+- **perf:** `Icon.vue` named-import map replaces the full-namespace Lucide import (tree-shaking restored)
+- **perf:** news images lazy-loaded and async-decoded
+- **a11y:** global `prefers-reduced-motion` compliance; invisible crossfade layers get `pointer-events: none` so hidden content can't swallow taps
+- **docs:** `AGENTS.md` knowledge-base files for agent-assisted development
+
+### Differentiation
+
+Everything below this section is upstream's architecture and holds unchanged — atomic design, pure-compute composables, BEM/token discipline, the brief-locked business rules (±7-day chart window, expiry thresholds, tick-vs-badge logic). This fork deliberately **adds a layer instead of rewriting**: the motion system is vendored as a namespaced `t-*` CSS layer with its own tokens, component BEM stays untouched, no new npm dependencies, and no spec/story file was modified. If upstream moves, this layer rebases cleanly on top.
 
 ---
 
 ## Live demo
 
-- **App:** [https://susi-air-pilot-app-assessment.vercel.app/](https://susi-air-pilot-app-assessment.vercel.app/)
-- **Storybook:** [https://susi-air-pilot-app-assessment-story.vercel.app/](https://susi-air-pilot-app-assessment-story.vercel.app/)
+- **This fork (app):** deployed on Vercel — see the repo's Deployments / the URL in the project description.
+- **Upstream app:** [https://susi-air-pilot-app-assessment.vercel.app/](https://susi-air-pilot-app-assessment.vercel.app/)
+- **Upstream Storybook:** [https://susi-air-pilot-app-assessment-story.vercel.app/](https://susi-air-pilot-app-assessment-story.vercel.app/)
 
-Both deploy from this repo on Vercel — the Nuxt app auto-detects via the Vercel Nuxt preset, and Storybook is a separate Vercel project with overridden build settings (`npm run build-storybook` → `storybook-static/`).
+The Nuxt app auto-detects via the Vercel Nuxt preset; Storybook can deploy as a separate Vercel project with overridden build settings (`npm run build-storybook` → `storybook-static/`).
 
 ---
 
