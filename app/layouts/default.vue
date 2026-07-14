@@ -29,6 +29,7 @@ function onNavigate(to: string) {
 
 <template>
   <div class="default-layout">
+    <OfflineBanner />
     <main class="default-layout__main">
       <slot />
     </main>
