@@ -1,0 +1,53 @@
+app/components/organisms/LogbookEntrySheet.vue
+  s_1489494d9a78b3::t_1af648c13e7c27 193
+  s_1489494d9a78b3::t_77dbdcaa59ab91 14
+  s_1489494d9a78b3::t_35d95d89721690 120
+  s_1489494d9a78b3::t_ef4e5c2a546ee8 82
+app/components/organisms/DashboardHeader.vue
+  s_1489494d9a78b3::t_ef1d0a099c7789 639,647
+app/stores/session.spec.ts
+  s_1489494d9a78b3::t_edb73cc2bed5e9 41,43,47,50,54,58,71,83,87,91
+app/stores/flightLegs.spec.ts
+  s_1489494d9a78b3::t_bf1d60379ecb10 1-27
+app/components/organisms/AppearanceSheet.spec.ts
+  s_1489494d9a78b3::t_684ea8e75d220d 49-56,64,80-81,92,105,120
+app/stores/session.ts
+  s_1489494d9a78b3::t_e52cd803ce89eb 14,16,19,23,26
+app/components/molecules/CalendarDay.vue
+  s_1489494d9a78b3::t_9b24dd7441cc37 42-46
+app/components/organisms/AppearanceSheet.vue
+  s_cd2f43550c6c4a::t_0a18cb6b154fa7 18
+app/composables/useLogbookEntries.ts
+  s_1489494d9a78b3::t_4a5274e6f3c62c 116-120,123
+app/pages/schedule.vue
+  s_1489494d9a78b3::t_a89f1f7bb864c0 7-9,12,17
+  s_1489494d9a78b3::t_436701a3074123 79
+app/stores/flightLegs.ts
+  s_1489494d9a78b3::t_948272981cbb7b 1-13
+app/composables/useTheme.ts
+  s_1489494d9a78b3::t_ec077e1106541f 61-67,72,76-80,118-121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "1500961653e702dd840daeae7e71a926d94754c8",
+  "prompts": {},
+  "sessions": {
+    "s_1489494d9a78b3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09d7d43f5ffe6o1LHe0lG6jJbw",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_cd2f43550c6c4a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a02b7b90-6402-4c34-8671-686154bc6b89",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
