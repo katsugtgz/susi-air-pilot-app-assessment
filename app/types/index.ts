@@ -93,3 +93,20 @@ export interface NotificationItem {
   read?: boolean
   variant?: 'info' | 'success' | 'warning' | 'danger'
 }
+
+/** A single flight leg for a duty day (from mock-flight-legs.json legsByDate[]). */
+export interface FlightLeg {
+  flightNumber: string
+  from: string
+  to: string
+  std: string // HH:mm departure
+  sta: string // HH:mm arrival
+  aircraft: string
+  blockTime: string // H:mm
+}
+
+/** Shape of mock-flight-legs.json. */
+export interface FlightLegsData {
+  fieldGuide: Record<string, string>
+  legsByDate: Record<string, FlightLeg[]>
+}
