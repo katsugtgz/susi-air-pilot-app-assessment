@@ -16,7 +16,7 @@
  * setup>` consumers, returning a `ComputedRef<LogbookResult>`.
  */
 import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
-import type { Legend, Schedule } from '~/types'
+import type { Legend, Schedule, UserLogbookEntry } from '~/types'
 
 export interface LogbookRow {
   /** ISO yyyy-mm-dd */
@@ -33,6 +33,14 @@ export interface LogbookRow {
   countLogbooks: number
   /** True only when status === 2 (verified). */
   verified: boolean
+  /** True for user-created entries merged in from the logbook store. */
+  isUserEntry?: boolean
+  /** "FROM → TO" route string (user entries only). */
+  route?: string
+  /** Aircraft text (user entries only). */
+  aircraft?: string
+  /** Block time "H:mm" (user entries only). */
+  blockTime?: string
 }
 
 export interface LogbookMonthGroup {
@@ -50,6 +58,8 @@ export interface LogbookResult {
     entries: number
     /** Number of those rows whose schedule status === 2. */
     verified: number
+    /** Total flight hours contributed by user-created entries. */
+    hours: number
   }
 }
 
@@ -103,7 +113,37 @@ function toRow(schedule: Schedule, legendMap: Record<string, Legend>): LogbookRo
   }
 }
 
-export function computeLogbookEntries(schedules: Schedule[], legend: Legend[]): LogbookResult {
+/** Parse a "H:mm" / "HH:mm" block time into fractional hours (0 on bad input). */
+function parseBlockTime(blockTime: string): number {
+  const match = /^(\d+):([0-5]?\d)$/.exec(blockTime.trim())
+  if (!match) return 0
+  const hours = Number(match[1])
+  const minutes = Number(match[2])
+  return hours + minutes / 60
+}
+
+function userEntryToRow(entry: UserLogbookEntry): LogbookRow {
+  return {
+    dutyDate: entry.date,
+    dutyType: 'USER',
+    dutyLabel: 'Logged flight',
+    dutyColor: '',
+    baseName: entry.from,
+    countSchedules: 1,
+    countLogbooks: 1,
+    verified: true,
+    isUserEntry: true,
+    route: `${entry.from} → ${entry.to}`,
+    aircraft: entry.aircraft,
+    blockTime: entry.blockTime,
+  }
+}
+
+export function computeLogbookEntries(
+  schedules: Schedule[],
+  legend: Legend[],
+  userEntries: UserLogbookEntry[] = [],
+): LogbookResult {
   const legendMap = legendByCodeMap(legend)
 
   // Filter: count_logbooks > 0. Then sort by duty_date desc.
@@ -121,6 +161,22 @@ export function computeLogbookEntries(schedules: Schedule[], legend: Legend[]): 
     groupMap.set(key, rows)
   }
 
+  // Merge user-created entries into their month groups.
+  let userHours = 0
+  for (const entry of userEntries) {
+    const key = monthKey(entry.date)
+    const rows = groupMap.get(key) ?? []
+    rows.push(userEntryToRow(entry))
+    groupMap.set(key, rows)
+    userHours += parseBlockTime(entry.blockTime)
+  }
+
+  // Re-sort every group's rows by duty_date desc so user + schedule rows
+  // interleave by date within their shared month.
+  for (const rows of groupMap.values()) {
+    rows.sort((a, b) => b.dutyDate.localeCompare(a.dutyDate))
+  }
+
   // Sort month keys desc so the latest month appears first.
   const sortedKeys = Array.from(groupMap.keys()).sort((a, b) => b.localeCompare(a))
   const groups: LogbookMonthGroup[] = sortedKeys.map((key) => ({
@@ -135,6 +191,7 @@ export function computeLogbookEntries(schedules: Schedule[], legend: Legend[]): 
   const totals = {
     entries: allRows.length,
     verified: allRows.filter((r) => r.verified).length,
+    hours: Math.round(userHours * 100) / 100,
   }
 
   return { groups, totals }
@@ -147,6 +204,8 @@ export function computeLogbookEntries(schedules: Schedule[], legend: Legend[]): 
 export function useLogbookEntries(
   schedules: MaybeRefOrGetter<Schedule[]>,
   legend: MaybeRefOrGetter<Legend[]>,
+  userEntries?: MaybeRefOrGetter<UserLogbookEntry[]>,
 ): ComputedRef<LogbookResult> {
-  return computed(() => computeLogbookEntries(toValue(schedules), toValue(legend)))
+  const extra = userEntries ?? (() => [])
+  return computed(() => computeLogbookEntries(toValue(schedules), toValue(legend), toValue(extra)))
 }
