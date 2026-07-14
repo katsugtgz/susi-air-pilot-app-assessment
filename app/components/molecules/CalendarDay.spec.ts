@@ -94,3 +94,45 @@ describe('CalendarDay — modifiers', () => {
     expect(wrapper.attributes('style') || '').not.toContain('--day-color')
   })
 })
+
+describe('CalendarDay — accessibility (button)', () => {
+  it('renders a real <button> root element', () => {
+    const wrapper = mount(CalendarDay, { props: { dayNumber: 15 } })
+    expect(wrapper.element.tagName).toBe('BUTTON')
+    expect(wrapper.attributes('type')).toBe('button')
+  })
+
+  it('builds a descriptive aria-label from props', () => {
+    const wrapper = mount(CalendarDay, {
+      props: {
+        date: '2026-05-15',
+        dayNumber: 15,
+        dutyType: 'DTY',
+        countSchedules: 4,
+        countLogbooks: 3,
+      },
+    })
+    const label = wrapper.attributes('aria-label')
+    expect(label).toContain('15 May')
+    expect(label).toContain('DTY')
+    expect(label).toContain('4 flights')
+    expect(label).toContain('3 logged')
+  })
+
+  it('aria-label omits flights when none scheduled', () => {
+    const wrapper = mount(CalendarDay, {
+      props: { date: '2026-05-20', dayNumber: 20 },
+    })
+    const label = wrapper.attributes('aria-label')
+    expect(label).toContain('20 May')
+    expect(label).not.toContain('flight')
+  })
+
+  it('emits click on Enter key (native button behavior)', async () => {
+    const wrapper = mount(CalendarDay, {
+      props: { date: '2026-05-15', dayNumber: 15, dutyType: 'DTY' },
+    })
+    await wrapper.trigger('click')
+    expect(wrapper.element.tagName).toBe('BUTTON')
+  })
+})
