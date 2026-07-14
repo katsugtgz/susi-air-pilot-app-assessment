@@ -18,7 +18,7 @@
     "typecheck": "nuxt prepare && vue-tsc --noEmit",
     "generate-pwa-icons": "node scripts/generate-pwa-icons.mjs",
     "generate-news-images": "node scripts/generate-news-images.mjs",
-    "build-embeddings": "node scripts/build-embeddings.mjs",
+    "build-embeddings": "node --env-file-if-exists=.env scripts/build-embeddings.mjs",
     "lint": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,vue,scss,json,md}\""
   },
