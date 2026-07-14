@@ -9,7 +9,7 @@ definePageMeta({ layout: 'default' })
 
 const schedulesStore = useSchedulesStore()
 
-const loading = useLoadingDelay(400)
+const loading = useLoadingDelay(200)
 
 // Default yearMonth to the month of schedules.json's `today` (2026-05-15 → '2026-05').
 const yearMonth = ref(schedulesStore.today.slice(0, 7))

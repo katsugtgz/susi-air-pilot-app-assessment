@@ -22,7 +22,7 @@ defineEmits<{ (e: 'select', id: string): void }>()
     </header>
     <div class="latest-news-carousel__scroll" role="region" :aria-label="title" tabindex="0">
       <NewsCard
-        v-for="item in items"
+        v-for="(item, index) in items"
         :id="item.id"
         :key="item.id"
         :category="item.category"
@@ -31,6 +31,7 @@ defineEmits<{ (e: 'select', id: string): void }>()
         :image-url="item.imageUrl"
         :date="item.date"
         :read-time="item.readTime"
+        :eager="index === 0"
         @click="$emit('select', item.id)"
       />
     </div>

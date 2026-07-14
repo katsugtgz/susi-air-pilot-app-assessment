@@ -122,13 +122,13 @@ const ICON_BY_VARIANT: Record<NonNullable<Props['variant']>, string> = {
   &--success {
     background: rgba(31, 191, 143, 0.1);
     border-color: rgba(31, 191, 143, 0.25);
-    color: #0e9472;
+    color: #0b745a;
   }
 
   &--warning {
     background: rgba(245, 158, 11, 0.12);
     border-color: rgba(245, 158, 11, 0.3);
-    color: #b8730a;
+    color: #965e08;
   }
 
   &--danger {

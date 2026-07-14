@@ -19,7 +19,15 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'en' },
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1' },
+        {
+          name: 'viewport',
+          content: 'width=device-width, initial-scale=1',
+        },
+        {
+          name: 'description',
+          content:
+            'Pilot companion app for Susi Air crew - duty schedule calendar, rolling flight-hour limits, document expiry tracking, and crew news.',
+        },
         { name: 'format-detection', content: 'telephone=no' },
         // iOS Safari standalone support (manifest spec isn't fully honored).
         { name: 'apple-mobile-web-app-capable', content: 'yes' },
@@ -31,6 +39,8 @@ export default defineNuxtConfig({
       link: [
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'apple-touch-icon', href: '/pwa-192.png' },
+        { rel: 'preconnect', href: 'https://picsum.photos' },
+        { rel: 'dns-prefetch', href: 'https://picsum.photos' },
       ],
     },
   },
