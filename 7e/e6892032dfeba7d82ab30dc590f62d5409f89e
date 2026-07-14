@@ -1,0 +1,19 @@
+server/api/chat.post.ts
+  s_db743caf0bb189::t_e1594ad3920e71 172-175,177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "7ee6892032dfeba7d82ab30dc590f62d5409f89e",
+  "prompts": {},
+  "sessions": {
+    "s_db743caf0bb189": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe98da95-4070-4794-a5d5-7d5e11f8c9a1",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
