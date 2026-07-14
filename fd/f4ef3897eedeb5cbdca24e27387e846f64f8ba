@@ -1,0 +1,54 @@
+app/components/molecules/LimitCard.vue
+  s_61cd6ec399c6c5::t_04521ecfd88a8b 5-6,34-37,39-77,93
+app/components/organisms/FlightHoursTrendChart.vue
+  s_61cd6ec399c6c5::t_de89ef428eb873 134-140,146-150,159-178
+  s_61cd6ec399c6c5::t_a406ba02264ea7 87
+app/assets/css/transitions-root.css
+  s_61cd6ec399c6c5::t_6770ea060886d0 89
+app/components/atoms/OfflineBanner.vue
+  s_61cd6ec399c6c5::t_ea6ef81717305e 1-71
+app/layouts/default.vue
+  s_61cd6ec399c6c5::t_4b28358ca97611 32
+app/components/atoms/OfflineBanner.spec.ts
+  s_61cd6ec399c6c5::t_e9e9a1b21d936c 1-75
+app/components/atoms/OfflineBanner.stories.ts
+  s_61cd6ec399c6c5::t_1e6d0906aef9e4 1,3-12,14-33,38-41
+  s_61cd6ec399c6c5::t_f0a4b31155ed9a 2,13,34-37
+app/pages/home.vue
+  s_61cd6ec399c6c5::t_6dc3a06aaef89a 279-294
+  s_61cd6ec399c6c5::t_04dee69b24cc72 125-133,136-157
+app/app.vue
+  s_61cd6ec399c6c5::t_5ebb594a1d465b 1-27,30-32,37-42,44,46,48-56,61,67-77,79-84,87-92
+app/components/organisms/LatestNewsCarousel.vue
+  s_61cd6ec399c6c5::t_7e9cc72ac3a570 8,11-20,28-53,56-57,60-62,84-87,97-101,114-173
+app/components/molecules/CalendarDay.spec.ts
+  s_61cd6ec399c6c5::t_991b194f038484 97-138
+app/components/molecules/CalendarDay.vue
+  s_61cd6ec399c6c5::t_0df91faa11dc3c 96-101,117-120
+  s_61cd6ec399c6c5::t_b234129a6d8967 4-5,34-68,72-73,81,91
+  s_dde7a0fc16af56::t_1b2238c9b0675a 121
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "fdf4ef3897eedeb5cbdca24e27387e846f64f8ba",
+  "prompts": {},
+  "sessions": {
+    "s_61cd6ec399c6c5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b4626ffebMybR184xexJPf",
+        "model": "glm-5.2"
+      },
+      "human_author": null
+    },
+    "s_dde7a0fc16af56": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d333cf2a-9ad0-4169-9df4-85c57ac47631",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
