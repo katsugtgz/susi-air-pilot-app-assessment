@@ -39,8 +39,11 @@ const ariaLabel = computed(() => {
 
   // Day + month from the ISO date, or just the number if no date.
   if (props.date) {
-    const d = new Date(props.date)
-    if (!Number.isNaN(d.getTime())) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(props.date)
+    if (m) {
+      // Construct a LOCAL date from the parsed components — `new Date('2026-05-01')`
+      // parses as UTC midnight and renders as the previous day in zones behind UTC.
+      const d = new Date(Number(m[1]), Number(m[2]) - 1, Number(m[3]))
       parts.push(d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }))
     } else if (props.dayNumber != null) {
       parts.push(String(props.dayNumber))

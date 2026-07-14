@@ -38,24 +38,24 @@ describe('useSessionStore', () => {
     window.localStorage.clear()
   })
 
-  it('starts unauthenticated with no email', () => {
+  it('starts unauthenticated with no pilot id', () => {
     const store = useSessionStore()
-    expect(store.email).toBeNull()
+    expect(store.pilotId).toBeNull()
     expect(store.isAuthenticated).toBe(false)
   })
 
-  it('signIn stores the email and authenticates', () => {
+  it('signIn stores the pilot id and authenticates', () => {
     const store = useSessionStore()
     store.signIn('PSA-1042')
-    expect(store.email).toBe('PSA-1042')
+    expect(store.pilotId).toBe('PSA-1042')
     expect(store.isAuthenticated).toBe(true)
   })
 
-  it('signOut clears the email and de-authenticates', () => {
+  it('signOut clears the pilot id and de-authenticates', () => {
     const store = useSessionStore()
     store.signIn('PSA-1042')
     store.signOut()
-    expect(store.email).toBeNull()
+    expect(store.pilotId).toBeNull()
     expect(store.isAuthenticated).toBe(false)
   })
 
@@ -68,7 +68,7 @@ describe('useSessionStore', () => {
     // page refresh where the in-memory store is rebuilt.
     setActivePinia(createPinia())
     const recreated = useSessionStore()
-    expect(recreated.email).toBe('PSA-1042')
+    expect(recreated.pilotId).toBe('PSA-1042')
     expect(recreated.isAuthenticated).toBe(true)
   })
 
@@ -80,14 +80,14 @@ describe('useSessionStore', () => {
 
     setActivePinia(createPinia())
     const recreated = useSessionStore()
-    expect(recreated.email).toBeNull()
+    expect(recreated.pilotId).toBeNull()
     expect(recreated.isAuthenticated).toBe(false)
   })
 
-  it('persists the email under the namespaced susi: key', async () => {
+  it('persists the pilot id under the namespaced susi: key', async () => {
     const store = useSessionStore()
     store.signIn('PSA-1042')
     await nextTick()
-    expect(window.localStorage.getItem('susi:session:email')).toBe('"PSA-1042"')
+    expect(window.localStorage.getItem('susi:session:pilotId')).toBe('"PSA-1042"')
   })
 })

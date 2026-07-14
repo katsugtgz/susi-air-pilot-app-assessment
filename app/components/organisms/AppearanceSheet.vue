@@ -15,7 +15,7 @@ defineProps<Props>()
 
 const emit = defineEmits<{ (e: 'close'): void }>()
 
-const { preference, systemDark, theme } = useTheme()
+const { preference, theme } = useTheme()
 
 const OPTIONS: Array<{
   value: ThemePreference
@@ -56,8 +56,6 @@ function close() {
             <span class="appearance-sheet__label">{{ opt.label }}</span>
             <span class="appearance-sheet__hint">
               {{ opt.hint }}<template v-if="opt.value === 'system'"> · current: {{ theme }}</template>
-              <template v-if="opt.value === 'system' && systemDark"> (dark)</template>
-              <template v-else-if="opt.value === 'system' && !systemDark"> (light)</template>
             </span>
           </span>
           <span

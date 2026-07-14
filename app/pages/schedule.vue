@@ -4,16 +4,17 @@
  * DutyDetailSheet (legs + logged status for duty days, friendly empty state
  * for non-duty days), replacing the old "Detail page coming soon" placeholder.
  *
- * legsByDate is read here at the composition root because no store owns the
- * flight-legs mock yet (Task 0 added the JSON + types, not a store); the page
- * is the only consumer that needs it.
+ * legsByDate is sourced from the flightLegs Pinia store (the sole consumer of
+ * mock-flight-legs.json), keeping the "stores are the only JSON consumers"
+ * convention.
  */
 import { useSchedulesStore } from '~/stores/schedules'
-import flightLegsData from '~/assets/data/mock-flight-legs.json'
+import { useFlightLegsStore } from '~/stores/flightLegs'
 
 definePageMeta({ layout: 'default' })
 
 const schedulesStore = useSchedulesStore()
+const flightLegsStore = useFlightLegsStore()
 
 const loading = useLoadingDelay(200)
 
@@ -25,8 +26,6 @@ const selectedDate = ref<string | null>(null)
 const selectedSchedule = computed(() =>
   selectedDate.value ? schedulesStore.scheduleByDate.get(selectedDate.value) : undefined,
 )
-
-const legsByDate = flightLegsData.legsByDate
 
 function onSelectDate(date: string) {
   selectedDate.value = date
@@ -77,7 +76,7 @@ function closeModal() {
       :open="selectedDate !== null"
       :schedule="selectedSchedule ?? null"
       :legend="schedulesStore.legend"
-      :legs-by-date="legsByDate"
+      :legs-by-date="flightLegsStore.legsByDate"
       @close="closeModal"
     />
   </div>

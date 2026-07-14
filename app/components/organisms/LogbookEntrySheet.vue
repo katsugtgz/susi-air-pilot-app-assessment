@@ -11,6 +11,7 @@
  * prop), never the real system date — the brief's dual-today rule.
  */
 import type { UserLogbookEntry } from '~/types'
+import { BLOCK_TIME_RE } from '~/composables/useLogbookEntries'
 
 type EntryPayload = Omit<UserLogbookEntry, 'id'>
 
@@ -78,7 +79,7 @@ function validate(): boolean {
   errors.from = /^[A-Z]{3}$/.test(form.from) ? '' : 'Enter a 3-letter code'
   errors.to = /^[A-Z]{3}$/.test(form.to) ? '' : 'Enter a 3-letter code'
   errors.aircraft = form.aircraft.trim() ? '' : 'Aircraft is required'
-  errors.blockTime = /^\d+:[0-5]\d$/.test(form.blockTime.trim()) ? '' : 'Format H:mm (e.g. 1:30)'
+  errors.blockTime = BLOCK_TIME_RE.test(form.blockTime.trim()) ? '' : 'Format H:mm (e.g. 1:30)'
   return !errors.date && !errors.from && !errors.to && !errors.aircraft && !errors.blockTime
 }
 
@@ -116,7 +117,7 @@ function setTo(value: string): void {
     aria-label="Log a flight entry"
     @close="emit('close')"
   >
-    <form class="entry-form" @submit.prevent="onSubmit">
+    <form id="logbook-entry-form" class="entry-form" @submit.prevent="onSubmit">
       <BaseInput
         label="Date"
         placeholder="yyyy-mm-dd"
@@ -189,7 +190,7 @@ function setTo(value: string): void {
     <template #footer>
       <div class="entry-form__actions">
         <BaseButton variant="secondary" size="sm" @click="emit('close')">Cancel</BaseButton>
-        <BaseButton variant="primary" size="sm" @click="onSubmit">Save entry</BaseButton>
+        <BaseButton variant="primary" size="sm" type="submit" form="logbook-entry-form">Save entry</BaseButton>
       </div>
     </template>
   </BottomSheet>

@@ -113,9 +113,14 @@ function toRow(schedule: Schedule, legendMap: Record<string, Legend>): LogbookRo
   }
 }
 
+/** Strict "H:mm" / "HH:mm" block-time regex — two-digit minutes only. Shared
+ *  by the validator in `LogbookEntrySheet.vue` and `parseBlockTime` here so
+ *  the two can't drift. No `g` flag → safe to share between `.exec` / `.test`. */
+export const BLOCK_TIME_RE = /^(\d+):([0-5]\d)$/
+
 /** Parse a "H:mm" / "HH:mm" block time into fractional hours (0 on bad input). */
 function parseBlockTime(blockTime: string): number {
-  const match = /^(\d+):([0-5]?\d)$/.exec(blockTime.trim())
+  const match = BLOCK_TIME_RE.exec(blockTime.trim())
   if (!match) return 0
   const hours = Number(match[1])
   const minutes = Number(match[2])

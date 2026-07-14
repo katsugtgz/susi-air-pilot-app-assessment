@@ -636,7 +636,7 @@ const headerClass = computed(() => ({
     padding: var(--space-3);
     border: 0;
     background: transparent;
-    color: var(--color-red);
+    color: var(--color-text-secondary);
     font-family: inherit;
     font-size: var(--fs-base-sm);
     font-weight: var(--fw-semibold);
@@ -644,7 +644,7 @@ const headerClass = computed(() => ({
     transition: background 0.15s ease;
 
     &:hover {
-      background: var(--color-expired-bg);
+      background: var(--color-surface-alt);
     }
 
     &:focus-visible {
