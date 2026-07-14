@@ -33,6 +33,10 @@ function onNavigate(to: string) {
       <slot />
     </main>
     <BottomNavigation :items="items" :active-route="activeRoute" @navigate="onNavigate" />
+    <!-- AI Copilot — lazy + client-only so it adds zero SSR / LCP cost. -->
+    <ClientOnly>
+      <LazyCopilotBubble />
+    </ClientOnly>
   </div>
 </template>
 
