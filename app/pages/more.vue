@@ -15,7 +15,7 @@ definePageMeta({ layout: 'default' })
 const pilotStore = usePilotStore()
 
 function onSignOut() {
-  // No real auth — return to Sign In per brief.
+  useSessionStore().signOut()
   navigateTo('/')
 }
 </script>
