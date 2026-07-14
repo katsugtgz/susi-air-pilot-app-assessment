@@ -1,9 +1,15 @@
 <script setup lang="ts">
 /**
- * Schedule page — month-grid calendar + legend. Tap-a-date surfaces a
- * placeholder modal per brief §5 ("Detail page coming soon").
+ * Schedule page — month-grid calendar + legend. Tapping a day opens a real
+ * DutyDetailSheet (legs + logged status for duty days, friendly empty state
+ * for non-duty days), replacing the old "Detail page coming soon" placeholder.
+ *
+ * legsByDate is read here at the composition root because no store owns the
+ * flight-legs mock yet (Task 0 added the JSON + types, not a store); the page
+ * is the only consumer that needs it.
  */
 import { useSchedulesStore } from '~/stores/schedules'
+import flightLegsData from '~/assets/data/mock-flight-legs.json'
 
 definePageMeta({ layout: 'default' })
 
@@ -14,11 +20,13 @@ const loading = useLoadingDelay(200)
 // Default yearMonth to the month of schedules.json's `today` (2026-05-15 → '2026-05').
 const yearMonth = ref(schedulesStore.today.slice(0, 7))
 
-// Tap-a-date placeholder modal state.
+// Tap-a-date detail sheet state.
 const selectedDate = ref<string | null>(null)
 const selectedSchedule = computed(() =>
   selectedDate.value ? schedulesStore.scheduleByDate.get(selectedDate.value) : undefined,
 )
+
+const legsByDate = flightLegsData.legsByDate
 
 function onSelectDate(date: string) {
   selectedDate.value = date
@@ -64,32 +72,14 @@ function closeModal() {
       :columns="2"
     />
 
-    <!-- Tap-a-date placeholder modal -->
-    <Transition name="modal">
-      <div v-if="selectedDate" class="schedule-page__modal-backdrop" @click.self="closeModal">
-        <div class="schedule-page__modal" role="dialog" aria-modal="true">
-          <header class="schedule-page__modal-header">
-            <h2 class="schedule-page__modal-title">{{ selectedDate }}</h2>
-            <button
-              type="button"
-              class="schedule-page__modal-close"
-              aria-label="Close"
-              @click="closeModal"
-            >
-              ×
-            </button>
-          </header>
-          <div class="schedule-page__modal-body">
-            <p v-if="selectedSchedule" class="schedule-page__modal-text">
-              {{ selectedSchedule.base_name }} · {{ selectedSchedule.duty_type }} ·
-              {{ selectedSchedule.count_schedules }} duty/duties planned
-            </p>
-            <p v-else class="schedule-page__modal-text">No duty scheduled.</p>
-            <p class="schedule-page__modal-coming-soon">Detail page coming soon.</p>
-          </div>
-        </div>
-      </div>
-    </Transition>
+    <!-- Tap-a-date day detail -->
+    <DutyDetailSheet
+      :open="selectedDate !== null"
+      :schedule="selectedSchedule ?? null"
+      :legend="schedulesStore.legend"
+      :legs-by-date="legsByDate"
+      @close="closeModal"
+    />
   </div>
 </template>
 
@@ -131,115 +121,6 @@ function closeModal() {
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: var(--space-1);
   }
-
-  // Modal
-  &__modal-backdrop {
-    position: fixed;
-    inset: 0;
-    background: rgba(14, 33, 56, 0.45);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-4);
-    z-index: 100;
-  }
-
-  &__modal {
-    width: 100%;
-    max-width: 360px;
-    background: var(--color-surface);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-md);
-    overflow: hidden;
-    transform-origin: center;
-    will-change: transform, opacity;
-  }
-
-  &__modal-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border);
-  }
-
-  &__modal-title {
-    margin: 0;
-    font-size: var(--fs-md);
-    font-weight: var(--fw-bold);
-    color: var(--color-text-primary);
-  }
-
-  &__modal-close {
-    background: transparent;
-    border: 0;
-    font-size: 24px;
-    line-height: 1;
-    color: var(--color-text-secondary);
-    cursor: pointer;
-
-    &:hover {
-      color: var(--color-text-primary);
-    }
-  }
-
-  &__modal-body {
-    padding: var(--space-4);
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-  }
-
-  &__modal-text {
-    margin: 0;
-    font-size: var(--fs-base);
-    color: var(--color-text-primary);
-  }
-
-  &__modal-coming-soon {
-    margin: 0;
-    font-size: var(--fs-sm);
-    color: var(--color-text-secondary);
-    font-style: italic;
-  }
-}
-
-.modal-enter-active {
-  transition: opacity var(--modal-open-dur) var(--modal-ease);
-}
-.modal-leave-active {
-  transition: opacity var(--modal-close-dur) var(--modal-ease);
-}
-.modal-enter-active .schedule-page__modal {
-  transition:
-    transform var(--modal-open-dur) var(--modal-ease),
-    opacity   var(--modal-open-dur) var(--modal-ease);
-}
-.modal-leave-active .schedule-page__modal {
-  transition:
-    transform var(--modal-close-dur) var(--modal-ease),
-    opacity   var(--modal-close-dur) var(--modal-ease);
-}
-.modal-enter-from,
-.modal-leave-to {
-  opacity: 0;
-}
-.modal-enter-from .schedule-page__modal {
-  transform: scale(var(--modal-scale));
-  opacity: 0;
-}
-.modal-leave-to .schedule-page__modal {
-  transform: scale(var(--modal-scale-close));
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .modal-enter-active,
-  .modal-leave-active,
-  .modal-enter-active .schedule-page__modal,
-  .modal-leave-active .schedule-page__modal {
-    transition: none !important;
-  }
 }
 
 /*
@@ -262,7 +143,7 @@ function closeModal() {
   filter: blur(0);
   transition:
     opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
+    filter var(--reveal-dur) var(--reveal-ease);
 }
 .t-skel-content {
   z-index: 2;
@@ -270,7 +151,7 @@ function closeModal() {
   filter: blur(var(--reveal-blur));
   transition:
     opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
+    filter var(--reveal-dur) var(--reveal-ease);
 }
 .t-skel.is-revealed .t-skel-skeleton {
   opacity: 0;
@@ -295,14 +176,22 @@ function closeModal() {
   animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
 }
 @keyframes t-skel-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: var(--pulse-min); }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: var(--pulse-min);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .t-skel-skeleton, .t-skel-content {
+  .t-skel-skeleton,
+  .t-skel-content {
     transition: none !important;
   }
-  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
+  .t-skel-skeleton.is-pulsing > * {
+    animation: none !important;
+  }
 }
 </style>

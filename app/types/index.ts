@@ -110,3 +110,14 @@ export interface FlightLegsData {
   fieldGuide: Record<string, string>
   legsByDate: Record<string, FlightLeg[]>
 }
+
+/** A user-created logbook entry (persisted via the logbook store). */
+export interface UserLogbookEntry {
+  id: string
+  date: string // ISO yyyy-mm-dd
+  from: string // uppercase IATA departure
+  to: string // uppercase IATA arrival
+  aircraft: string // "PK-BVM · C208B Grand Caravan"
+  blockTime: string // H:mm
+  remarks?: string
+}
