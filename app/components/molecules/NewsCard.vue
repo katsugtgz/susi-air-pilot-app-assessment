@@ -26,6 +26,13 @@ defineEmits<{ (e: 'click'): void }>()
         <img
           v-if="imageUrl"
           :src="imageUrl"
+          :srcset="
+            imageUrl && imageUrl.endsWith('.webp')
+              ? imageUrl.replace('.webp', '@2x.webp') + ' 2x'
+              : undefined
+          "
+          width="600"
+          height="360"
           :alt="title"
           :loading="eager ? 'eager' : 'lazy'"
           :decoding="eager ? undefined : 'async'"

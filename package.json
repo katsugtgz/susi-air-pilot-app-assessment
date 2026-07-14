@@ -17,6 +17,7 @@
     "test:storybook:ci": "concurrently -k -s first -n SB,TEST -c cyan,blue \"npm run storybook -- --ci\" \"wait-on tcp:6006 && test-storybook\"",
     "typecheck": "nuxt prepare && vue-tsc --noEmit",
     "generate-pwa-icons": "node scripts/generate-pwa-icons.mjs",
+    "generate-news-images": "node scripts/generate-news-images.mjs",
     "lint": "eslint . --fix",
     "format": "prettier --write \"**/*.{ts,vue,scss,json,md}\""
   },
