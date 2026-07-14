@@ -1,0 +1,117 @@
+app/pages/more.vue
+  s_ab52e4a851f7d3::t_346163c8939948 3-8,10-12,14-20,24-86,91,94-101,108-151,153-155,157-168
+vitest.config.ts
+  s_ab52e4a851f7d3::t_d073761a5e939f 27
+app/components/organisms/CopilotBubble.stories.ts
+  s_ab52e4a851f7d3::t_eb1493e1b51f9d 1-22
+server/api/chat.post.ts
+  s_ab52e4a851f7d3::t_dc830d98069486 114,128
+  s_ab52e4a851f7d3::t_e9a0bceee45759 1-21,24-113,115-127,129-216
+  s_ab52e4a851f7d3::t_9c9d959741c563 22-23
+app/components/molecules/ChatMessage.stories.ts
+  s_ab52e4a851f7d3::t_15e63ab14e4492 1-34
+app/components/organisms/CopilotBubble.vue
+  s_db743caf0bb189::t_e8150c454961de 44-45,49
+  s_ab52e4a851f7d3::t_2a816e2f3a66a4 1-43,46-48,50-263
+app/components/molecules/ChatMessage.vue
+  s_ab52e4a851f7d3::t_40bab05a3e1a08 1-77
+server/data/embeddings.json
+  s_ab52e4a851f7d3::t_fbe429afcfa4b7 1-302
+app/components/organisms/CopilotSheet.spec.ts
+  s_ab52e4a851f7d3::t_0dea6fc2cfab0b 2-144
+  s_ab52e4a851f7d3::t_350ae00a4b8618 1
+app/components/molecules/SettingsListItem.spec.ts
+  s_ab52e4a851f7d3::t_2218409b6b52fc 1-77
+app/pages/logbook.vue
+  s_ab52e4a851f7d3::t_94660d5e76533f 3-10,12-14,16-43,47-128,133,136-141,150-212,214-257,259-354,356
+app/components/organisms/CopilotSheet.vue
+  s_ab52e4a851f7d3::t_ad94565243ac76 1-86,88-173,175-456
+  s_ab52e4a851f7d3::t_3271b64aa819e8 87
+  s_ab52e4a851f7d3::t_ed31d82fdd18d6 174
+app/components/atoms/Icon.vue
+  s_ab52e4a851f7d3::t_e1ba2680d062e9 54-55
+  s_ab52e4a851f7d3::t_c59ad419a09f1f 30-31
+README.md
+  s_aee3fd39589610::t_f56a3911b1b261 1,3,5,7,9,11,13-17,19,21-26,28,30-33,38-40,43,45,47-52,56-74,94,96-100,102,104,106-108,110,112,114-115,117,121
+  s_aee3fd39589610::t_fcf5386b9aed71 76,80-91
+  s_aee3fd39589610::t_63bf27fb3b8019 75
+scripts/build-embeddings.mjs
+  s_ab52e4a851f7d3::t_1d8c9c6c522ca2 1-185
+app/components/molecules/ChatMessage.spec.ts
+  s_ab52e4a851f7d3::t_3e9a61a5587bed 1-36
+.env.example
+  s_ab52e4a851f7d3::t_eeb727cd2eff39 1-14
+app/components/molecules/SettingsListItem.vue
+  s_ab52e4a851f7d3::t_b5d4b14014374d 1-150
+app/composables/useCopilotChat.ts
+  s_ab52e4a851f7d3::t_3a87dd5c65faf2 1-181
+server/utils/rag.spec.ts
+  s_ab52e4a851f7d3::t_bdcf691a31558f 1-85
+app/components/organisms/CopilotSheet.stories.ts
+  s_ab52e4a851f7d3::t_27c5f467dae850 1-69
+server/utils/rag.ts
+  s_ab52e4a851f7d3::t_08199e5638db80 1-57
+package.json
+  s_ab52e4a851f7d3::t_763c02749617e5 26
+  s_ab52e4a851f7d3::t_3e17733cefb0cd 21
+app/components/molecules/SettingsListItem.stories.ts
+  s_ab52e4a851f7d3::t_b0bde7c47f10bb 1-36
+nuxt.config.ts
+  s_ab52e4a851f7d3::t_398102f62a6845 72-80
+server/utils/gemini.ts
+  s_ab52e4a851f7d3::t_f1f7b986ed9037 42-43,47-48
+  s_ab52e4a851f7d3::t_3e3e2eaa409008 1-41,44-46,49-86
+app/layouts/default.vue
+  s_ab52e4a851f7d3::t_5ba2f113fb8ca4 36-39
+app/composables/useCopilotChat.spec.ts
+  s_ab52e4a851f7d3::t_4030c3f1a5d3d7 1-157
+app/composables/useLogbookEntries.ts
+  s_ab52e4a851f7d3::t_af73f12ed34dbb 1-131,135,138-152
+  s_ab52e4a851f7d3::t_d44dd9fec3e236 132-134,136-137
+app/components/organisms/CopilotBubble.spec.ts
+  s_ab52e4a851f7d3::t_c29d2303c12d43 100
+  s_ab52e4a851f7d3::t_c80a42f7a1f81f 1-4,26-32,35-37,39-43,45-81,83-99,101-138,140-146,148-167
+  s_ab52e4a851f7d3::t_c37b45216f18a4 5-25,33-34,38
+  s_ab52e4a851f7d3::t_ea43385034747f 44
+  s_ab52e4a851f7d3::t_45d1f0445e0957 139,147
+  s_ab52e4a851f7d3::t_2cbfc1b0a3abc8 82
+app/composables/useLogbookEntries.spec.ts
+  s_ab52e4a851f7d3::t_3a74253a906b1a 1-2,4-66,68-72,76-77,80-120,123-136
+  s_ab52e4a851f7d3::t_d4fb42ced215a5 121-122
+  s_ab52e4a851f7d3::t_3fc234926bbd2c 67,73-75,78-79
+  s_ab52e4a851f7d3::t_c12cbcacdf2150 3
+package-lock.json
+  s_ab52e4a851f7d3::t_fa3e57a324d6c0 10,1449-1472,5269-5325,6995-7000,9088-9096,9221-9226,10211-10219,10679-10687,11703-11708,11836-11858,12195-12206,12309-12354,12650-12675,15029-15037,15107-15127,15596-15601,16598-16617,17988-18009,18988-19010,23257-23265
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "26ae3029b3d0348124add67417e90f82db8fa09d",
+  "prompts": {},
+  "sessions": {
+    "s_ab52e4a851f7d3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a1b995ccffeNH1Ma8AAYrqKs5",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_aee3fd39589610": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5e62-5006-7277-8f3f-4bc1cc0258d4",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_db743caf0bb189": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe98da95-4070-4794-a5d5-7d5e11f8c9a1",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
