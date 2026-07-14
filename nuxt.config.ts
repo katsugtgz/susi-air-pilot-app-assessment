@@ -69,5 +69,14 @@ export default defineNuxtConfig({
   typescript: {
     strict: true,
   },
+
+  // AI Copilot config — server-only. NEVER expose these under .public.
+  // Keys rotate via `server/utils/gemini.ts` `withKeyRotation`.
+  runtimeConfig: {
+    geminiApiKeys: '', // NUXT_GEMINI_API_KEYS — comma-separated
+    geminiApiKey: '', // NUXT_GEMINI_API_KEY — single fallback
+    geminiChatModel: 'gemini-3-flash-preview',
+    geminiEmbeddingModel: 'gemini-embedding-001',
+  },
 })
 

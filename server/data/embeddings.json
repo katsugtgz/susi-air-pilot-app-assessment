@@ -1,0 +1,302 @@
+[
+  {
+    "id": "doc:doc_recurrent",
+    "source": "documents",
+    "text": "Next Recurrent Date expires on 2026-10-14. Reference today for documents: 2026-05-31.",
+    "embedding": null
+  },
+  {
+    "id": "doc:doc_ppc",
+    "source": "documents",
+    "text": "PPC Exp. Date expires on 2026-12-25. Reference today for documents: 2026-05-31.",
+    "embedding": null
+  },
+  {
+    "id": "doc:doc_license",
+    "source": "documents",
+    "text": "Indonesian License Exp. Date expires on 2026-05-29. Reference today for documents: 2026-05-31.",
+    "embedding": null
+  },
+  {
+    "id": "doc:doc_medical",
+    "source": "documents",
+    "text": "Indonesian Medical Exp. Date expires on 2026-06-11. Reference today for documents: 2026-05-31.",
+    "embedding": null
+  },
+  {
+    "id": "doc:doc_security",
+    "source": "documents",
+    "text": "Security Clearance Exp. Date expires on 2026-05-01. Reference today for documents: 2026-05-31.",
+    "embedding": null
+  },
+  {
+    "id": "news:1",
+    "source": "news",
+    "text": "[Operations] New Cessna Grand Caravan EX joins the fleet The 2026 airframe boosts capacity on the Sumatra trunk routes, replacing two older PC-12s rotationally through August. Published May 28, 2026. Read time 3 min.",
+    "embedding": null
+  },
+  {
+    "id": "news:2",
+    "source": "news",
+    "text": "[Safety] Q3 2026 recurrent simulator training schedule All captains and first officers must complete the recurrent sim block by 30 September. Slots are open in the CRD portal. Published May 24, 2026. Read time 5 min.",
+    "embedding": null
+  },
+  {
+    "id": "news:3",
+    "source": "news",
+    "text": "[Notice] CRD operating hours during the Eid period Reduced hours from 17–21 June. On-call coverage published in the internal calendar; emergency line unchanged. Published May 20, 2026. Read time 2 min.",
+    "embedding": null
+  },
+  {
+    "id": "news:4",
+    "source": "news",
+    "text": "[Fleet] PC-12 engine overhaul programme kicks off Six airframes rotate through the maintenance bay through August. Refer to the fleet status board for tail assignments. Published May 15, 2026. Read time 4 min.",
+    "embedding": null
+  },
+  {
+    "id": "flight-hours:pilot",
+    "source": "flight-hours",
+    "text": "Pilot John Doe (ID PSA-1042) has logged 1444.5 total flight hours.",
+    "embedding": null
+  },
+  {
+    "id": "flight-hours:limits",
+    "source": "flight-hours",
+    "text": "Regulatory flight-hour limits — daily 8, weekly 40, monthly 100, annual 1050.",
+    "embedding": null
+  },
+  {
+    "id": "flight-hours:chart-bounds",
+    "source": "flight-hours",
+    "text": "Chart bounds per range toggle — 1w: limit 40, max 45, windowDays 7, displayRangeDays 7; 1m: limit 100, max 125, windowDays 30, displayRangeDays 7; 3m: limit 300, max 325, windowDays 90, displayRangeDays 7; 6m: limit 600, max 625, windowDays 180, displayRangeDays 7; 1y: limit 1050, max 1200, windowDays 365, displayRangeDays 7.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:field-guide",
+    "source": "schedules",
+    "text": "duty_date: Date of the duty (ISO format). status: 1 = pending/upcoming, 2 = completed/verified. base_name: Short code shown under the day on the calendar. For DTY days this is the airport base code (MKW, PDG, etc); for other duty types it matches the duty code (DTY, TRX, SCK, MED, etc). base_color: Hex color used to fill the day cell on the calendar. duty_type: Logical duty category. Maps to one entry in 'legend' below. count_schedules: Total flights/duties planned for the day. Drives the number badge at the top right of the calendar day cell. count_logbooks: Flights/duties already logged. When count_logbooks === count_schedules, show a tick icon instead of the number badge.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:DTY",
+    "source": "schedules",
+    "text": "Duty legend code DTY means On Duty (color #10B981).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:RLV",
+    "source": "schedules",
+    "text": "Duty legend code RLV means Requested Leave (color #475569).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:SCK",
+    "source": "schedules",
+    "text": "Duty legend code SCK means Sick (color #EF4444).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:TRD",
+    "source": "schedules",
+    "text": "Duty legend code TRD means Travel Day (color #FBA577).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:TRX",
+    "source": "schedules",
+    "text": "Duty legend code TRX means Training (color #F59E0B).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:ADM",
+    "source": "schedules",
+    "text": "Duty legend code ADM means Administration (color #9CA3AF).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:FER",
+    "source": "schedules",
+    "text": "Duty legend code FER means Ferry (color #7C2D12).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:MED",
+    "source": "schedules",
+    "text": "Duty legend code MED means Medical (color #7C3AED).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:REC",
+    "source": "schedules",
+    "text": "Duty legend code REC means Recurrent (color #0EA5E9).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:legend:ULV",
+    "source": "schedules",
+    "text": "Duty legend code ULV means Unpaid Leave (color #111827).",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97027",
+    "source": "schedules",
+    "text": "On 2026-05-15 duty DTY at base MKW, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97028",
+    "source": "schedules",
+    "text": "On 2026-05-19 duty DTY at base SIQ, 2 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97029",
+    "source": "schedules",
+    "text": "On 2026-05-20 duty MED at base CJN, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97030",
+    "source": "schedules",
+    "text": "On 2026-05-21 duty DTY at base CJN, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97031",
+    "source": "schedules",
+    "text": "On 2026-05-22 duty DTY at base MKW, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97032",
+    "source": "schedules",
+    "text": "On 2026-05-23 duty DTY at base CJN, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97033",
+    "source": "schedules",
+    "text": "On 2026-05-25 duty DTY at base MKW, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97034",
+    "source": "schedules",
+    "text": "On 2026-05-26 duty DTY at base CJN, 2 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97035",
+    "source": "schedules",
+    "text": "On 2026-05-27 duty DTY at base CJN, 2 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97036",
+    "source": "schedules",
+    "text": "On 2026-05-29 duty DTY at base PDG, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97037",
+    "source": "schedules",
+    "text": "On 2026-05-31 duty DTY at base MKW, 2 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97038",
+    "source": "schedules",
+    "text": "On 2026-06-01 duty DTY at base MKW, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97039",
+    "source": "schedules",
+    "text": "On 2026-06-02 duty DTY at base MKW, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97040",
+    "source": "schedules",
+    "text": "On 2026-06-03 duty DTY at base MKW, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97041",
+    "source": "schedules",
+    "text": "On 2026-06-04 duty TRX at base CJN, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97042",
+    "source": "schedules",
+    "text": "On 2026-06-05 duty DTY at base PDG, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97043",
+    "source": "schedules",
+    "text": "On 2026-06-06 duty FER at base HLP, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97044",
+    "source": "schedules",
+    "text": "On 2026-06-08 duty ADM at base CJN, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97045",
+    "source": "schedules",
+    "text": "On 2026-06-09 duty DTY at base SIQ, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97046",
+    "source": "schedules",
+    "text": "On 2026-06-10 duty DTY at base PDG, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97047",
+    "source": "schedules",
+    "text": "On 2026-06-16 duty DTY at base MKW, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97048",
+    "source": "schedules",
+    "text": "On 2026-06-19 duty DTY at base CJN, 4 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97049",
+    "source": "schedules",
+    "text": "On 2026-06-22 duty MED at base CJN, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97050",
+    "source": "schedules",
+    "text": "On 2026-06-23 duty RLV at base HLP, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97051",
+    "source": "schedules",
+    "text": "On 2026-06-24 duty DTY at base PDG, 6 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97052",
+    "source": "schedules",
+    "text": "On 2026-06-25 duty DTY at base MKW, 2 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  },
+  {
+    "id": "schedules:entry:97053",
+    "source": "schedules",
+    "text": "On 2026-06-29 duty REC at base CJN, 1 flights planned, status pending. Reference today for schedules: 2026-05-15.",
+    "embedding": null
+  }
+]

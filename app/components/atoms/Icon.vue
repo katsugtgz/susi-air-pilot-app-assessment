@@ -27,6 +27,8 @@ import {
   Plane,
   ChevronLeft,
   ChevronRight,
+  Sparkles,
+  Send,
 } from '@lucide/vue'
 
 // The complete set of icons rendered anywhere in app + stories. Adding a new
@@ -49,6 +51,8 @@ const ICON_MAP = {
   Plane,
   ChevronLeft,
   ChevronRight,
+  Sparkles,
+  Send,
 } as const
 
 interface Props {
