@@ -169,11 +169,12 @@ export default defineEventHandler(async (event) => {
         const toolResult = lookupFlightByDate(call.args?.date)
 
         // Append the model's functionCall turn + the functionResponse turn.
+        // Use the model's returned content VERBATIM (not a reconstruction):
+        // Gemini 3 requires the thoughtSignature carried in the functionCall
+        // part, and rebuilding the part drops it (400 INVALID_ARGUMENT).
+        const modelTurn = firstResponse.candidates?.[0]?.content
         const functionResponseTurn = [
-          {
-            role: 'model',
-            parts: [{ functionCall: { id: call.id, name: call.name, args: call.args } }],
-          },
+          ...(modelTurn ? [modelTurn] : []),
           {
             role: 'user',
             parts: [
