@@ -11,17 +11,17 @@ import { computed } from 'vue'
 import { usePersistedState } from '~/composables/usePersistedState'
 
 export const useSessionStore = defineStore('session', () => {
-  const email = usePersistedState<string | null>('session:email', null)
+  const pilotId = usePersistedState<string | null>('session:pilotId', null)
 
-  const isAuthenticated = computed(() => email.value !== null)
+  const isAuthenticated = computed(() => pilotId.value !== null)
 
   function signIn(value: string) {
-    email.value = value
+    pilotId.value = value
   }
 
   function signOut() {
-    email.value = null
+    pilotId.value = null
   }
 
-  return { email, isAuthenticated, signIn, signOut }
+  return { pilotId, isAuthenticated, signIn, signOut }
 })

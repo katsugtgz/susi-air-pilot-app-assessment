@@ -58,15 +58,26 @@ function applyThemeAttribute(theme: ResolvedTheme) {
  *   - `systemDark` — readonly ref tracking the OS preference (live).
  *   - `theme` — readonly computed effective theme ('light' | 'dark').
  *
+ * Implemented as a lazily-initialised module SINGLETON: the first caller
+ * creates the refs, the persist/apply `watch`, and the matchMedia listener;
+ * every subsequent caller (AppearanceSheet, plugins, etc.) shares that one
+ * instance. This avoids leaking a fresh matchMedia listener per `useTheme()`
+ * call and keeps all consumers in sync. The listener is intentionally never
+ * removed — it lives for the app's lifetime, which is correct for a singleton.
+ *
  * The first call seeds `document.documentElement[data-theme]` so a late
  * hydration never leaves the page in the wrong palette. Subsequent writes
  * to `preference.value` persist + re-apply.
  */
-export function useTheme(): {
+interface ThemeState {
   preference: Ref<ThemePreference>
   systemDark: Ref<boolean>
   theme: Readonly<Ref<ResolvedTheme>>
-} {
+}
+
+let state: ThemeState | null = null
+
+function initThemeState(): ThemeState {
   const preference = ref<ThemePreference>(readStoredPref())
   const systemDark = ref<boolean>(systemPrefersDark())
   const theme = computed(() => resolveTheme(preference.value, systemDark.value))
@@ -103,4 +114,8 @@ export function useTheme(): {
   }
 
   return { preference, systemDark, theme }
+}
+
+export function useTheme(): ThemeState {
+  return (state ??= initThemeState())
 }

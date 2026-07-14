@@ -1,6 +1,5 @@
 import { describe, it, expect, beforeAll, beforeEach, afterEach, vi } from 'vitest'
 import { mount, flushPromises, type VueWrapper } from '@vue/test-utils'
-import AppearanceSheet from './AppearanceSheet.vue'
 
 // Node 22 declares an experimental `localStorage` global that shadows
 // happy-dom's window.localStorage and returns undefined unless
@@ -47,7 +46,14 @@ afterEach(() => {
   document.body.innerHTML = ''
 })
 
-function mountSheet(options: Parameters<typeof mount>[1] = {}) {
+// useTheme is now a module singleton, so its refs + matchMedia listener
+// persist for the lifetime of the module instance. To keep tests isolated
+// (each one can seed localStorage and expect the singleton to re-hydrate
+// from it) we reset the module registry before each test and dynamically
+// re-import AppearanceSheet — that re-evaluates its `useTheme()` call
+// against a freshly initialised singleton.
+async function mountSheet(options: Parameters<typeof mount>[1] = {}): Promise<VueWrapper<unknown>> {
+  const { default: AppearanceSheet } = await import('./AppearanceSheet.vue')
   const w = mount(AppearanceSheet, options) as VueWrapper<unknown>
   wrappers.push(w)
   return w
@@ -55,6 +61,7 @@ function mountSheet(options: Parameters<typeof mount>[1] = {}) {
 
 describe('AppearanceSheet', () => {
   beforeEach(() => {
+    vi.resetModules()
     window.localStorage.clear()
     document.documentElement.removeAttribute('data-theme')
     // happy-dom does not implement matchMedia by default — install a stub
@@ -70,8 +77,8 @@ describe('AppearanceSheet', () => {
     }
   })
 
-  it('mounts and renders three radio rows', () => {
-    mountSheet({ props: { open: true } })
+  it('mounts and renders three radio rows', async () => {
+    await mountSheet({ props: { open: true } })
     const rows = document.querySelectorAll('.appearance-sheet__row')
     expect(rows.length).toBe(3)
     expect(document.body.textContent ?? '').toContain('Light')
@@ -82,7 +89,7 @@ describe('AppearanceSheet', () => {
   it('marks the current preference as active (radiogroup semantics)', async () => {
     // useTheme stores the raw preference string (no JSON) — match that format.
     window.localStorage.setItem('susi:theme', 'dark')
-    mountSheet({ props: { open: true } })
+    await mountSheet({ props: { open: true } })
     await flushPromises()
 
     const rows = document.querySelectorAll<HTMLButtonElement>('.appearance-sheet__row')
@@ -95,7 +102,7 @@ describe('AppearanceSheet', () => {
   })
 
   it('clicking a row updates the preference and applies data-theme', async () => {
-    mountSheet({ props: { open: true } })
+    await mountSheet({ props: { open: true } })
     await flushPromises()
 
     const rows = document.querySelectorAll<HTMLButtonElement>('.appearance-sheet__row')
@@ -110,7 +117,7 @@ describe('AppearanceSheet', () => {
   })
 
   it('emits close via the BottomSheet close handler', async () => {
-    const wrapper = mountSheet({ props: { open: true } })
+    const wrapper = await mountSheet({ props: { open: true } })
     await flushPromises()
     const backdrop = document.querySelector('.bottom-sheet__backdrop') as HTMLElement
     backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true }))
