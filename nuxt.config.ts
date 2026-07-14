@@ -40,6 +40,14 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'apple-touch-icon', href: '/pwa-192.png' },
       ],
+      // Pre-paint theme bootstrap — synchronously sets data-theme from
+      // localStorage in <head> to avoid a palette flash on reload.
+      script: [
+        {
+          innerHTML: `(function(){try{var p=localStorage.getItem('susi:theme')||'system';var m=window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)');var d=p==='dark'||(p==='system'&&m&&m.matches);document.documentElement.setAttribute('data-theme',d?'dark':'light');}catch(e){}})();`,
+          tagPosition: 'head',
+        },
+      ],
     },
   },
 

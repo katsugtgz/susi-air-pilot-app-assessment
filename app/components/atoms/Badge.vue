@@ -39,19 +39,17 @@ withDefaults(defineProps<Props>(), { variant: 'neutral' })
   }
 
   &--safe {
-    background: rgba(31, 191, 143, 0.12);
-    color: #0b745a;
+    background: var(--color-safe-bg);
+    color: var(--color-safe-fg);
   }
 
   &--soon {
-    background: rgba(245, 158, 11, 0.14);
-    color: #965e08;
+    background: var(--color-soon-bg);
+    color: var(--color-soon-fg);
   }
 
   &--expired {
-    // Tint of the AA red at 8% — 12% of the old red composited to #F3DFE5,
-    // which put the 11px label at 4.36:1 (Lighthouse-measured, < 4.5 AA).
-    background: rgba(204, 26, 58, 0.08);
+    background: var(--color-expired-bg);
     color: var(--color-danger);
   }
 

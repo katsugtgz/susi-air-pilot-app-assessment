@@ -130,6 +130,70 @@ $control-height-lg: 48px;
   --control-height-sm: #{$control-height-sm};
   --control-height-md: #{$control-height-md};
   --control-height-lg: #{$control-height-lg};
+
+  // ----- Semantic status-pair tokens (fg + tinted bg, hand-tuned for AA) -----
+  // Used by Badge, alert banners, and other status indicators. Light values
+  // match the hand-tuned AA palette that previously lived inline in Badge.vue.
+  --color-safe-fg: #0b745a;
+  --color-safe-bg: rgba(31, 191, 143, 0.12);
+  --color-soon-fg: #965e08;
+  --color-soon-bg: rgba(245, 158, 11, 0.14);
+  --color-expired-bg: rgba(204, 26, 58, 0.08);
+
+  // ----- Overlay tint tokens (hover states, skeleton shimmer) -----
+  // Replaces literal `rgba(14, 33, 56, ...)` so dark mode can flip them to a
+  // white tint. Light value is the navy at low alpha; dark overrides below.
+  --color-overlay: rgba(14, 33, 56, 0.06);
+  --color-overlay-strong: rgba(14, 33, 56, 0.1);
+}
+
+// =============================================================================
+// Dark theme — applied via [data-theme="dark"] on <html>.
+// The pre-paint head script in nuxt.config.ts sets this attribute before
+// first paint from localStorage['susi:theme'] to avoid a white flash.
+//
+// Palette goals:
+//   - Surfaces are dark navy (not pure black) — keeps brand recognition.
+//   - Text tiers preserve the same relative hierarchy as light (primary >
+//     secondary > muted) at WCAG AA (≥4.5:1 body, ≥3:1 UI).
+//   - Brand accents (red, success, warning) are brightened so they read at AA
+//     on the dark surface.
+// =============================================================================
+[data-theme='dark'] {
+  --color-navy: #f1f5f9;
+  --color-red: #f87171;
+  --color-red-dark: #ef4444;
+  --color-bg: #0b1626;
+  --color-surface: #16243a;
+  --color-surface-alt: #1f3047;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #94a3b8;
+  --color-text-muted: #64748b;
+  --color-border: #2a3b54;
+  --color-success: #2dd4bf;
+  --color-warning: #fbbf24;
+  --color-danger: #f87171;
+  --color-chart-accent: #38d9f5;
+
+  // Darker, longer shadows read better on dark surfaces.
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --shadow-focus: 0 0 0 3px rgba(248, 113, 113, 0.32);
+
+  // Status pairs — brightened fg + tinted bg, both AA on dark surface.
+  --color-safe-fg: #2dd4bf;
+  --color-safe-bg: rgba(45, 212, 191, 0.16);
+  --color-soon-fg: #fbbf24;
+  --color-soon-bg: rgba(251, 191, 36, 0.16);
+  --color-expired-bg: rgba(248, 113, 113, 0.16);
+
+  // Overlay flips to a white tint — subtle lightening on dark surfaces.
+  --color-overlay: rgba(255, 255, 255, 0.05);
+  --color-overlay-strong: rgba(255, 255, 255, 0.08);
+
+  // Re-tint the iOS status bar / chrome to match the dark shell.
+  color-scheme: dark;
 }
 
 // ----- Global resets that depend on tokens -----

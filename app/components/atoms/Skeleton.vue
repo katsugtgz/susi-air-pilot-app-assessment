@@ -44,11 +44,11 @@ const style = computed(() => {
   background:
     linear-gradient(
       90deg,
-      rgba(14, 33, 56, 0.06) 0%,
-      rgba(14, 33, 56, 0.06) 40%,
-      rgba(14, 33, 56, 0.1) 50%,
-      rgba(14, 33, 56, 0.06) 60%,
-      rgba(14, 33, 56, 0.06) 100%
+      var(--color-overlay) 0%,
+      var(--color-overlay) 40%,
+      var(--color-overlay-strong) 50%,
+      var(--color-overlay) 60%,
+      var(--color-overlay) 100%
     );
   background-size: 200% 100%;
   animation: skeleton-shimmer 1.4s ease-in-out infinite;

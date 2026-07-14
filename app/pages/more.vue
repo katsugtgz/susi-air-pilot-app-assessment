@@ -4,8 +4,14 @@
  *
  * Profile reads from the pilot store (name, pilotId, totalFlightHours).
  * Settings groups (Account / Preferences / About) are built from the
- * SettingsListItem molecule. Notifications, Documents, Appearance, Language
- * and Licenses are placeholders — only Sign out has an effect (returns to /).
+ * SettingsListItem molecule. Every row is wired to a real surface:
+ *   - Notifications → NotificationPrefsSheet
+ *   - Documents    → /documents page
+ *   - Appearance    → AppearanceSheet (light/dark/system)
+ *   - Licenses     → LicensesSheet
+ *   - Sign out     → returns to / (per brief, no real auth)
+ *
+ * Language is intentionally cut — see .omo/demo-expansion-plan.md.
  */
 import { navigateTo } from '#app'
 import { usePilotStore } from '~/stores/pilot'
@@ -17,6 +23,14 @@ const pilotStore = usePilotStore()
 function onSignOut() {
   useSessionStore().signOut()
   navigateTo('/')
+}
+
+const notifOpen = ref(false)
+const appearanceOpen = ref(false)
+const licensesOpen = ref(false)
+
+function openDocuments() {
+  navigateTo('/documents')
 }
 </script>
 
@@ -40,8 +54,13 @@ function onSignOut() {
     <section class="more-page__group" aria-label="Account settings">
       <h2 class="more-page__group-title">Account</h2>
       <div class="more-page__group-list">
-        <SettingsListItem label="Notifications" icon="bell" trailing="chevron" />
-        <SettingsListItem label="Documents" icon="file-text" trailing="chevron" />
+        <SettingsListItem label="Notifications" icon="bell" trailing="chevron" @click="notifOpen = true" />
+        <SettingsListItem
+          label="Documents"
+          icon="file-text"
+          trailing="chevron"
+          @click="openDocuments"
+        />
       </div>
     </section>
 
@@ -51,16 +70,8 @@ function onSignOut() {
         <SettingsListItem
           label="Appearance"
           icon="info"
-          trailing="badge"
-          badge-label="Soon"
-          badge-variant="soon"
-        />
-        <SettingsListItem
-          label="Language"
-          icon="info"
-          trailing="badge"
-          badge-label="Soon"
-          badge-variant="soon"
+          trailing="chevron"
+          @click="appearanceOpen = true"
         />
       </div>
     </section>
@@ -75,7 +86,12 @@ function onSignOut() {
           badge-label="v1.0.0"
           badge-variant="neutral"
         />
-        <SettingsListItem label="Licenses" icon="file-text" trailing="chevron" />
+        <SettingsListItem
+          label="Licenses"
+          icon="file-text"
+          trailing="chevron"
+          @click="licensesOpen = true"
+        />
       </div>
     </section>
 
@@ -84,6 +100,10 @@ function onSignOut() {
         <SettingsListItem label="Sign out" icon="log-out" danger @click="onSignOut" />
       </div>
     </section>
+
+    <NotificationPrefsSheet :open="notifOpen" @close="notifOpen = false" />
+    <AppearanceSheet :open="appearanceOpen" @close="appearanceOpen = false" />
+    <LicensesSheet :open="licensesOpen" @close="licensesOpen = false" />
   </div>
 </template>
 
