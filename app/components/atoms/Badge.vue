@@ -49,7 +49,9 @@ withDefaults(defineProps<Props>(), { variant: 'neutral' })
   }
 
   &--expired {
-    background: rgba(230, 55, 87, 0.12);
+    // Tint of the AA red at 8% — 12% of the old red composited to #F3DFE5,
+    // which put the 11px label at 4.36:1 (Lighthouse-measured, < 4.5 AA).
+    background: rgba(204, 26, 58, 0.08);
     color: var(--color-danger);
   }
 
