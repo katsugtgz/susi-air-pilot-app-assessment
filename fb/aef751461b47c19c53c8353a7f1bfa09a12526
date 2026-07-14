@@ -1,0 +1,35 @@
+app/components/atoms/Badge.vue
+  s_4df040f04916ee::t_44012f8efb581a 43,48
+app/pages/schedule.vue
+  s_4df040f04916ee::t_232425424aeeec 12
+app/pages/home.vue
+  s_4df040f04916ee::t_b547d478908e36 66
+nuxt.config.ts
+  s_4df040f04916ee::t_f0078d64140393 22-30,42-43
+app/components/atoms/Alert.vue
+  s_4df040f04916ee::t_a434cd4ba5a028 125,131
+app/components/organisms/BottomNavigation.vue
+  s_4df040f04916ee::t_cd918da4d277b2 19
+app/components/molecules/NewsCard.vue
+  s_4df040f04916ee::t_cd4ef0cac1ebad 15-16,26-33
+app/assets/scss/tokens.scss
+  s_4df040f04916ee::t_d8037001b795f7 10-11,16-17,21
+app/components/organisms/LatestNewsCarousel.vue
+  s_4df040f04916ee::t_f6269097d6b8a8 25,34
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "fbaef751461b47c19c53c8353a7f1bfa09a12526",
+  "prompts": {},
+  "sessions": {
+    "s_4df040f04916ee": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5deb-98a4-7c4c-a2fe-5465f6482811",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
