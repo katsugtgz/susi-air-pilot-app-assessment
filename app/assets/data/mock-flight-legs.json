@@ -1,0 +1,1660 @@
+{
+  "fieldGuide": {
+    "flightNumber": "Callsign for the sector (SI = Susi Air ICAO 3-letter designator).",
+    "from": "IATA departure airport code (base on outbound, strip on return).",
+    "to": "IATA arrival airport code.",
+    "std": "Scheduled time of departure (local, HH:mm).",
+    "sta": "Scheduled time of arrival (local, HH:mm). Always after std.",
+    "aircraft": "Registration · type string. PK-BV* are Cessna 208B Grand Caravans.",
+    "blockTime": "Out-to-in block time (H:mm).",
+    "legsByDate": "Keyed by ISO duty_date. Only DTY days appear; count equals count_schedules."
+  },
+  "legsByDate": {
+    "2026-04-01": [
+      {
+        "flightNumber": "SI 254",
+        "from": "MKW",
+        "to": "DJJ",
+        "std": "06:00",
+        "sta": "06:49",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:49"
+      },
+      {
+        "flightNumber": "SI 255",
+        "from": "DJJ",
+        "to": "MKW",
+        "std": "07:12",
+        "sta": "08:14",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 256",
+        "from": "MKW",
+        "to": "KEQ",
+        "std": "08:48",
+        "sta": "09:53",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 257",
+        "from": "KEQ",
+        "to": "MKW",
+        "std": "10:22",
+        "sta": "11:05",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:43"
+      }
+    ],
+    "2026-04-04": [
+      {
+        "flightNumber": "SI 229",
+        "from": "CJN",
+        "to": "KEQ",
+        "std": "06:15",
+        "sta": "07:42",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:27"
+      },
+      {
+        "flightNumber": "SI 230",
+        "from": "KEQ",
+        "to": "CJN",
+        "std": "08:17",
+        "sta": "09:15",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:58"
+      }
+    ],
+    "2026-04-10": [
+      {
+        "flightNumber": "SI 263",
+        "from": "CJN",
+        "to": "KNG",
+        "std": "06:15",
+        "sta": "06:59",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:44"
+      },
+      {
+        "flightNumber": "SI 264",
+        "from": "KNG",
+        "to": "CJN",
+        "std": "07:19",
+        "sta": "08:23",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:04"
+      },
+      {
+        "flightNumber": "SI 265",
+        "from": "CJN",
+        "to": "INX",
+        "std": "08:49",
+        "sta": "09:45",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:56"
+      },
+      {
+        "flightNumber": "SI 266",
+        "from": "INX",
+        "to": "CJN",
+        "std": "10:13",
+        "sta": "11:16",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:03"
+      },
+      {
+        "flightNumber": "SI 267",
+        "from": "CJN",
+        "to": "SQG",
+        "std": "11:53",
+        "sta": "12:28",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:35"
+      },
+      {
+        "flightNumber": "SI 268",
+        "from": "SQG",
+        "to": "CJN",
+        "std": "12:49",
+        "sta": "13:44",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:55"
+      }
+    ],
+    "2026-04-12": [
+      {
+        "flightNumber": "SI 293",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "06:45",
+        "sta": "07:44",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:59"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "08:04",
+        "sta": "08:47",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:43"
+      },
+      {
+        "flightNumber": "SI 295",
+        "from": "MKW",
+        "to": "KNG",
+        "std": "09:21",
+        "sta": "10:33",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:12"
+      },
+      {
+        "flightNumber": "SI 296",
+        "from": "KNG",
+        "to": "MKW",
+        "std": "11:03",
+        "sta": "12:00",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:57"
+      }
+    ],
+    "2026-04-13": [
+      {
+        "flightNumber": "SI 236",
+        "from": "MKW",
+        "to": "RSK",
+        "std": "06:45",
+        "sta": "07:43",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:58"
+      },
+      {
+        "flightNumber": "SI 237",
+        "from": "RSK",
+        "to": "MKW",
+        "std": "08:11",
+        "sta": "09:19",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "1:08"
+      },
+      {
+        "flightNumber": "SI 238",
+        "from": "MKW",
+        "to": "SQG",
+        "std": "09:48",
+        "sta": "10:55",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "1:07"
+      },
+      {
+        "flightNumber": "SI 239",
+        "from": "SQG",
+        "to": "MKW",
+        "std": "11:23",
+        "sta": "12:16",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:53"
+      }
+    ],
+    "2026-04-15": [
+      {
+        "flightNumber": "SI 269",
+        "from": "SIQ",
+        "to": "OKL",
+        "std": "06:45",
+        "sta": "07:35",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:50"
+      },
+      {
+        "flightNumber": "SI 270",
+        "from": "OKL",
+        "to": "SIQ",
+        "std": "08:01",
+        "sta": "09:14",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:13"
+      },
+      {
+        "flightNumber": "SI 271",
+        "from": "SIQ",
+        "to": "KNG",
+        "std": "09:48",
+        "sta": "10:47",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:59"
+      },
+      {
+        "flightNumber": "SI 272",
+        "from": "KNG",
+        "to": "SIQ",
+        "std": "11:09",
+        "sta": "11:53",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:44"
+      }
+    ],
+    "2026-04-17": [
+      {
+        "flightNumber": "SI 293",
+        "from": "MKW",
+        "to": "RSK",
+        "std": "06:30",
+        "sta": "07:25",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:55"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "RSK",
+        "to": "MKW",
+        "std": "07:46",
+        "sta": "08:30",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:44"
+      },
+      {
+        "flightNumber": "SI 295",
+        "from": "MKW",
+        "to": "NBX",
+        "std": "09:03",
+        "sta": "10:04",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 296",
+        "from": "NBX",
+        "to": "MKW",
+        "std": "10:38",
+        "sta": "11:19",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:41"
+      },
+      {
+        "flightNumber": "SI 297",
+        "from": "MKW",
+        "to": "KNG",
+        "std": "11:56",
+        "sta": "12:57",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 298",
+        "from": "KNG",
+        "to": "MKW",
+        "std": "13:26",
+        "sta": "14:06",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:40"
+      }
+    ],
+    "2026-04-20": [
+      {
+        "flightNumber": "SI 291",
+        "from": "SIQ",
+        "to": "SQG",
+        "std": "06:00",
+        "sta": "06:39",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:39"
+      },
+      {
+        "flightNumber": "SI 292",
+        "from": "SQG",
+        "to": "SIQ",
+        "std": "07:13",
+        "sta": "07:52",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:39"
+      },
+      {
+        "flightNumber": "SI 293",
+        "from": "SIQ",
+        "to": "DJJ",
+        "std": "08:24",
+        "sta": "09:02",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:38"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "DJJ",
+        "to": "SIQ",
+        "std": "09:33",
+        "sta": "10:22",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:49"
+      },
+      {
+        "flightNumber": "SI 295",
+        "from": "SIQ",
+        "to": "DJJ",
+        "std": "10:49",
+        "sta": "11:26",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:37"
+      },
+      {
+        "flightNumber": "SI 296",
+        "from": "DJJ",
+        "to": "SIQ",
+        "std": "11:52",
+        "sta": "12:54",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:02"
+      }
+    ],
+    "2026-04-22": [
+      {
+        "flightNumber": "SI 269",
+        "from": "PDG",
+        "to": "RSK",
+        "std": "06:30",
+        "sta": "07:51",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:21"
+      },
+      {
+        "flightNumber": "SI 270",
+        "from": "RSK",
+        "to": "PDG",
+        "std": "08:17",
+        "sta": "09:16",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:59"
+      }
+    ],
+    "2026-04-23": [
+      {
+        "flightNumber": "SI 272",
+        "from": "SIQ",
+        "to": "OKL",
+        "std": "06:15",
+        "sta": "06:58",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:43"
+      },
+      {
+        "flightNumber": "SI 273",
+        "from": "OKL",
+        "to": "SIQ",
+        "std": "07:22",
+        "sta": "08:03",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:41"
+      },
+      {
+        "flightNumber": "SI 274",
+        "from": "SIQ",
+        "to": "SQG",
+        "std": "08:43",
+        "sta": "09:47",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:04"
+      },
+      {
+        "flightNumber": "SI 275",
+        "from": "SQG",
+        "to": "SIQ",
+        "std": "10:18",
+        "sta": "11:00",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:42"
+      }
+    ],
+    "2026-04-28": [
+      {
+        "flightNumber": "SI 203",
+        "from": "CJN",
+        "to": "DJJ",
+        "std": "06:45",
+        "sta": "07:40",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:55"
+      },
+      {
+        "flightNumber": "SI 204",
+        "from": "DJJ",
+        "to": "CJN",
+        "std": "08:11",
+        "sta": "09:16",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 205",
+        "from": "CJN",
+        "to": "SQG",
+        "std": "09:41",
+        "sta": "10:28",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 206",
+        "from": "SQG",
+        "to": "CJN",
+        "std": "10:58",
+        "sta": "12:11",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:13"
+      }
+    ],
+    "2026-04-30": [
+      {
+        "flightNumber": "SI 296",
+        "from": "PDG",
+        "to": "INX",
+        "std": "06:45",
+        "sta": "07:57",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:12"
+      },
+      {
+        "flightNumber": "SI 297",
+        "from": "INX",
+        "to": "PDG",
+        "std": "08:24",
+        "sta": "09:42",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:18"
+      },
+      {
+        "flightNumber": "SI 298",
+        "from": "PDG",
+        "to": "INX",
+        "std": "10:15",
+        "sta": "11:06",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 299",
+        "from": "INX",
+        "to": "PDG",
+        "std": "11:30",
+        "sta": "12:43",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:13"
+      }
+    ],
+    "2026-05-01": [
+      {
+        "flightNumber": "SI 259",
+        "from": "PDG",
+        "to": "WMX",
+        "std": "06:00",
+        "sta": "07:07",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:07"
+      },
+      {
+        "flightNumber": "SI 260",
+        "from": "WMX",
+        "to": "PDG",
+        "std": "07:38",
+        "sta": "08:28",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:50"
+      }
+    ],
+    "2026-05-05": [
+      {
+        "flightNumber": "SI 209",
+        "from": "PDG",
+        "to": "KEQ",
+        "std": "07:00",
+        "sta": "08:02",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 210",
+        "from": "KEQ",
+        "to": "PDG",
+        "std": "08:26",
+        "sta": "09:32",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:06"
+      },
+      {
+        "flightNumber": "SI 211",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "10:01",
+        "sta": "11:11",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "1:10"
+      },
+      {
+        "flightNumber": "SI 212",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "11:46",
+        "sta": "13:05",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "1:19"
+      }
+    ],
+    "2026-05-07": [
+      {
+        "flightNumber": "SI 264",
+        "from": "PDG",
+        "to": "BIK",
+        "std": "06:30",
+        "sta": "07:42",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:12"
+      },
+      {
+        "flightNumber": "SI 265",
+        "from": "BIK",
+        "to": "PDG",
+        "std": "08:08",
+        "sta": "09:24",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:16"
+      },
+      {
+        "flightNumber": "SI 266",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "09:49",
+        "sta": "10:54",
+        "aircraft": "PK-BVT · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 267",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "11:18",
+        "sta": "12:23",
+        "aircraft": "PK-BVT · C208B Grand Caravan",
+        "blockTime": "1:05"
+      }
+    ],
+    "2026-05-08": [
+      {
+        "flightNumber": "SI 212",
+        "from": "PDG",
+        "to": "DJJ",
+        "std": "06:30",
+        "sta": "07:34",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:04"
+      },
+      {
+        "flightNumber": "SI 213",
+        "from": "DJJ",
+        "to": "PDG",
+        "std": "08:04",
+        "sta": "08:51",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 214",
+        "from": "PDG",
+        "to": "RSK",
+        "std": "09:31",
+        "sta": "10:08",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:37"
+      },
+      {
+        "flightNumber": "SI 215",
+        "from": "RSK",
+        "to": "PDG",
+        "std": "10:32",
+        "sta": "11:30",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:58"
+      },
+      {
+        "flightNumber": "SI 216",
+        "from": "PDG",
+        "to": "DJJ",
+        "std": "12:02",
+        "sta": "12:59",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:57"
+      },
+      {
+        "flightNumber": "SI 217",
+        "from": "DJJ",
+        "to": "PDG",
+        "std": "13:28",
+        "sta": "14:31",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:03"
+      }
+    ],
+    "2026-05-11": [
+      {
+        "flightNumber": "SI 290",
+        "from": "MKW",
+        "to": "SQG",
+        "std": "06:45",
+        "sta": "07:47",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 291",
+        "from": "SQG",
+        "to": "MKW",
+        "std": "08:08",
+        "sta": "09:13",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 292",
+        "from": "MKW",
+        "to": "RSK",
+        "std": "09:46",
+        "sta": "10:49",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:03"
+      },
+      {
+        "flightNumber": "SI 293",
+        "from": "RSK",
+        "to": "MKW",
+        "std": "11:17",
+        "sta": "11:54",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:37"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "MKW",
+        "to": "DJJ",
+        "std": "12:26",
+        "sta": "13:31",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 295",
+        "from": "DJJ",
+        "to": "MKW",
+        "std": "14:05",
+        "sta": "15:03",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:58"
+      }
+    ],
+    "2026-05-12": [
+      {
+        "flightNumber": "SI 238",
+        "from": "MKW",
+        "to": "NBX",
+        "std": "06:15",
+        "sta": "07:15",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:00"
+      },
+      {
+        "flightNumber": "SI 239",
+        "from": "NBX",
+        "to": "MKW",
+        "std": "07:35",
+        "sta": "08:47",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:12"
+      },
+      {
+        "flightNumber": "SI 240",
+        "from": "MKW",
+        "to": "BIK",
+        "std": "09:20",
+        "sta": "10:13",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:53"
+      },
+      {
+        "flightNumber": "SI 241",
+        "from": "BIK",
+        "to": "MKW",
+        "std": "10:47",
+        "sta": "12:06",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:19"
+      }
+    ],
+    "2026-05-13": [
+      {
+        "flightNumber": "SI 228",
+        "from": "SIQ",
+        "to": "INX",
+        "std": "06:15",
+        "sta": "07:07",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:52"
+      },
+      {
+        "flightNumber": "SI 229",
+        "from": "INX",
+        "to": "SIQ",
+        "std": "07:41",
+        "sta": "08:46",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 230",
+        "from": "SIQ",
+        "to": "RSK",
+        "std": "09:20",
+        "sta": "10:07",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 231",
+        "from": "RSK",
+        "to": "SIQ",
+        "std": "10:34",
+        "sta": "11:38",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:04"
+      },
+      {
+        "flightNumber": "SI 232",
+        "from": "SIQ",
+        "to": "INX",
+        "std": "12:07",
+        "sta": "12:49",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:42"
+      },
+      {
+        "flightNumber": "SI 233",
+        "from": "INX",
+        "to": "SIQ",
+        "std": "13:15",
+        "sta": "14:18",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "1:03"
+      }
+    ],
+    "2026-05-14": [
+      {
+        "flightNumber": "SI 224",
+        "from": "SIQ",
+        "to": "OKL",
+        "std": "06:15",
+        "sta": "06:56",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:41"
+      },
+      {
+        "flightNumber": "SI 225",
+        "from": "OKL",
+        "to": "SIQ",
+        "std": "07:25",
+        "sta": "08:16",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 226",
+        "from": "SIQ",
+        "to": "INX",
+        "std": "08:41",
+        "sta": "09:29",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:48"
+      },
+      {
+        "flightNumber": "SI 227",
+        "from": "INX",
+        "to": "SIQ",
+        "std": "10:03",
+        "sta": "10:57",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:54"
+      },
+      {
+        "flightNumber": "SI 228",
+        "from": "SIQ",
+        "to": "DJJ",
+        "std": "11:24",
+        "sta": "12:05",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:41"
+      },
+      {
+        "flightNumber": "SI 229",
+        "from": "DJJ",
+        "to": "SIQ",
+        "std": "12:40",
+        "sta": "13:20",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:40"
+      }
+    ],
+    "2026-05-15": [
+      {
+        "flightNumber": "SI 257",
+        "from": "MKW",
+        "to": "INX",
+        "std": "06:45",
+        "sta": "07:42",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:57"
+      },
+      {
+        "flightNumber": "SI 258",
+        "from": "INX",
+        "to": "MKW",
+        "std": "08:13",
+        "sta": "08:50",
+        "aircraft": "PK-BVS · C208B Grand Caravan",
+        "blockTime": "0:37"
+      },
+      {
+        "flightNumber": "SI 259",
+        "from": "MKW",
+        "to": "KEQ",
+        "std": "09:17",
+        "sta": "10:18",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 260",
+        "from": "KEQ",
+        "to": "MKW",
+        "std": "10:52",
+        "sta": "11:39",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 261",
+        "from": "MKW",
+        "to": "NBX",
+        "std": "12:09",
+        "sta": "13:00",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 262",
+        "from": "NBX",
+        "to": "MKW",
+        "std": "13:28",
+        "sta": "14:03",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:35"
+      }
+    ],
+    "2026-05-19": [
+      {
+        "flightNumber": "SI 225",
+        "from": "SIQ",
+        "to": "NBX",
+        "std": "06:15",
+        "sta": "07:17",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 226",
+        "from": "NBX",
+        "to": "SIQ",
+        "std": "07:44",
+        "sta": "09:00",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:16"
+      }
+    ],
+    "2026-05-21": [
+      {
+        "flightNumber": "SI 200",
+        "from": "CJN",
+        "to": "INX",
+        "std": "07:00",
+        "sta": "08:19",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:19"
+      },
+      {
+        "flightNumber": "SI 201",
+        "from": "INX",
+        "to": "CJN",
+        "std": "08:48",
+        "sta": "10:06",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:18"
+      },
+      {
+        "flightNumber": "SI 202",
+        "from": "CJN",
+        "to": "WMX",
+        "std": "10:43",
+        "sta": "11:28",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:45"
+      },
+      {
+        "flightNumber": "SI 203",
+        "from": "WMX",
+        "to": "CJN",
+        "std": "11:55",
+        "sta": "13:01",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:06"
+      }
+    ],
+    "2026-05-22": [
+      {
+        "flightNumber": "SI 266",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "06:30",
+        "sta": "07:16",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:46"
+      },
+      {
+        "flightNumber": "SI 267",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "07:36",
+        "sta": "08:27",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 268",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "08:52",
+        "sta": "09:50",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:58"
+      },
+      {
+        "flightNumber": "SI 269",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "10:18",
+        "sta": "11:09",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:51"
+      }
+    ],
+    "2026-05-23": [
+      {
+        "flightNumber": "SI 245",
+        "from": "CJN",
+        "to": "RSK",
+        "std": "06:00",
+        "sta": "06:56",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:56"
+      },
+      {
+        "flightNumber": "SI 246",
+        "from": "RSK",
+        "to": "CJN",
+        "std": "07:21",
+        "sta": "08:06",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:45"
+      },
+      {
+        "flightNumber": "SI 247",
+        "from": "CJN",
+        "to": "NBX",
+        "std": "08:38",
+        "sta": "09:16",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:38"
+      },
+      {
+        "flightNumber": "SI 248",
+        "from": "NBX",
+        "to": "CJN",
+        "std": "09:42",
+        "sta": "10:38",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:56"
+      },
+      {
+        "flightNumber": "SI 249",
+        "from": "CJN",
+        "to": "WMX",
+        "std": "11:09",
+        "sta": "11:45",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:36"
+      },
+      {
+        "flightNumber": "SI 250",
+        "from": "WMX",
+        "to": "CJN",
+        "std": "12:06",
+        "sta": "12:55",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:49"
+      }
+    ],
+    "2026-05-25": [
+      {
+        "flightNumber": "SI 285",
+        "from": "MKW",
+        "to": "BIK",
+        "std": "06:45",
+        "sta": "07:50",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 286",
+        "from": "BIK",
+        "to": "MKW",
+        "std": "08:17",
+        "sta": "09:22",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 287",
+        "from": "MKW",
+        "to": "DJJ",
+        "std": "10:00",
+        "sta": "10:43",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:43"
+      },
+      {
+        "flightNumber": "SI 288",
+        "from": "DJJ",
+        "to": "MKW",
+        "std": "11:10",
+        "sta": "11:51",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:41"
+      },
+      {
+        "flightNumber": "SI 289",
+        "from": "MKW",
+        "to": "BIK",
+        "std": "12:17",
+        "sta": "13:22",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:05"
+      },
+      {
+        "flightNumber": "SI 290",
+        "from": "BIK",
+        "to": "MKW",
+        "std": "13:50",
+        "sta": "14:51",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:01"
+      }
+    ],
+    "2026-05-26": [
+      {
+        "flightNumber": "SI 240",
+        "from": "CJN",
+        "to": "WMX",
+        "std": "07:00",
+        "sta": "08:34",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:34"
+      },
+      {
+        "flightNumber": "SI 241",
+        "from": "WMX",
+        "to": "CJN",
+        "std": "08:57",
+        "sta": "09:57",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:00"
+      }
+    ],
+    "2026-05-27": [
+      {
+        "flightNumber": "SI 272",
+        "from": "CJN",
+        "to": "KEQ",
+        "std": "06:45",
+        "sta": "08:02",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:17"
+      },
+      {
+        "flightNumber": "SI 273",
+        "from": "KEQ",
+        "to": "CJN",
+        "std": "08:32",
+        "sta": "10:11",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:39"
+      }
+    ],
+    "2026-05-29": [
+      {
+        "flightNumber": "SI 262",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "07:00",
+        "sta": "07:54",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:54"
+      },
+      {
+        "flightNumber": "SI 263",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "08:25",
+        "sta": "09:07",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:42"
+      },
+      {
+        "flightNumber": "SI 264",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "09:37",
+        "sta": "10:53",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:16"
+      },
+      {
+        "flightNumber": "SI 265",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "11:23",
+        "sta": "12:11",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:48"
+      }
+    ],
+    "2026-05-31": [
+      {
+        "flightNumber": "SI 226",
+        "from": "MKW",
+        "to": "WMX",
+        "std": "06:45",
+        "sta": "08:08",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:23"
+      },
+      {
+        "flightNumber": "SI 227",
+        "from": "WMX",
+        "to": "MKW",
+        "std": "08:35",
+        "sta": "09:51",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:16"
+      }
+    ],
+    "2026-06-01": [
+      {
+        "flightNumber": "SI 242",
+        "from": "MKW",
+        "to": "KEQ",
+        "std": "06:15",
+        "sta": "07:09",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:54"
+      },
+      {
+        "flightNumber": "SI 243",
+        "from": "KEQ",
+        "to": "MKW",
+        "std": "07:36",
+        "sta": "08:27",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 244",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "08:58",
+        "sta": "09:58",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:00"
+      },
+      {
+        "flightNumber": "SI 245",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "10:23",
+        "sta": "10:59",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:36"
+      },
+      {
+        "flightNumber": "SI 246",
+        "from": "MKW",
+        "to": "BIK",
+        "std": "11:24",
+        "sta": "12:27",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:03"
+      },
+      {
+        "flightNumber": "SI 247",
+        "from": "BIK",
+        "to": "MKW",
+        "std": "12:53",
+        "sta": "13:43",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:50"
+      }
+    ],
+    "2026-06-02": [
+      {
+        "flightNumber": "SI 260",
+        "from": "MKW",
+        "to": "KEQ",
+        "std": "07:00",
+        "sta": "08:01",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 261",
+        "from": "KEQ",
+        "to": "MKW",
+        "std": "08:33",
+        "sta": "09:30",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:57"
+      },
+      {
+        "flightNumber": "SI 262",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "10:10",
+        "sta": "10:59",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:49"
+      },
+      {
+        "flightNumber": "SI 263",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "11:27",
+        "sta": "12:10",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "0:43"
+      },
+      {
+        "flightNumber": "SI 264",
+        "from": "MKW",
+        "to": "SQG",
+        "std": "12:37",
+        "sta": "13:21",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:44"
+      },
+      {
+        "flightNumber": "SI 265",
+        "from": "SQG",
+        "to": "MKW",
+        "std": "13:53",
+        "sta": "14:32",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:39"
+      }
+    ],
+    "2026-06-03": [
+      {
+        "flightNumber": "SI 254",
+        "from": "MKW",
+        "to": "KEQ",
+        "std": "06:15",
+        "sta": "07:12",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:57"
+      },
+      {
+        "flightNumber": "SI 255",
+        "from": "KEQ",
+        "to": "MKW",
+        "std": "07:33",
+        "sta": "08:16",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "0:43"
+      },
+      {
+        "flightNumber": "SI 256",
+        "from": "MKW",
+        "to": "NBX",
+        "std": "08:42",
+        "sta": "09:33",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:51"
+      },
+      {
+        "flightNumber": "SI 257",
+        "from": "NBX",
+        "to": "MKW",
+        "std": "09:57",
+        "sta": "11:04",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "1:07"
+      }
+    ],
+    "2026-06-05": [
+      {
+        "flightNumber": "SI 293",
+        "from": "PDG",
+        "to": "BIK",
+        "std": "06:30",
+        "sta": "07:33",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:03"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "BIK",
+        "to": "PDG",
+        "std": "08:05",
+        "sta": "09:07",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 295",
+        "from": "PDG",
+        "to": "DJJ",
+        "std": "09:41",
+        "sta": "10:41",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "1:00"
+      },
+      {
+        "flightNumber": "SI 296",
+        "from": "DJJ",
+        "to": "PDG",
+        "std": "11:11",
+        "sta": "12:14",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "1:03"
+      },
+      {
+        "flightNumber": "SI 297",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "12:43",
+        "sta": "13:20",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:37"
+      },
+      {
+        "flightNumber": "SI 298",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "13:49",
+        "sta": "14:40",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:51"
+      }
+    ],
+    "2026-06-09": [
+      {
+        "flightNumber": "SI 243",
+        "from": "SIQ",
+        "to": "KNG",
+        "std": "06:15",
+        "sta": "07:05",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:50"
+      },
+      {
+        "flightNumber": "SI 244",
+        "from": "KNG",
+        "to": "SIQ",
+        "std": "07:35",
+        "sta": "08:31",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:56"
+      },
+      {
+        "flightNumber": "SI 245",
+        "from": "SIQ",
+        "to": "OKL",
+        "std": "09:11",
+        "sta": "10:10",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:59"
+      },
+      {
+        "flightNumber": "SI 246",
+        "from": "OKL",
+        "to": "SIQ",
+        "std": "10:33",
+        "sta": "11:09",
+        "aircraft": "PK-BVQ · C208B Grand Caravan",
+        "blockTime": "0:36"
+      },
+      {
+        "flightNumber": "SI 247",
+        "from": "SIQ",
+        "to": "NBX",
+        "std": "11:37",
+        "sta": "12:25",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:48"
+      },
+      {
+        "flightNumber": "SI 248",
+        "from": "NBX",
+        "to": "SIQ",
+        "std": "12:46",
+        "sta": "13:36",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "0:50"
+      }
+    ],
+    "2026-06-10": [
+      {
+        "flightNumber": "SI 239",
+        "from": "PDG",
+        "to": "INX",
+        "std": "06:30",
+        "sta": "07:27",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:57"
+      },
+      {
+        "flightNumber": "SI 240",
+        "from": "INX",
+        "to": "PDG",
+        "std": "07:58",
+        "sta": "08:57",
+        "aircraft": "PK-BVW · C208B Grand Caravan",
+        "blockTime": "0:59"
+      },
+      {
+        "flightNumber": "SI 241",
+        "from": "PDG",
+        "to": "NBX",
+        "std": "09:26",
+        "sta": "10:38",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "1:12"
+      },
+      {
+        "flightNumber": "SI 242",
+        "from": "NBX",
+        "to": "PDG",
+        "std": "11:13",
+        "sta": "11:53",
+        "aircraft": "PK-BVU · C208B Grand Caravan",
+        "blockTime": "0:40"
+      }
+    ],
+    "2026-06-16": [
+      {
+        "flightNumber": "SI 263",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "07:00",
+        "sta": "08:19",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:19"
+      },
+      {
+        "flightNumber": "SI 264",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "08:42",
+        "sta": "10:01",
+        "aircraft": "PK-BVD · C208B Grand Caravan",
+        "blockTime": "1:19"
+      },
+      {
+        "flightNumber": "SI 265",
+        "from": "MKW",
+        "to": "KNG",
+        "std": "10:32",
+        "sta": "11:33",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 266",
+        "from": "KNG",
+        "to": "MKW",
+        "std": "12:00",
+        "sta": "13:09",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:09"
+      }
+    ],
+    "2026-06-19": [
+      {
+        "flightNumber": "SI 291",
+        "from": "CJN",
+        "to": "NBX",
+        "std": "06:30",
+        "sta": "07:20",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "0:50"
+      },
+      {
+        "flightNumber": "SI 292",
+        "from": "NBX",
+        "to": "CJN",
+        "std": "07:54",
+        "sta": "08:54",
+        "aircraft": "PK-BVK · C208B Grand Caravan",
+        "blockTime": "1:00"
+      },
+      {
+        "flightNumber": "SI 293",
+        "from": "CJN",
+        "to": "RSK",
+        "std": "09:27",
+        "sta": "10:40",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:13"
+      },
+      {
+        "flightNumber": "SI 294",
+        "from": "RSK",
+        "to": "CJN",
+        "std": "11:01",
+        "sta": "12:05",
+        "aircraft": "PK-BVF · C208B Grand Caravan",
+        "blockTime": "1:04"
+      }
+    ],
+    "2026-06-24": [
+      {
+        "flightNumber": "SI 256",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "07:00",
+        "sta": "07:36",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:36"
+      },
+      {
+        "flightNumber": "SI 257",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "08:03",
+        "sta": "08:50",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 258",
+        "from": "PDG",
+        "to": "SQG",
+        "std": "09:25",
+        "sta": "10:27",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "1:02"
+      },
+      {
+        "flightNumber": "SI 259",
+        "from": "SQG",
+        "to": "PDG",
+        "std": "10:51",
+        "sta": "11:38",
+        "aircraft": "PK-BVM · C208B Grand Caravan",
+        "blockTime": "0:47"
+      },
+      {
+        "flightNumber": "SI 260",
+        "from": "PDG",
+        "to": "RSK",
+        "std": "12:17",
+        "sta": "13:18",
+        "aircraft": "PK-BVT · C208B Grand Caravan",
+        "blockTime": "1:01"
+      },
+      {
+        "flightNumber": "SI 261",
+        "from": "RSK",
+        "to": "PDG",
+        "std": "13:50",
+        "sta": "14:48",
+        "aircraft": "PK-BVT · C208B Grand Caravan",
+        "blockTime": "0:58"
+      }
+    ],
+    "2026-06-25": [
+      {
+        "flightNumber": "SI 204",
+        "from": "MKW",
+        "to": "OKL",
+        "std": "06:30",
+        "sta": "07:40",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:10"
+      },
+      {
+        "flightNumber": "SI 205",
+        "from": "OKL",
+        "to": "MKW",
+        "std": "08:14",
+        "sta": "09:21",
+        "aircraft": "PK-BVJ · C208B Grand Caravan",
+        "blockTime": "1:07"
+      }
+    ]
+  }
+}
