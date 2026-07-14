@@ -1,0 +1,25 @@
+app/components/molecules/NewsCard.vue
+  s_7dc098e76cd16d::t_e9a6cdf8f601c1 29-35
+scripts/generate-news-images.mjs
+  s_7dc098e76cd16d::t_5109defd7ce8ba 1-59
+app/assets/data/mock-news.json
+  s_7dc098e76cd16d::t_2d46715f679a8c 8,17,26,35
+package.json
+  s_7dc098e76cd16d::t_f02e22ee3c9a19 20
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "54a77522c6d32887ee125060b9a7a207d72797b3",
+  "prompts": {},
+  "sessions": {
+    "s_7dc098e76cd16d": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dfe-4ac8-74ba-9505-2920a9abbee4",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
