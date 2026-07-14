@@ -16,6 +16,11 @@ describe('SignInForm', () => {
     expect(button.attributes('type')).toBe('submit')
   })
 
+  it('swaps the button label to "Signing in…" while loading', () => {
+    const wrapper = mount(SignInForm, { props: { loading: true } })
+    expect(wrapper.find('.base-button').text()).toContain('Signing in…')
+  })
+
   it('emits submit with credentials on form submit', async () => {
     const wrapper = mount(SignInForm)
     await wrapper.find('input[name="pilotId"]').setValue('PSA-1042')

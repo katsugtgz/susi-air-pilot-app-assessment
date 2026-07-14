@@ -1,8 +1,10 @@
 <script setup lang="ts">
 /**
  * SignInForm
- * Pilot ID + Password form. Per brief §5: submit routes to /home with no
- * real auth check (Phase 3 only renders the form; routing happens Phase 5).
+ * Pilot ID + Password form. Emits `submit` with the entered credentials; the
+ * parent page (index.vue) persists the session and navigates. While `loading`
+ * is true the submit button swaps to a "Signing in…" affordance (BaseButton's
+ * spinner + disabled state) so the round-trip feels real.
  *
  * MUST include the "Need help? Contact CRD" helper link below the form —
  * easy to treat as decorative and skip.
@@ -12,7 +14,7 @@ interface Props {
   loading?: boolean
   error?: string
 }
-withDefaults(defineProps<Props>(), { loading: false, error: '' })
+const props = withDefaults(defineProps<Props>(), { loading: false, error: '' })
 
 const emit = defineEmits<{
   (e: 'submit', payload: { pilotId: string; password: string }): void
@@ -21,6 +23,8 @@ const emit = defineEmits<{
 
 const pilotId = ref('')
 const password = ref('')
+
+const submitLabel = computed(() => (props.loading ? 'Signing in…' : 'Sign In'))
 
 function onSubmit() {
   emit('submit', { pilotId: pilotId.value, password: password.value })
@@ -55,7 +59,7 @@ function onSubmit() {
     <p v-if="error" class="sign-in-form__error" role="alert">{{ error }}</p>
 
     <BaseButton type="submit" variant="primary" size="lg" full-width :loading="loading">
-      Sign In
+      {{ submitLabel }}
     </BaseButton>
 
     <!-- CRD helper link — REQUIRED per brief §5. NOT decorative. -->

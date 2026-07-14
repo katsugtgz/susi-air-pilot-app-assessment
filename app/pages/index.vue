@@ -1,11 +1,15 @@
 <script setup lang="ts">
 /**
  * Sign In page — uses the auth layout (no bottom nav).
- * Submit navigates to /home with no auth check, per brief §5.
+ * Submit persists a demo session (Pilot ID as the identifier) via the session
+ * store, then navigates to /home. The global auth middleware guards the rest
+ * of the app against unsigned-in visitors.
  */
 import { navigateTo } from '#app'
 
 definePageMeta({ layout: 'auth' })
+
+const sessionStore = useSessionStore()
 
 const loading = ref(false)
 const error = ref('')
@@ -19,13 +23,14 @@ interface Credentials {
   password: string
 }
 
-async function onSubmit(_creds: Credentials) {
-  // Brief explicitly says "no real auth check" — simulate a brief loading
-  // state for UX feedback, then navigate.
+async function onSubmit(creds: Credentials) {
+  // Simulate a brief network round-trip for UX feedback, then establish the
+  // session and navigate.
   loading.value = true
   error.value = ''
   try {
-    await new Promise((resolve) => setTimeout(resolve, 300))
+    await new Promise((resolve) => setTimeout(resolve, 500))
+    sessionStore.signIn(creds.pilotId)
     await navigateTo('/home')
   } catch {
     loading.value = false
