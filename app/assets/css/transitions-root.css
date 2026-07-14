@@ -86,7 +86,7 @@
   /* Page side-by-side */
   --page-slide-dur: 250ms;
   --page-fade-dur: 250ms;
-  --page-slide-distance: 8px;
+  --page-slide-distance: 16px;
   --page-blur: 3px;
   --page-stagger: 0ms;
   --page-exit-enabled: 1;
