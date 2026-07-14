@@ -1,7 +1,8 @@
 <script setup lang="ts">
 /**
  * CalendarDay
- * One cell of the schedule month-grid.
+ * One cell of the schedule month-grid. Rendered as a real <button> for
+ * keyboard accessibility (Tab reaches every day; Enter/Space activates).
  *
  * - Empty (no schedule) → blank cell, optionally faded if out of month.
  * - With schedule → cell tinted by `baseColor`, base code shown underneath.
@@ -30,10 +31,46 @@ const props = withDefaults(defineProps<Props>(), {
 
 const hasSchedule = computed(() => !!props.dutyType)
 const isComplete = computed(() => props.countSchedules > 0 && props.countLogbooks === props.countSchedules)
+
+// Build a descriptive aria-label from existing props so screen-reader users
+// get the same information as sighted users without parsing visual badges.
+const ariaLabel = computed(() => {
+  const parts: string[] = []
+
+  // Day + month from the ISO date, or just the number if no date.
+  if (props.date) {
+    const d = new Date(props.date)
+    if (!Number.isNaN(d.getTime())) {
+      parts.push(d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long' }))
+    } else if (props.dayNumber != null) {
+      parts.push(String(props.dayNumber))
+    }
+  } else if (props.dayNumber != null) {
+    parts.push(String(props.dayNumber))
+  }
+
+  if (props.isOutOfMonth) {
+    parts.push('out of month')
+  }
+
+  if (props.dutyType) {
+    parts.push(props.dutyType)
+  }
+
+  if (props.countSchedules > 0) {
+    parts.push(`${props.countSchedules} flight${props.countSchedules === 1 ? '' : 's'}`)
+    if (props.countLogbooks > 0) {
+      parts.push(`${props.countLogbooks} logged`)
+    }
+  }
+
+  return parts.join(', ')
+})
 </script>
 
 <template>
-  <div
+  <button
+    type="button"
     class="calendar-day"
     :class="{
       'calendar-day--out': isOutOfMonth,
@@ -41,6 +78,7 @@ const isComplete = computed(() => props.countSchedules > 0 && props.countLogbook
       'calendar-day--empty': !hasSchedule,
     }"
     :style="baseColor && hasSchedule ? { '--day-color': baseColor } : undefined"
+    :aria-label="ariaLabel"
   >
     <span class="calendar-day__number">{{ dayNumber }}</span>
     <span v-if="hasSchedule && baseName" class="calendar-day__base">{{ baseName }}</span>
@@ -50,11 +88,17 @@ const isComplete = computed(() => props.countSchedules > 0 && props.countLogbook
     <span v-else-if="hasSchedule && countSchedules > 0" class="calendar-day__count">
       {{ countSchedules }}
     </span>
-  </div>
+  </button>
 </template>
 
 <style scoped lang="scss">
 .calendar-day {
+  // Button reset — the semantic <button> must not inherit UA button styles.
+  appearance: none;
+  background: var(--day-color, var(--color-surface));
+  border: 0;
+  font: inherit;
+  width: 100%;
   position: relative;
   aspect-ratio: 1 / 1;
   display: flex;
@@ -62,7 +106,6 @@ const isComplete = computed(() => props.countSchedules > 0 && props.countLogbook
   align-items: center;
   justify-content: center;
   padding: var(--space-1);
-  background: var(--day-color, var(--color-surface));
   border-radius: var(--radius-md);
   color: var(--color-text-primary);
   font-size: var(--fs-base-sm);
@@ -70,6 +113,11 @@ const isComplete = computed(() => props.countSchedules > 0 && props.countLogbook
   box-shadow: var(--shadow-xs);
   cursor: pointer;
   transition: transform 0.05s ease;
+
+  &:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
+  }
 
   &:active:not(.calendar-day--out) {
     transform: scale(0.97);

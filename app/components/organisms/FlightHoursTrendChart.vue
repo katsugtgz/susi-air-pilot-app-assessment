@@ -84,7 +84,7 @@ const chartOptions = computed<ChartOptions<'line'>>(() => ({
   responsive: true,
   maintainAspectRatio: false,
   animation: {
-    duration: prefersReducedMotion.value ? 0 : 300,
+    duration: prefersReducedMotion.value ? 0 : 400,
     easing: 'easeOutQuart',
   },
   interaction: { mode: 'index', intersect: false },
@@ -131,11 +131,23 @@ function shortDate(iso: string): string {
 
 // Exposed for test consumers — reading the chart canvas pixels is brittle.
 defineExpose({ chartData, chartOptions })
+
+const chartReady = ref(false)
+onMounted(() => {
+  nextTick(() => {
+    chartReady.value = true
+  })
+})
 </script>
 
 <template>
   <div class="flight-hours-trend-chart" :style="{ height: `${height}px` }">
     <Line :data="chartData" :options="chartOptions" />
+    <Transition name="chart-skeleton-fade">
+      <div v-if="!chartReady" class="flight-hours-trend-chart__loading">
+        <Skeleton variant="rect" :height="height" />
+      </div>
+    </Transition>
   </div>
 </template>
 
@@ -143,5 +155,25 @@ defineExpose({ chartData, chartOptions })
 .flight-hours-trend-chart {
   width: 100%;
   position: relative;
+}
+
+.flight-hours-trend-chart__loading {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.chart-skeleton-fade-leave-active {
+  transition: opacity var(--reveal-dur) var(--reveal-ease);
+}
+
+.chart-skeleton-fade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-skeleton-fade-leave-active {
+    transition: none;
+  }
 }
 </style>

@@ -122,28 +122,39 @@ const upcomingArrival = computed(() => {
     </section>
 
     <section class="home-page__section">
-      <div class="t-skel" :class="{ 'is-revealed': !loading }">
-        <div class="t-skel-skeleton is-pulsing">
-          <div class="home-page__skeleton-hours">
-            <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-            <Skeleton variant="rect" :height="180" />
-            <div class="home-page__skeleton-cards">
-              <Skeleton variant="rect" :height="140" />
-              <Skeleton variant="rect" :height="140" />
-              <Skeleton variant="rect" :height="140" />
-              <Skeleton variant="rect" :height="140" />
-            </div>
+      <Transition name="chart-crossfade" mode="out-in">
+        <div v-if="loading" key="skeleton" class="home-page__skeleton-hours">
+          <Skeleton variant="rect" :height="40" radius="24" :width="220" />
+          <Skeleton variant="rect" :height="180" />
+          <div class="home-page__skeleton-cards">
+            <Skeleton variant="rect" :height="140" />
+            <Skeleton variant="rect" :height="140" />
+            <Skeleton variant="rect" :height="140" />
+            <Skeleton variant="rect" :height="140" />
           </div>
         </div>
-        <div class="t-skel-content">
-          <HoursToLimitSection
-            :flight-hours="flightHoursStore.flightHours"
-            :limits="flightHoursStore.limits"
-            :chart-bounds="flightHoursStore.chartBounds"
-            :today="FLIGHT_HOURS_TODAY"
-          />
-        </div>
-      </div>
+        <LazyHoursToLimitSection
+          v-else
+          key="content"
+          :flight-hours="flightHoursStore.flightHours"
+          :limits="flightHoursStore.limits"
+          :chart-bounds="flightHoursStore.chartBounds"
+          :today="FLIGHT_HOURS_TODAY"
+        >
+          <template #fallback>
+            <div class="home-page__skeleton-hours">
+              <Skeleton variant="rect" :height="40" radius="24" :width="220" />
+              <Skeleton variant="rect" :height="180" />
+              <div class="home-page__skeleton-cards">
+                <Skeleton variant="rect" :height="140" />
+                <Skeleton variant="rect" :height="140" />
+                <Skeleton variant="rect" :height="140" />
+                <Skeleton variant="rect" :height="140" />
+              </div>
+            </div>
+          </template>
+        </LazyHoursToLimitSection>
+      </Transition>
     </section>
 
     <section class="home-page__section">
@@ -264,5 +275,21 @@ const upcomingArrival = computed(() => {
     transition: none !important;
   }
   .t-skel-skeleton.is-pulsing > * { animation: none !important; }
+}
+
+.chart-crossfade-enter-active,
+.chart-crossfade-leave-active {
+  transition: opacity var(--reveal-dur) var(--reveal-ease);
+}
+.chart-crossfade-enter-from,
+.chart-crossfade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-crossfade-enter-active,
+  .chart-crossfade-leave-active {
+    transition: none;
+  }
 }
 </style>
