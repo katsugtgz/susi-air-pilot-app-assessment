@@ -1,0 +1,83 @@
+app/pages/more.vue
+  s_49e4f93454f37a::t_414c0cf44fdd8c 7-14,27-34,57-63,73-74,89-94,103-106
+nuxt.config.ts
+  s_49e4f93454f37a::t_0e3bddf25a7f97 43-44
+  s_49e4f93454f37a::t_3ed96e7145aeb8 45-50
+app/composables/useTheme.ts
+  s_49e4f93454f37a::t_de38631ecefe78 1-106
+app/components/atoms/Skeleton.vue
+  s_49e4f93454f37a::t_53a32ba1c8cea3 47-51
+app/components/organisms/LicensesSheet.spec.ts
+  s_49e4f93454f37a::t_db77cf6c24f64f 3-4,21,26,28-49,51-58,60-67,69-75
+  s_49e4f93454f37a::t_e88fc1f2d44183 1-2,5-20,22-25,27,50,59,68
+app/composables/useTheme.spec.ts
+  s_49e4f93454f37a::t_13ce56370d9527 1-32
+app/components/organisms/AppearanceSheet.vue
+  s_49e4f93454f37a::t_f65aaa0f5f7d26 25-26
+  s_49e4f93454f37a::t_4641ed9c738f9e 1-24,27-159
+app/components/atoms/ToggleSwitch.spec.ts
+  s_49e4f93454f37a::t_17130d48cd8893 36-37
+  s_49e4f93454f37a::t_d5177b2a638b29 1-35,38-72
+app/components/organisms/AppearanceSheet.stories.ts
+  s_49e4f93454f37a::t_3e525d1e91725b 1-20
+app/components/organisms/LicensesSheet.stories.ts
+  s_49e4f93454f37a::t_65500b53d8a156 1-20
+app/composables/useDocumentFilter.spec.ts
+  s_49e4f93454f37a::t_d41db00360195e 1-77
+app/components/organisms/NotificationPrefsSheet.spec.ts
+  s_49e4f93454f37a::t_4e053b86f7c31f 3,47,54-59,61-67,69-79,81-97,99-105
+  s_49e4f93454f37a::t_9e128dc8d1bdb9 4-35,46
+  s_49e4f93454f37a::t_17615a27589bdb 48-53,60,68,80,98
+  s_49e4f93454f37a::t_fce17a21425ff5 1-2,36-45
+app/components/atoms/ToggleSwitch.vue
+  s_49e4f93454f37a::t_b163724f278266 1-113
+app/composables/useDocumentFilter.ts
+  s_49e4f93454f37a::t_cbf9913650fb93 1-23,30-34,37-58
+  s_49e4f93454f37a::t_249f9406278af7 24-29,35-36
+app/components/organisms/DashboardHeader.vue
+  s_49e4f93454f37a::t_7f5c24648dc9ac 7-22,32-33,62-69,74-79,82-90,102-119,131-134,138-144,155-156,162-164,166-169,173,182,187,212-242,244-250,252-253,261,266,283,352,356-362,398-402,519-524,533,539-552,558-562,564,583,587,591,616,630-655,697
+  s_49e4f93454f37a::t_edf4b2febefd1f 251
+app/components/organisms/NotificationPrefsSheet.stories.ts
+  s_49e4f93454f37a::t_349dd22bcf5564 1-20
+app/components/organisms/LicensesSheet.vue
+  s_49e4f93454f37a::t_882ba6a1e40b29 1-111
+app/components/atoms/ToggleSwitch.stories.ts
+  s_49e4f93454f37a::t_91ef3565936288 1-51
+app/pages/documents.vue
+  s_49e4f93454f37a::t_64ff7582b4a34d 1-180
+app/components/organisms/DashboardHeader.spec.ts
+  s_49e4f93454f37a::t_19b9ba6d3acf32 1-2,37-48,50-52
+  s_49e4f93454f37a::t_5a16b8bb9aadae 49
+  s_49e4f93454f37a::t_909fb71ccdd296 5-36
+  s_49e4f93454f37a::t_2b55d00895cef6 55-72,74,79,85,89,95,109,115,128,134,146,152,157,165,172,179,185,193,200,208,218,228,230,232,237,242-244,246-270,272-284,286-308,310-321,323-330,332-336,338-349,353-356,358-371,373-386
+  s_49e4f93454f37a::t_5e965aa00dd237 350-352,357
+  s_49e4f93454f37a::t_18176484c8a4e1 53,245,271,285,309,322,331,337,372
+app/components/organisms/NotificationPrefsSheet.vue
+  s_49e4f93454f37a::t_215262a33acaea 35,47
+  s_49e4f93454f37a::t_0cb607c9b3ad5a 1-34,36-46,48-129
+app/components/organisms/AppearanceSheet.spec.ts
+  s_49e4f93454f37a::t_293804f3b92ebf 83-84,89-90,103,108
+  s_49e4f93454f37a::t_57f0318bde5055 1-2,40-55,74,77-79,85,91-92,98,102,113
+  s_49e4f93454f37a::t_5e89d6c4925692 3,39,56-73,75-76,80-82,86-88,93-97,99-101,104-107,109-112,114-120
+  s_49e4f93454f37a::t_aba3788b7165ef 4-38
+app/assets/scss/tokens.scss
+  s_49e4f93454f37a::t_82df0843b6d169 133-196
+app/components/atoms/Badge.vue
+  s_49e4f93454f37a::t_ddf4a98349e3fe 42-43,47-48,52
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "4bad4cd5017855d1cb35d7938730bb78dfc41068",
+  "prompts": {},
+  "sessions": {
+    "s_49e4f93454f37a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b46b8ffew5oJ2W36MfjEvi",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
