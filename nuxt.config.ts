@@ -39,8 +39,6 @@ export default defineNuxtConfig({
       link: [
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'apple-touch-icon', href: '/pwa-192.png' },
-        { rel: 'preconnect', href: 'https://picsum.photos' },
-        { rel: 'dns-prefetch', href: 'https://picsum.photos' },
       ],
     },
   },
