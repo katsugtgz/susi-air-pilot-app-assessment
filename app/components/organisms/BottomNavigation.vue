@@ -16,7 +16,7 @@ defineEmits<{ (e: 'navigate', to: string): void }>()
 </script>
 
 <template>
-  <nav class="bottom-navigation" role="tablist" aria-label="Primary">
+  <nav class="bottom-navigation" aria-label="Primary">
     <BottomNavItem
       v-for="item in items"
       :key="item.to"

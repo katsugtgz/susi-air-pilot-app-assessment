@@ -40,12 +40,12 @@ withDefaults(defineProps<Props>(), { variant: 'neutral' })
 
   &--safe {
     background: rgba(31, 191, 143, 0.12);
-    color: #0e9472;
+    color: #0b745a;
   }
 
   &--soon {
     background: rgba(245, 158, 11, 0.14);
-    color: #b8730a;
+    color: #965e08;
   }
 
   &--expired {

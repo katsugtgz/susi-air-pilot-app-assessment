@@ -12,6 +12,8 @@ interface Props {
   imageUrl?: string
   date?: string
   readTime?: string
+  /** Render the image eagerly (above-the-fold carousel card). */
+  eager?: boolean
 }
 defineProps<Props>()
 defineEmits<{ (e: 'click'): void }>()
@@ -21,7 +23,14 @@ defineEmits<{ (e: 'click'): void }>()
   <article class="news-card" @click="$emit('click')">
     <div v-if="imageUrl || $slots.image" class="news-card__media">
       <slot name="image">
-        <img v-if="imageUrl" :src="imageUrl" :alt="title" loading="lazy" decoding="async" />
+        <img
+          v-if="imageUrl"
+          :src="imageUrl"
+          :alt="title"
+          :loading="eager ? 'eager' : 'lazy'"
+          :decoding="eager ? undefined : 'async'"
+          :fetchpriority="eager ? 'high' : undefined"
+        />
       </slot>
     </div>
     <div class="news-card__body">

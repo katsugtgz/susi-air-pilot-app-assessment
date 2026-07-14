@@ -63,7 +63,7 @@ const notifications: NotificationItem[] = [
   },
 ]
 
-const loading = useLoadingDelay(600)
+const loading = useLoadingDelay(200)
 
 // Per brief §3.2, the chart's dev "today" is 2026-05-31.
 const FLIGHT_HOURS_TODAY = '2026-05-31'
