@@ -14,6 +14,13 @@ export default defineNuxtConfig({
   css: ['~/assets/scss/tokens.scss', '~/assets/css/transitions-root.css'],
 
   app: {
+    // Native page transitions. Nuxt coordinates these with layout swaps
+    // internally — the direction (fade/forward/back) is picked per-navigation
+    // by middleware/page-transition.global.ts. Doing this manually via a
+    // <Transition> around <NuxtPage> inside <NuxtLayout> orphans the page on
+    // cross-layout navigations (auth → default), leaving an empty <main>.
+    pageTransition: { name: 'page-fade', mode: 'out-in' },
+
     head: {
       title: 'Susi Air Pilot App',
       htmlAttrs: { lang: 'en' },
