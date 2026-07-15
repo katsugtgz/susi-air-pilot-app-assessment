@@ -1,35 +1,13 @@
 <script setup lang="ts">
-const route = useRoute()
-
-const ROUTE_ORDER: Record<string, number> = {
-  '/': 0,
-  '/home': 1,
-  '/schedule': 2,
-  '/logbook': 3,
-  '/more': 4,
-}
-
-const transitionName = ref('page-fade')
-
-watch(
-  () => route.path,
-  (to, from) => {
-    const toOrder = ROUTE_ORDER[to] ?? -1
-    const fromOrder = from ? (ROUTE_ORDER[from] ?? -1) : -1
-    if (to === '/' || !from || toOrder === -1 || fromOrder === -1) {
-      transitionName.value = 'page-fade'
-    } else {
-      transitionName.value = toOrder > fromOrder ? 'page-forward' : 'page-back'
-    }
-  },
-)
+// Page transitions are driven by native Nuxt config (nuxt.config `app.pageTransition`)
+// with the per-navigation direction chosen in middleware/page-transition.global.ts.
+// Letting Nuxt own the <Transition> keeps page and layout swaps coordinated, so
+// cross-layout navigations (auth → default on sign-in) no longer orphan the page.
 </script>
 
 <template>
   <NuxtLayout>
-    <Transition :name="transitionName" mode="out-in">
-      <NuxtPage :key="route.path" />
-    </Transition>
+    <NuxtPage />
   </NuxtLayout>
 </template>
 
