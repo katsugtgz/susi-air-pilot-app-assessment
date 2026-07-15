@@ -1,0 +1,23 @@
+app/middleware/page-transition.global.ts
+  s_da700fe4574a54::t_5ceb58bcf33cad 1-33
+app/app.vue
+  s_da700fe4574a54::t_72bdf0eeeadbb5 2-5,10
+nuxt.config.ts
+  s_da700fe4574a54::t_e2f323734df483 17-23
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "43148ecc45fd81163cb7ac79c957a9bd47adb616",
+  "prompts": {},
+  "sessions": {
+    "s_da700fe4574a54": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "624a5366-51f1-42f4-b20e-6458b821eba4",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
