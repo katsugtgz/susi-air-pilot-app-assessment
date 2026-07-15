@@ -1,0 +1,25 @@
+server/api/chat.post.ts
+  s_526b9df8c7de73::t_1b79db046e4a50 64-77
+app/components/atoms/BaseInput.vue
+  s_526b9df8c7de73::t_1e46eb02194d71 38-41
+app/composables/useCopilotChat.ts
+  s_526b9df8c7de73::t_52a47c49251545 106-113
+server/utils/rag.ts
+  s_526b9df8c7de73::t_681de84a2176f6 52-53,55-60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "ce00adebdca4436e5b2af646875270738e19b537",
+  "prompts": {},
+  "sessions": {
+    "s_526b9df8c7de73": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f083b808-47a9-47fa-a56f-acbf87a31d56",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
