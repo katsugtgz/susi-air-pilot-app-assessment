@@ -103,9 +103,14 @@ export function useCopilotChat(): UseCopilotChat {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({
-          messages: [...messages.value]
-            .filter((m) => m.id !== assistantMsg.id)
-            .map((m) => ({ role: m.role === 'assistant' ? 'model' : 'user', text: m.text })),
+          // Single pass: drop the in-flight assistant placeholder and shape
+          // each message for the API in one iteration.
+          messages: messages.value.reduce<Array<{ role: 'model' | 'user'; text: string }>>((acc, m) => {
+            if (m.id !== assistantMsg.id) {
+              acc.push({ role: m.role === 'assistant' ? 'model' : 'user', text: m.text })
+            }
+            return acc
+          }, []),
         }),
       })
 
