@@ -49,9 +49,15 @@ export function cosineSimilarity(a: number[], b: number[]): number {
  */
 export function retrieve(queryVec: number[], corpus: Chunk[], k: number): Chunk[] {
   if (k <= 0) return []
+  // Single pass to score the retrievable chunks (skipping null/length-mismatch
+  // embeddings), then sort by descending similarity.
   const scored = corpus
-    .filter((c) => c.embedding !== null && c.embedding.length === queryVec.length)
-    .map((c) => ({ chunk: c, score: cosineSimilarity(queryVec, c.embedding as number[]) }))
+    .reduce<Array<{ chunk: Chunk; score: number }>>((acc, c) => {
+      if (c.embedding !== null && c.embedding.length === queryVec.length) {
+        acc.push({ chunk: c, score: cosineSimilarity(queryVec, c.embedding) })
+      }
+      return acc
+    }, [])
     .sort((a, b) => b.score - a.score)
   return scored.slice(0, k).map((s) => s.chunk)
 }

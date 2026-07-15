@@ -61,16 +61,20 @@ const lookupFlightByDateDeclaration = {
  */
 function lookupFlightByDate(date: unknown): unknown[] {
   if (typeof date !== 'string') return []
-  return schedulesMock.schedules
-    .filter((s) => s.duty_date === date)
-    .map((s) => ({
-      duty_date: s.duty_date,
-      duty_type: s.duty_type,
-      base_name: s.base_name,
-      count_schedules: s.count_schedules,
-      count_logbooks: s.count_logbooks,
-      status: s.status === 2 ? 'verified' : 'pending',
-    }))
+  // Single pass: match the date and shape the row in one iteration.
+  return schedulesMock.schedules.reduce<unknown[]>((acc, s) => {
+    if (s.duty_date === date) {
+      acc.push({
+        duty_date: s.duty_date,
+        duty_type: s.duty_type,
+        base_name: s.base_name,
+        count_schedules: s.count_schedules,
+        count_logbooks: s.count_logbooks,
+        status: s.status === 2 ? 'verified' : 'pending',
+      })
+    }
+    return acc
+  }, [])
 }
 
 function toGeminiContents(messages: IncomingMessage[]) {

@@ -35,7 +35,10 @@ const inputType = computed(() => {
   return showPassword.value ? 'text' : 'password'
 })
 
-const inputId = computed(() => props.id ?? props.name ?? `input-${Math.random().toString(36).slice(2, 9)}`)
+// SSR-safe stable id (server and client agree, so no hydration mismatch and
+// the label→input association survives). Explicit `id`/`name` still win.
+const generatedId = useId()
+const inputId = computed(() => props.id ?? props.name ?? generatedId)
 
 function onInput(event: Event) {
   const target = event.target as HTMLInputElement
