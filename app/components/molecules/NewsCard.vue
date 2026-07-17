@@ -37,7 +37,7 @@ defineEmits<{ (e: 'click'): void }>()
           :loading="eager ? 'eager' : 'lazy'"
           :decoding="eager ? undefined : 'async'"
           :fetchpriority="eager ? 'high' : undefined"
-        />
+        >
       </slot>
     </div>
     <div class="news-card__body">
