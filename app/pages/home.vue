@@ -6,6 +6,7 @@ import { navigateTo } from '#app'
 import { useFlightHoursStore } from '~/stores/flightHours'
 import { useDocumentsStore } from '~/stores/documents'
 import { useNewsStore } from '~/stores/news'
+import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 import { useFlightLegsStore } from '~/stores/flightLegs'
 import type { ActionItem } from '~/composables/useActionItems'
 import type { Schedule } from '~/types'
@@ -21,7 +22,6 @@ const flightLegsStore = useFlightLegsStore()
 
 function onLogout() { navigateTo('/') }
 const loading = useLoadingDelay(200)
-const FLIGHT_HOURS_TODAY = '2026-05-31'
 
 const demoTimeline = useDemoTimeline(() => ({
   scheduleToday: schedulesStore.today,

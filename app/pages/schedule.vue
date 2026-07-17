@@ -11,6 +11,7 @@
 import { useSchedulesStore } from '~/stores/schedules'
 import { useFlightLegsStore } from '~/stores/flightLegs'
 import { useDocumentsStore } from '~/stores/documents'
+import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 
 definePageMeta({ layout: 'default' })
 
@@ -22,7 +23,6 @@ const loading = useLoadingDelay(200)
 
 // Default yearMonth to the month of schedules.json's `today` (2026-05-15 → '2026-05').
 const yearMonth = ref(schedulesStore.today.slice(0, 7))
-const FLIGHT_HOURS_TODAY = '2026-05-31'
 const demoTimeline = useDemoTimeline(() => ({
   scheduleToday: schedulesStore.today,
   documentsToday: documentsStore.today,
