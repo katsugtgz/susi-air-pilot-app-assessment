@@ -17,13 +17,13 @@ import { navigateTo } from '#app'
 import { usePilotStore } from '~/stores/pilot'
 import { useSchedulesStore } from '~/stores/schedules'
 import { useDocumentsStore } from '~/stores/documents'
+import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 
 definePageMeta({ layout: 'default' })
 
 const pilotStore = usePilotStore()
 const schedulesStore = useSchedulesStore()
 const documentsStore = useDocumentsStore()
-const FLIGHT_HOURS_TODAY = '2026-05-31'
 const demoTimeline = useDemoTimeline(() => ({
   scheduleToday: schedulesStore.today,
   documentsToday: documentsStore.today,
