@@ -29,7 +29,6 @@ export function computeUpcomingDutyPreview(
 ): UpcomingDutyPreview {
   const upcoming = input.schedules
     .filter((schedule) => schedule.status === 1 && schedule.duty_date >= input.today)
-    .slice()
     .sort((left, right) => left.duty_date.localeCompare(right.duty_date))
 
   for (const schedule of upcoming) {
