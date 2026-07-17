@@ -88,7 +88,11 @@ function nextDutyItem(input: ActionItemsInput): readonly RankedActionItem[] {
 
 function logbookItems(input: ActionItemsInput): readonly RankedActionItem[] {
   return input.schedules
-    .filter((schedule) => schedule.count_logbooks < schedule.count_schedules)
+    .filter(
+      (schedule) =>
+        schedule.count_logbooks < schedule.count_schedules &&
+        schedule.duty_date < input.scheduleToday,
+    )
     .map((schedule) => ({
       id: `logbook-incomplete-${schedule.duty_date}`,
       kind: 'logbook-incomplete',
@@ -96,7 +100,7 @@ function logbookItems(input: ActionItemsInput): readonly RankedActionItem[] {
       body: `${schedule.count_logbooks}/${schedule.count_schedules} entries recorded`,
       severity: 'warning',
       date: schedule.duty_date,
-      rank: schedule.duty_date < input.scheduleToday ? 1 : 4,
+      rank: 1,
     }))
 }
 
