@@ -34,7 +34,7 @@ const DOCUMENTS: readonly DocumentRecord[] = [
 
 describe('computeActionItems', () => {
   it('derives next-duty, document, and incomplete-logbook action items deterministically', () => {
-    // Given: one upcoming duty, expired/soon documents, and two incomplete logbook rows.
+    // Given: one upcoming duty, expired/soon documents, and one past incomplete logbook row.
     const schedules = [
       schedule({ duty_date: '2026-05-15', count_logbooks: 6 }),
       schedule({ duty_date: '2026-05-19', count_schedules: 2, count_logbooks: 0 }),
@@ -58,8 +58,28 @@ describe('computeActionItems', () => {
       'logbook-incomplete-2026-04-13',
       'document-soon-doc_medical',
       'next-duty-2026-05-15',
-      'logbook-incomplete-2026-05-19',
     ])
+  })
+
+  it('does not flag upcoming duties as incomplete before they occur', () => {
+    // Given: a future duty with no logbook entries yet.
+    const schedules = [
+      schedule({ duty_date: '2026-05-19', count_schedules: 2, count_logbooks: 0 }),
+    ]
+    const input = {
+      schedules,
+      legsByDate: {},
+      documents: [],
+      scheduleToday: '2026-05-15',
+      documentsToday: '2026-05-31',
+      documentWarningDays: 30,
+    }
+
+    // When: actions are derived.
+    const result = computeActionItems(input)
+
+    // Then: planned work is not incorrectly flagged as missing.
+    expect(result.items.map((item) => item.id)).not.toContain('logbook-incomplete-2026-05-19')
   })
 
   it('uses safe app wording and notification variants without clearance language', () => {
