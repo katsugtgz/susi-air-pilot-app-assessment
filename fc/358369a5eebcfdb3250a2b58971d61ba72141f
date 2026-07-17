@@ -1,0 +1,25 @@
+app/pages/schedule.vue
+  s_7d5d4b7cba384f::t_4fb86a91ab0d7f 14
+app/pages/more.vue
+  s_7d5d4b7cba384f::t_83ba0836e703bd 20
+app/utils/demo-source.ts
+  s_7d5d4b7cba384f::t_5e2d1c92843851 1-4
+app/pages/home.vue
+  s_7d5d4b7cba384f::t_f1a34b4f772d0b 9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "fc358369a5eebcfdb3250a2b58971d61ba72141f",
+  "prompts": {},
+  "sessions": {
+    "s_7d5d4b7cba384f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f6f5c-d815-7ccb-b626-d652b0c5a794",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
