@@ -1,0 +1,23 @@
+app/composables/useUpcomingDutyPreview.ts
+  s_7d5d4b7cba384f::t_71605f4c3cc307 26-28,33-38
+app/composables/useUpcomingDutyPreview.spec.ts
+  s_7d5d4b7cba384f::t_6370b18fe195e2 92-104
+app/composables/useActionItems.ts
+  s_7d5d4b7cba384f::t_25f6f209a89309 75
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "172400f169e3d646f004ab595a745cdce45569e5",
+  "prompts": {},
+  "sessions": {
+    "s_7d5d4b7cba384f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f6f5c-d815-7ccb-b626-d652b0c5a794",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
