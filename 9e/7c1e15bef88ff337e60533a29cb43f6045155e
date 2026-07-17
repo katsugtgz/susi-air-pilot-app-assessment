@@ -1,0 +1,19 @@
+app/pages/schedule.vue
+  s_7d5d4b7cba384f::t_4fb86a91ab0d7f 54
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.14",
+  "base_commit_sha": "9e7c1e15bef88ff337e60533a29cb43f6045155e",
+  "prompts": {},
+  "sessions": {
+    "s_7d5d4b7cba384f": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f6f5c-d815-7ccb-b626-d652b0c5a794",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
