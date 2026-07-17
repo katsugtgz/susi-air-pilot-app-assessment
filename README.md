@@ -96,7 +96,7 @@ With no keys configured the app runs normally; `/api/chat` returns `503 AI copil
 
 **Folder layout**
 
-```
+```text
 app/
 ├── components/{atoms,molecules,organisms}/  # 13 / 13 / 19 — atomic design
 ├── composables/          # 14 pure-compute fns, each co-located with *.spec.ts
