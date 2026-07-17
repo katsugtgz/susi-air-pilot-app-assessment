@@ -21,3 +21,15 @@ export const Offline: Story = {
 export const Stale: Story = {
   args: { status: 'stale', timestamp: '2026-05-29 17:00' },
 }
+
+export const Synced: Story = {
+  args: { status: 'synced', timestamp: '2026-05-31 09:14' },
+}
+
+export const Syncing: Story = {
+  args: { status: 'syncing', timestamp: 'now' },
+}
+
+export const Failed: Story = {
+  args: { status: 'failed', timestamp: '2026-05-31 09:14' },
+}
