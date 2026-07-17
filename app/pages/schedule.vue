@@ -51,7 +51,7 @@ function closeModal() {
         <h1 class="schedule-page__title">Schedule</h1>
         <p class="schedule-page__context">Viewing {{ yearMonth }} from mock roster data.</p>
       </div>
-      <SyncStatusPill status="demo" :timestamp="schedulesStore.today" />
+      <SyncStatusPill status="demo" :timestamp="demoTimeline.latestDataDate" />
     </header>
 
     <DataFreshnessStrip :timeline="demoTimeline" />
@@ -143,78 +143,6 @@ function closeModal() {
     display: grid;
     grid-template-columns: repeat(7, minmax(0, 1fr));
     gap: var(--space-1);
-  }
-}
-
-/*
- * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
- * Transition / opacity / filter logic + --reveal-* / --pulse-* tokens follow
- * the reference; layers share a single grid cell (grid-area: 1 / 1) so the
- * in-flow content reserves the slot height and the crossfade is layout-free.
- */
-.t-skel {
-  display: grid;
-}
-.t-skel-skeleton,
-.t-skel-content {
-  grid-area: 1 / 1;
-  min-width: 0;
-}
-.t-skel-skeleton {
-  z-index: 1;
-  opacity: 1;
-  filter: blur(0);
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel-content {
-  z-index: 2;
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel.is-revealed .t-skel-skeleton {
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-}
-.t-skel.is-revealed .t-skel-content {
-  opacity: 1;
-  filter: blur(0);
-}
-// The invisible layer must not swallow taps: content sits above the skeleton
-// (z-index 2) even while opacity: 0, and opacity doesn't disable hit-testing.
-.t-skel:not(.is-revealed) .t-skel-content,
-.t-skel.is-revealed .t-skel-skeleton {
-  pointer-events: none;
-}
-.t-skel.is-resetting .t-skel-skeleton,
-.t-skel.is-resetting .t-skel-content {
-  transition: none !important;
-}
-
-.t-skel-skeleton.is-pulsing > * {
-  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
-}
-@keyframes t-skel-pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: var(--pulse-min);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .t-skel-skeleton,
-  .t-skel-content {
-    transition: none !important;
-  }
-  .t-skel-skeleton.is-pulsing > * {
-    animation: none !important;
   }
 }
 </style>
