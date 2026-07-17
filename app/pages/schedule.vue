@@ -10,16 +10,24 @@
  */
 import { useSchedulesStore } from '~/stores/schedules'
 import { useFlightLegsStore } from '~/stores/flightLegs'
+import { useDocumentsStore } from '~/stores/documents'
 
 definePageMeta({ layout: 'default' })
 
 const schedulesStore = useSchedulesStore()
 const flightLegsStore = useFlightLegsStore()
+const documentsStore = useDocumentsStore()
 
 const loading = useLoadingDelay(200)
 
 // Default yearMonth to the month of schedules.json's `today` (2026-05-15 → '2026-05').
 const yearMonth = ref(schedulesStore.today.slice(0, 7))
+const FLIGHT_HOURS_TODAY = '2026-05-31'
+const demoTimeline = useDemoTimeline(() => ({
+  scheduleToday: schedulesStore.today,
+  documentsToday: documentsStore.today,
+  flightHoursToday: FLIGHT_HOURS_TODAY,
+}))
 
 // Tap-a-date detail sheet state.
 const selectedDate = ref<string | null>(null)
@@ -39,8 +47,14 @@ function closeModal() {
 <template>
   <div class="schedule-page">
     <header class="schedule-page__header">
-      <h1 class="schedule-page__title">Schedule</h1>
+      <div>
+        <h1 class="schedule-page__title">Schedule</h1>
+        <p class="schedule-page__context">Viewing {{ yearMonth }} from mock roster data.</p>
+      </div>
+      <SyncStatusPill status="demo" :timestamp="schedulesStore.today" />
     </header>
+
+    <DataFreshnessStrip :timeline="demoTimeline" />
 
     <div class="t-skel" :class="{ 'is-revealed': !loading }">
       <div class="t-skel-skeleton is-pulsing">
@@ -90,6 +104,10 @@ function closeModal() {
   padding: 0 var(--space-4) var(--space-4);
 
   &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: var(--space-3);
     padding: var(--space-3) 0 var(--space-1);
   }
 
@@ -98,6 +116,12 @@ function closeModal() {
     font-size: var(--fs-2xl);
     font-weight: var(--fw-bold);
     color: var(--color-text-primary);
+  }
+
+  &__context {
+    margin: var(--space-1) 0 0;
+    font-size: var(--fs-base-sm);
+    color: var(--color-text-secondary);
   }
 
   &__grid,

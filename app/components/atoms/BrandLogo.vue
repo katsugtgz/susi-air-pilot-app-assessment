@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), { height: 28, variant: 'full' })
     :style="{ height: `${height}px` }"
     alt="Susi Air"
     draggable="false"
-  />
+  >
 </template>
 
 <style scoped lang="scss">

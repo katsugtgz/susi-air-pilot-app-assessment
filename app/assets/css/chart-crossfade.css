@@ -1,0 +1,17 @@
+/* Chart crossfade transition */
+.chart-crossfade-enter-active,
+.chart-crossfade-leave-active {
+  transition: opacity var(--reveal-dur) var(--reveal-ease);
+}
+
+.chart-crossfade-enter-from,
+.chart-crossfade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-crossfade-enter-active,
+  .chart-crossfade-leave-active {
+    transition: none;
+  }
+}

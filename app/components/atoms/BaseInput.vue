@@ -63,7 +63,7 @@ function onInput(event: Event) {
         @input="onInput"
         @blur="(p) => emit('blur', p)"
         @focus="(p) => emit('focus', p)"
-      />
+      >
       <button
         v-if="type === 'password'"
         type="button"
