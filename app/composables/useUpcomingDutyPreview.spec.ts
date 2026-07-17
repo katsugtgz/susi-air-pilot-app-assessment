@@ -89,6 +89,19 @@ describe('computeUpcomingDutyPreview', () => {
     expect(result).toEqual({ kind: 'empty' })
   })
 
+  it('surfaces an invalid today instead of silently producing an empty preview', () => {
+    // Given: schedules with legs but a malformed today value.
+    const schedules = [schedule({ count_logbooks: 6 })]
+    const legsByDate = { '2026-05-15': [FIRST_LEG] }
+
+    // When: the preview is derived with a non-ISO today.
+    const result = computeUpcomingDutyPreview({ schedules, legsByDate, today: 'not-a-date' })
+
+    // Then: bad input is surfaced, not silently collapsed to empty.
+    expect(result.kind).toBe('invalid')
+    if (result.kind === 'invalid') expect(result.reason).toContain('YYYY-MM-DD')
+  })
+
   it('returns a reactive wrapper with the pure result', () => {
     // Given: plain values accepted by the wrapper.
     const input = {

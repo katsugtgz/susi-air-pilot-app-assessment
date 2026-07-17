@@ -23,10 +23,19 @@ export type UpcomingDutyPreview =
       readonly legCount: number
     }
   | { readonly kind: 'empty' }
+  | { readonly kind: 'invalid'; readonly reason: string }
+
+const ISO_DATE = /^\d{4}-\d{2}-\d{2}$/
 
 export function computeUpcomingDutyPreview(
   input: UpcomingDutyPreviewInput,
 ): UpcomingDutyPreview {
+  if (!ISO_DATE.test(input.today)) {
+    return {
+      kind: 'invalid',
+      reason: `today must be a YYYY-MM-DD date, got "${input.today}"`,
+    }
+  }
   const upcoming = input.schedules
     .filter((schedule) => schedule.status === 1 && schedule.duty_date >= input.today)
     .sort((left, right) => left.duty_date.localeCompare(right.duty_date))
