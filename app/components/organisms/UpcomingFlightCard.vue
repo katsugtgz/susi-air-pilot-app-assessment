@@ -28,6 +28,12 @@ const statusVariant = computed<'safe' | 'neutral'>(() =>
 )
 const statusLabel = computed(() => (props.schedule.status === 2 ? 'Verified' : 'Upcoming'))
 
+const actionLabel = computed(() => {
+  const from = props.departure?.icao ?? props.schedule.base_name
+  const to = props.arrival?.icao ?? props.schedule.base_name
+  return `Open next duty details, ${from} to ${to}`
+})
+
 function onSelect() {
   if (!props.actionable) return
   emit('select', props.schedule)
@@ -35,13 +41,17 @@ function onSelect() {
 </script>
 
 <template>
-  <component
-    :is="actionable ? 'button' : 'article'"
+  <article
     class="upcoming-flight-card"
     :class="{ 'upcoming-flight-card--actionable': actionable }"
-    :type="actionable ? 'button' : undefined"
-    @click="onSelect"
   >
+    <button
+      v-if="actionable"
+      type="button"
+      class="upcoming-flight-card__action"
+      :aria-label="actionLabel"
+      @click="onSelect"
+    />
     <header class="upcoming-flight-card__header">
       <span class="upcoming-flight-card__label">Next duty</span>
       <Badge :variant="statusVariant" :label="statusLabel" />
@@ -63,7 +73,7 @@ function onSelect() {
         <span class="upcoming-flight-card__time-value">{{ arrivalTime ?? '—' }}</span>
       </div>
     </footer>
-  </component>
+  </article>
 </template>
 
 <style scoped lang="scss">
@@ -71,6 +81,7 @@ function onSelect() {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
+  position: relative;
   background: var(--color-surface);
   border: 0;
   border-radius: var(--radius-card);
@@ -85,14 +96,28 @@ function onSelect() {
     cursor: pointer;
   }
 
-  &--actionable:active {
+  // Overlay button keeps the card keyboard-accessible without nesting flow
+  // content (header/div/footer) inside a <button>, which is invalid HTML.
+  // Press + focus states reflect on the card via :has().
+  &:has(.upcoming-flight-card__action:active) {
     transform: translateY(0.5px);
     box-shadow: var(--shadow-xs);
   }
 
-  &--actionable:focus-visible {
+  &:has(.upcoming-flight-card__action:focus-visible) {
     outline: none;
     box-shadow: var(--shadow-focus);
+  }
+
+  &__action {
+    position: absolute;
+    inset: 0;
+    border: 0;
+    padding: 0;
+    margin: 0;
+    background: transparent;
+    border-radius: inherit;
+    cursor: pointer;
   }
 
   &__header {
