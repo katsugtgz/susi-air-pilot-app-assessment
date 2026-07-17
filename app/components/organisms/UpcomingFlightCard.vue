@@ -16,17 +16,32 @@ interface Props {
   arrivalTime?: string
   /** Optional flight number for the route header. */
   flightNumber?: string
+  /** Makes the card a keyboard-accessible button that opens duty details. */
+  actionable?: boolean
 }
 const props = withDefaults(defineProps<Props>(), {})
+
+const emit = defineEmits<{ (e: 'select', payload: Schedule): void }>()
 
 const statusVariant = computed<'safe' | 'neutral'>(() =>
   props.schedule.status === 2 ? 'safe' : 'neutral',
 )
 const statusLabel = computed(() => (props.schedule.status === 2 ? 'Verified' : 'Upcoming'))
+
+function onSelect() {
+  if (!props.actionable) return
+  emit('select', props.schedule)
+}
 </script>
 
 <template>
-  <article class="upcoming-flight-card">
+  <component
+    :is="actionable ? 'button' : 'article'"
+    class="upcoming-flight-card"
+    :class="{ 'upcoming-flight-card--actionable': actionable }"
+    :type="actionable ? 'button' : undefined"
+    @click="onSelect"
+  >
     <header class="upcoming-flight-card__header">
       <span class="upcoming-flight-card__label">Next duty</span>
       <Badge :variant="statusVariant" :label="statusLabel" />
@@ -48,7 +63,7 @@ const statusLabel = computed(() => (props.schedule.status === 2 ? 'Verified' : '
         <span class="upcoming-flight-card__time-value">{{ arrivalTime ?? '—' }}</span>
       </div>
     </footer>
-  </article>
+  </component>
 </template>
 
 <style scoped lang="scss">
@@ -57,15 +72,27 @@ const statusLabel = computed(() => (props.schedule.status === 2 ? 'Verified' : '
   flex-direction: column;
   gap: var(--space-4);
   background: var(--color-surface);
+  border: 0;
   border-radius: var(--radius-card);
   padding: var(--space-4);
   box-shadow: var(--shadow-sm);
-  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
   transition: box-shadow 0.15s ease, transform 0.05s ease;
 
-  &:active {
+  &--actionable {
+    cursor: pointer;
+  }
+
+  &--actionable:active {
     transform: translateY(0.5px);
     box-shadow: var(--shadow-xs);
+  }
+
+  &--actionable:focus-visible {
+    outline: none;
+    box-shadow: var(--shadow-focus);
   }
 
   &__header {

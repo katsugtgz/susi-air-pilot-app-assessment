@@ -46,6 +46,14 @@ function onContactCrd() {
 <template>
   <div class="sign-in-page">
     <Alert
+      variant="info"
+      title="Demo mode"
+      class="sign-in-page__alert"
+    >
+      Any Pilot ID and password opens the mock dashboard. No real authentication or live ops sync.
+    </Alert>
+
+    <Alert
       v-if="showCrdAlert"
       variant="info"
       title="Need help?"

@@ -1,20 +1,14 @@
 <script setup lang="ts">
-/**
- * Dashboard (Home) — composes the 5 dashboard organisms with data from
- * 5 Pinia stores. All mock data; no fetches.
- *
- * Reference "today" for flight hours is 2026-05-31 (per brief §3.2), while
- * schedules use their own today (2026-05-15) from mock-schedules.json.
- *
- * Phase 6: data is gated by useLoadingDelay so skeletons are demonstrable.
- */
+// Dashboard — composes dashboard organisms with Pinia stores. Mock data only.
 import { usePilotStore } from '~/stores/pilot'
 import { useSchedulesStore } from '~/stores/schedules'
 import { navigateTo } from '#app'
 import { useFlightHoursStore } from '~/stores/flightHours'
 import { useDocumentsStore } from '~/stores/documents'
 import { useNewsStore } from '~/stores/news'
-import type { NotificationItem } from '~/types'
+import { useFlightLegsStore } from '~/stores/flightLegs'
+import type { ActionItem } from '~/composables/useActionItems'
+import type { Schedule } from '~/types'
 
 definePageMeta({ layout: 'default' })
 
@@ -23,59 +17,63 @@ const schedulesStore = useSchedulesStore()
 const flightHoursStore = useFlightHoursStore()
 const documentsStore = useDocumentsStore()
 const newsStore = useNewsStore()
+const flightLegsStore = useFlightLegsStore()
 
-function onLogout() {
-  // No real auth — just return to the sign-in screen.
-  navigateTo('/')
-}
-
-// Dummy notifications for the bell dropdown. No backend; the brief ships
-// with mock data only. Mixed read/unread so the unread badge is meaningful.
-const notifications: NotificationItem[] = [
-  {
-    id: 'n1',
-    title: 'Duty starts in 2 hours',
-    body: 'PDG → PLM, Airbus ATR 72-600. Report by 14:30 LT.',
-    time: '12m ago',
-    variant: 'info',
-  },
-  {
-    id: 'n2',
-    title: 'Schedule change',
-    body: 'PKU → BTH leg added to tomorrow\'s roster.',
-    time: '1h ago',
-    variant: 'warning',
-  },
-  {
-    id: 'n3',
-    title: 'Medical certificate expires soon',
-    body: '14 days remaining — renew before 22 July 2026.',
-    time: 'Yesterday',
-    variant: 'warning',
-  },
-  {
-    id: 'n4',
-    title: 'Flight log verified',
-    body: 'Cruise log for flight SJO-320 has been countersigned.',
-    time: '2 days ago',
-    read: true,
-    variant: 'success',
-  },
-]
-
+function onLogout() { navigateTo('/') }
 const loading = useLoadingDelay(200)
-
-// Per brief §3.2, the chart's dev "today" is 2026-05-31.
 const FLIGHT_HOURS_TODAY = '2026-05-31'
 
-// Decode the next upcoming schedule's base_name into a fake departure/arrival
-// pair. The mock doesn't include route legs, so we surface the duty's base
-// as the arrival and Padang (PDG) as the canonical departure.
-const upcomingDeparture = computed(() => ({ icao: 'PDG', city: 'Padang' }))
-const upcomingArrival = computed(() => {
-  const next = schedulesStore.nextUpcomingSchedule
-  return next ? { icao: next.base_name } : { icao: '—' }
+const demoTimeline = useDemoTimeline(() => ({
+  scheduleToday: schedulesStore.today,
+  documentsToday: documentsStore.today,
+  flightHoursToday: FLIGHT_HOURS_TODAY,
+}))
+
+const upcomingDuty = useUpcomingDutyPreview(() => ({
+  schedules: schedulesStore.schedules,
+  legsByDate: flightLegsStore.legsByDate,
+  today: schedulesStore.today,
+}))
+
+const actionItems = useActionItems(() => ({
+  schedules: schedulesStore.schedules,
+  legsByDate: flightLegsStore.legsByDate,
+  documents: documentsStore.documents,
+  scheduleToday: schedulesStore.today,
+  documentsToday: documentsStore.today,
+  documentWarningDays: documentsStore.warningDays,
+}))
+
+const notifications = computed(() => [...actionItems.value.notifications])
+const selectedSchedule = ref<Schedule | null>(null)
+const detailOpen = computed(() => selectedSchedule.value !== null)
+
+function onFlightSelect(schedule: Schedule) {
+  selectedSchedule.value = schedule
+}
+function onDetailClose() {
+  selectedSchedule.value = null
+}
+
+const flightData = computed(() => {
+  const duty = upcomingDuty.value
+  if (duty.kind !== 'ready') return { departure: '—', arrival: schedulesStore.nextUpcomingSchedule?.base_name ?? '—' }
+  return {
+    departure: duty.departureCode,
+    arrival: duty.arrivalCode,
+    flightNumber: duty.flightNumber,
+    std: duty.std,
+    sta: duty.sta,
+  }
 })
+
+function onActionNavigate(payload: { item: ActionItem; to: string }) {
+  if (payload.item.kind === 'next-duty' && schedulesStore.nextUpcomingSchedule) {
+    selectedSchedule.value = schedulesStore.nextUpcomingSchedule
+    return
+  }
+  navigateTo(payload.to)
+}
 </script>
 
 <template>
@@ -89,6 +87,14 @@ const upcomingArrival = computed(() => {
     />
 
     <section class="home-page__section">
+      <DataFreshnessStrip :timeline="demoTimeline" />
+    </section>
+
+    <section class="home-page__section home-page__section--status">
+      <SyncStatusPill status="demo" :timestamp="demoTimeline.latestDataDate" />
+    </section>
+
+    <section class="home-page__operations">
       <div class="t-skel" :class="{ 'is-revealed': !loading }">
         <div class="t-skel-skeleton is-pulsing">
           <div class="home-page__skeleton-card">
@@ -99,11 +105,18 @@ const upcomingArrival = computed(() => {
           <UpcomingFlightCard
             v-if="schedulesStore.nextUpcomingSchedule"
             :schedule="schedulesStore.nextUpcomingSchedule"
-            :departure="upcomingDeparture"
-            :arrival="upcomingArrival"
+            :departure="{ icao: flightData.departure }"
+            :arrival="{ icao: flightData.arrival }"
+            :departure-time="flightData.std"
+            :arrival-time="flightData.sta"
+            :flight-number="flightData.flightNumber"
+            actionable
+            @select="onFlightSelect"
           />
         </div>
       </div>
+
+      <ActionCenter :items="actionItems.items" @navigate="onActionNavigate" />
     </section>
 
     <section class="home-page__section">
@@ -164,6 +177,14 @@ const upcomingArrival = computed(() => {
         :warning-days="documentsStore.warningDays"
       />
     </section>
+
+    <DutyDetailSheet
+      :open="detailOpen"
+      :schedule="selectedSchedule"
+      :legend="schedulesStore.legend"
+      :legs-by-date="flightLegsStore.legsByDate"
+      @close="onDetailClose"
+    />
   </div>
 </template>
 
@@ -176,6 +197,17 @@ const upcomingArrival = computed(() => {
 
   &__section {
     width: 100%;
+
+    &--status {
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
+  &__operations {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-4);
   }
 
   &__skeleton-card {
@@ -211,85 +243,10 @@ const upcomingArrival = computed(() => {
   }
 }
 
-/*
- * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
- * The transition / opacity / filter logic + --reveal-* / --pulse-* tokens
- * follow the reference. The stacking primitive is a single grid cell
- * (grid-area: 1 / 1) instead of position:absolute so the in-flow content
- * always reserves the slot height → the skeleton ↔ content swap is
- * layout-free (no reflow on reveal). Content sits on z-index: 2.
- */
-.t-skel {
-  display: grid;
-}
-.t-skel-skeleton,
-.t-skel-content {
-  grid-area: 1 / 1;
-  min-width: 0;
-}
-.t-skel-skeleton {
-  z-index: 1;
-  opacity: 1;
-  filter: blur(0);
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel-content {
-  z-index: 2;
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel.is-revealed .t-skel-skeleton {
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-}
-.t-skel.is-revealed .t-skel-content {
-  opacity: 1;
-  filter: blur(0);
-}
-// The invisible layer must not swallow taps: content sits above the skeleton
-// (z-index 2) even while opacity: 0, and opacity doesn't disable hit-testing.
-.t-skel:not(.is-revealed) .t-skel-content,
-.t-skel.is-revealed .t-skel-skeleton {
-  pointer-events: none;
-}
-.t-skel.is-resetting .t-skel-skeleton,
-.t-skel.is-resetting .t-skel-content {
-  transition: none !important;
-}
-
-.t-skel-skeleton.is-pulsing > * {
-  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
-}
-@keyframes t-skel-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: var(--pulse-min); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .t-skel-skeleton, .t-skel-content {
-    transition: none !important;
-  }
-  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
-}
-
-.chart-crossfade-enter-active,
-.chart-crossfade-leave-active {
-  transition: opacity var(--reveal-dur) var(--reveal-ease);
-}
-.chart-crossfade-enter-from,
-.chart-crossfade-leave-to {
-  opacity: 0;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .chart-crossfade-enter-active,
-  .chart-crossfade-leave-active {
-    transition: none;
+@media (min-width: 768px) {
+  .home-page__operations {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    align-items: start;
   }
 }
 </style>
