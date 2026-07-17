@@ -85,7 +85,7 @@ describe('UpcomingFlightCard', () => {
       },
     })
 
-    await wrapper.find('button.upcoming-flight-card').trigger('click')
+    await wrapper.find('button.upcoming-flight-card__action').trigger('click')
 
     expect(wrapper.emitted('select')).toEqual([[baseSchedule]])
   })
