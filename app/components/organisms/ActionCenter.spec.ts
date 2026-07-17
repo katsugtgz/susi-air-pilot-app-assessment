@@ -68,7 +68,7 @@ describe('ActionCenter', () => {
         body: 'SSI-2204 at 08:15, 2 leg(s) planned',
         severity: 'info',
         date: '2026-05-31',
-        to: '/schedule',
+        to: '/more',
       },
     ] as const
     const wrapper = mount(ActionCenter, { props: { items: routedItems } })
@@ -76,7 +76,7 @@ describe('ActionCenter', () => {
     await wrapper.find('[data-action-id="next-duty-2026-05-31"]').trigger('click')
 
     expect(wrapper.emitted('navigate')).toEqual([
-      [{ item: routedItems[0], to: '/schedule', source: 'action-center' }],
+      [{ item: routedItems[0], to: '/more', source: 'action-center' }],
     ])
   })
 })
