@@ -72,7 +72,7 @@ function nextDutyItem(input: ActionItemsInput): readonly RankedActionItem[] {
     legsByDate: input.legsByDate,
     today: input.scheduleToday,
   })
-  if (preview.kind === 'empty') return []
+  if (preview.kind !== 'ready') return []
   return [
     {
       id: `next-duty-${preview.dutyDate}`,
