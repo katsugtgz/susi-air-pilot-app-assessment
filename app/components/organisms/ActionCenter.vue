@@ -32,6 +32,12 @@ const attentionItems = computed(() =>
   props.items.filter((item) => item.kind === 'document-expired' || item.kind === 'document-soon'),
 )
 
+const groups = computed(() => [
+  { labelId: 'action-center-next', title: 'Next duty', fallback: 'No next duty flagged.', items: nextItems.value },
+  { labelId: 'action-center-changed', title: 'Changed', fallback: 'No changed items flagged.', items: changedItems.value },
+  { labelId: 'action-center-attention', title: 'Needs attention', fallback: 'No attention items flagged.', items: attentionItems.value },
+])
+
 function navigate(item: ActionCenterItem) {
   emit('navigate', { item, to: item.to ?? ROUTE_BY_KIND[item.kind], source: 'action-center' })
 }
@@ -53,51 +59,16 @@ function navigate(item: ActionCenterItem) {
       No action items in this demo snapshot.
     </p>
 
-    <section class="action-center__group" aria-labelledby="action-center-next">
-      <h3 id="action-center-next" class="action-center__group-title">Next duty</h3>
-      <p v-if="nextItems.length === 0" class="action-center__fallback">No next duty flagged.</p>
+    <section
+      v-for="group in groups"
+      :key="group.labelId"
+      class="action-center__group"
+      :aria-labelledby="group.labelId"
+    >
+      <h3 :id="group.labelId" class="action-center__group-title">{{ group.title }}</h3>
+      <p v-if="group.items.length === 0" class="action-center__fallback">{{ group.fallback }}</p>
       <button
-        v-for="item in nextItems"
-        :key="item.id"
-        type="button"
-        class="action-center__row"
-        :class="`action-center__row--${item.severity}`"
-        :data-action-id="item.id"
-        @click="navigate(item)"
-      >
-        <Icon :name="ICON_BY_SEVERITY[item.severity]" :size="18" decorative />
-        <span class="action-center__copy">
-          <span class="action-center__row-title">{{ item.title }}</span>
-          <span class="action-center__row-body">{{ item.body }}</span>
-        </span>
-      </button>
-    </section>
-
-    <section class="action-center__group" aria-labelledby="action-center-changed">
-      <h3 id="action-center-changed" class="action-center__group-title">Changed</h3>
-      <p v-if="changedItems.length === 0" class="action-center__fallback">No changed items flagged.</p>
-      <button
-        v-for="item in changedItems"
-        :key="item.id"
-        type="button"
-        class="action-center__row"
-        :class="`action-center__row--${item.severity}`"
-        :data-action-id="item.id"
-        @click="navigate(item)"
-      >
-        <Icon :name="ICON_BY_SEVERITY[item.severity]" :size="18" decorative />
-        <span class="action-center__copy">
-          <span class="action-center__row-title">{{ item.title }}</span>
-          <span class="action-center__row-body">{{ item.body }}</span>
-        </span>
-      </button>
-    </section>
-
-    <section class="action-center__group" aria-labelledby="action-center-attention">
-      <h3 id="action-center-attention" class="action-center__group-title">Needs attention</h3>
-      <p v-if="attentionItems.length === 0" class="action-center__fallback">No attention items flagged.</p>
-      <button
-        v-for="item in attentionItems"
+        v-for="item in group.items"
         :key="item.id"
         type="button"
         class="action-center__row"
