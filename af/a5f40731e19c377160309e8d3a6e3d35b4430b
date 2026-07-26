@@ -1,0 +1,504 @@
+app/pages/home.vue
+  s_2abb5ed3dcad54::t_ce8880de8650a9 98-102,104-107,115-117,123-132,134,245,250,251
+  s_4df040f04916ee::t_b547d478908e36 23
+  s_61cd6ec399c6c5::t_6dc3a06aaef89a 250-251
+  s_61cd6ec399c6c5::t_04dee69b24cc72 138-146,149-170
+app/components/molecules/BottomNavItem.vue
+  s_2abb5ed3dcad54::t_bc4dc4c04a3440 27-31,38-84
+app/components/molecules/LimitCard.vue
+  s_2abb5ed3dcad54::t_9906b1ab063643 38
+  s_61cd6ec399c6c5::t_04521ecfd88a8b 5-6,34-37,39-77,93
+.storybook/preview.ts
+  s_2abb5ed3dcad54::t_2383ec01df5491 3
+app/components/molecules/RangeToggleGroup.vue
+  s_2abb5ed3dcad54::t_ed04f0f88b0f07 29-73,77-78,96,106-107,118,134-169
+app/components/organisms/FlightHoursTrendChart.vue
+  s_2abb5ed3dcad54::t_8ce908c6d7f460 42-50,86,88-89
+  s_61cd6ec399c6c5::t_de89ef428eb873 134-140,146-150,159-178
+  s_61cd6ec399c6c5::t_a406ba02264ea7 87
+app/app.vue
+  s_2abb5ed3dcad54::t_050d5133ca4e45 21,23,35-38,47-49,55-56,63-64,71-74
+  s_61cd6ec399c6c5::t_5ebb594a1d465b 1,6-7,15-20,22,24,26-34,39,45-55,57-62,65-70
+  s_da700fe4574a54::t_72bdf0eeeadbb5 2-5,10
+app/components/atoms/ProgressRing.vue
+  s_2abb5ed3dcad54::t_e7102b6a263fa7 46-56,84-85,87-95,159-194
+  s_2abb5ed3dcad54::t_dd86a63ed41584 86
+app/components/atoms/Icon.vue
+  s_2abb5ed3dcad54::t_38b083aa57bbd9 6-10,12-29,32-53,56,73,80
+  s_ab52e4a851f7d3::t_e1ba2680d062e9 54-55
+  s_ab52e4a851f7d3::t_c59ad419a09f1f 30-31
+app/assets/css/transitions-root.css
+  s_2abb5ed3dcad54::t_e34baf4a1bbfae 1-88,90-204
+  s_61cd6ec399c6c5::t_6770ea060886d0 89
+app/pages/schedule.vue
+  s_5973537a5c42e0::t_bbf71681c2873f 187-192
+  s_2abb5ed3dcad54::t_2c2f8bd9b73926 59-65,68-79,147-168,170-176,178-186,193-201,209-211,214-215,219
+  s_4df040f04916ee::t_232425424aeeec 21
+  s_5b182757b437d4::t_8964e1ffe1cdc8 3-6,32
+  s_5b182757b437d4::t_a96154a90f0912 88-92,94-95
+  s_5b182757b437d4::t_91cb15d5f83744 169,177,202-208,212-213,216-218
+  s_1489494d9a78b3::t_a89f1f7bb864c0 7-9,12,18
+  s_1489494d9a78b3::t_436701a3074123 93
+app/components/organisms/DashboardHeader.vue
+  s_2abb5ed3dcad54::t_06baa8aa93e5a2 191-195,304-345
+  s_49e4f93454f37a::t_7f5c24648dc9ac 7-22,32-33,62-69,74-79,82-90,102-119,131-134,138-144,155-156,162-164,166-169,173,182,187,212-242,244-250,252-253,261,266,283,352,356-362,398-402,519-524,533,539-552,558-562,564,583,587,591,616,630-638,640-646,648-655,697
+  s_49e4f93454f37a::t_edf4b2febefd1f 251
+  s_1489494d9a78b3::t_ef1d0a099c7789 639,647
+README.md
+  s_5973537a5c42e0::t_cc56e6e90054e9 6,8,10,12,14,16,20,22,26
+  s_aee3fd39589610::t_f56a3911b1b261 1,3,27,29,34,38,40-45,47,49,51-53,59-60,64,66,68-72,75,79-94,118,122-124,142,144,147-148,152,154-155,157
+  s_aee3fd39589610::t_fcf5386b9aed71 99,107,109-114
+  s_aee3fd39589610::t_63bf27fb3b8019 98
+.gitignore
+  s_5973537a5c42e0::t_c934adac95452e 16
+  s_fef7d87784985a::t_81cd5605e65789 17-21
+public/sw.js
+  s_fef7d87784985a::t_f440326a9a122f 34-36
+nuxt.config.ts
+  s_4df040f04916ee::t_f0078d64140393 29-37
+  s_ab52e4a851f7d3::t_398102f62a6845 87-95
+  s_49e4f93454f37a::t_0e3bddf25a7f97 50-51
+  s_49e4f93454f37a::t_3ed96e7145aeb8 52-57
+  s_da700fe4574a54::t_e2f323734df483 17-23
+app/components/atoms/Alert.vue
+  s_4df040f04916ee::t_a434cd4ba5a028 125,131
+app/components/organisms/BottomNavigation.vue
+  s_4df040f04916ee::t_cd918da4d277b2 19
+app/components/molecules/NewsCard.vue
+  s_4df040f04916ee::t_cd4ef0cac1ebad 15-16,26-28,36-39
+  s_7dc098e76cd16d::t_e9a6cdf8f601c1 29-35
+app/assets/scss/tokens.scss
+  s_4df040f04916ee::t_d8037001b795f7 10-11,16-17,21
+  s_49e4f93454f37a::t_82df0843b6d169 133-196
+app/components/organisms/LatestNewsCarousel.vue
+  s_4df040f04916ee::t_f6269097d6b8a8 54
+  s_61cd6ec399c6c5::t_7e9cc72ac3a570 8,11-20,28-53,56-57,60-62,84-87,97-101,114-173
+scripts/generate-news-images.mjs
+  s_7dc098e76cd16d::t_5109defd7ce8ba 1-59
+app/assets/data/mock-news.json
+  s_7dc098e76cd16d::t_2d46715f679a8c 8,17,26,35
+package.json
+  s_7dc098e76cd16d::t_f02e22ee3c9a19 21
+  s_ab52e4a851f7d3::t_763c02749617e5 27
+  s_db743caf0bb189::t_c4c2a3f6049d71 22
+app/pages/more.vue
+  s_ab52e4a851f7d3::t_346163c8939948 3-6,16-17,20,22-23,34-35,37-38,50-65,72-74,82-90,93-103,105,113,114-121,130,133-140,147-190,192-194,196-207
+  s_c557a2c2f6308e::t_146d70c62f25be 36
+  s_49e4f93454f37a::t_414c0cf44fdd8c 7-14,39-46,75-81,91-92,108-113,122-125
+vitest.config.ts
+  s_ab52e4a851f7d3::t_d073761a5e939f 27
+app/components/organisms/CopilotBubble.stories.ts
+  s_ab52e4a851f7d3::t_eb1493e1b51f9d 1-22
+server/api/chat.post.ts
+  s_ab52e4a851f7d3::t_dc830d98069486 118,132
+  s_ab52e4a851f7d3::t_e9a0bceee45759 1-21,24-63,78-117,119-131,133-175,180,182-221
+  s_ab52e4a851f7d3::t_9c9d959741c563 22-23
+  s_db743caf0bb189::t_e1594ad3920e71 176-179,181
+  s_526b9df8c7de73::t_1b79db046e4a50 64-77
+app/components/molecules/ChatMessage.stories.ts
+  s_ab52e4a851f7d3::t_15e63ab14e4492 1-34
+app/components/organisms/CopilotBubble.vue
+  s_db743caf0bb189::t_e8150c454961de 44-45,49
+  s_ab52e4a851f7d3::t_2a816e2f3a66a4 1-43,46-48,50-263
+app/components/molecules/ChatMessage.vue
+  s_ab52e4a851f7d3::t_40bab05a3e1a08 1-77
+server/data/embeddings.json
+  s_ab52e4a851f7d3::t_fbe429afcfa4b7 1-5,776-780,1551-1555,2326-2330,3101-3105,3876-3880,4651-4655,5426-5430,6201-6205,6976-6980,7751-7755,8526-8530,9301-9305,10076-10080,10851-10855,11626-11630,12401-12405,13176-13180,13951-13955,14726-14730,15501-15505,16276-16280,17051-17055,17826-17830,18601-18605,19376-19380,20151-20155,20926-20930,21701-21705,22476-22480,23251-23255,24026-24030,24801-24805,25576-25580,26351-26355,27126-27130,27901-27905,28676-28680,29451-29455,30226-30230,31001-31005,31776-31780,32551-32555,33326-33330,34101-34105,34876-34880,35651-35655,36426-36430,37201-37205,37976-37980,38751-38752
+  s_db743caf0bb189::t_c9a65f75056437 6-775,781-1550,1556-2325,2331-3100,3106-3875,3881-4650,4656-5425,5431-6200,6206-6975,6981-7750,7756-8525,8531-9300,9306-10075,10081-10850,10856-11625,11631-12400,12406-13175,13181-13950,13956-14725,14731-15500,15506-16275,16281-17050,17056-17825,17831-18600,18606-19375,19381-20150,20156-20925,20931-21700,21706-22475,22481-23250,23256-24025,24031-24800,24806-25575,25581-26350,26356-27125,27131-27900,27906-28675,28681-29450,29456-30225,30231-31000,31006-31775,31781-32550,32556-33325,33331-34100,34106-34875,34881-35650,35656-36425,36431-37200,37206-37975,37981-38750
+app/components/organisms/CopilotSheet.spec.ts
+  s_ab52e4a851f7d3::t_0dea6fc2cfab0b 2-144
+  s_ab52e4a851f7d3::t_350ae00a4b8618 1
+app/components/molecules/SettingsListItem.spec.ts
+  s_ab52e4a851f7d3::t_2218409b6b52fc 1-77
+app/pages/logbook.vue
+  s_ab52e4a851f7d3::t_94660d5e76533f 3,8,13-14,18,20-22,24-26,29-31,37-38,44-60,64-66,71-96,98-115,118,120-122,133-134,139-141,143-153,165,168-171,176-177,186-248,250-293,295-297,321-375,377-383,385-406,414-416,419
+  s_5b182757b437d4::t_4a5e94e1f5a25d 172-175
+  s_5b182757b437d4::t_4a3c53a18f2a05 298-320
+  s_5b182757b437d4::t_877e26686a2ba9 4-7,9-11,15-17,23,27-28,32-36,39-42
+  s_5b182757b437d4::t_1c70d709e85413 116-117,119,123-127,131-132,138,154-160
+  s_5b182757b437d4::t_efaa65bf4e3433 67-70
+  s_5b182757b437d4::t_8ee73a4cab7644 97
+  s_5b182757b437d4::t_91cb15d5f83744 128-130,135-137,142,376,384,407-413,417-418,421-423
+  s_5b182757b437d4::t_b255de0f9dc780 43
+app/components/organisms/CopilotSheet.vue
+  s_ab52e4a851f7d3::t_ad94565243ac76 1-86,88-173,175-456
+  s_ab52e4a851f7d3::t_3271b64aa819e8 87
+  s_ab52e4a851f7d3::t_ed31d82fdd18d6 174
+scripts/build-embeddings.mjs
+  s_ab52e4a851f7d3::t_1d8c9c6c522ca2 1-185
+app/components/molecules/ChatMessage.spec.ts
+  s_ab52e4a851f7d3::t_3e9a61a5587bed 1-36
+.env.example
+  s_ab52e4a851f7d3::t_eeb727cd2eff39 1-14
+app/components/molecules/SettingsListItem.vue
+  s_ab52e4a851f7d3::t_b5d4b14014374d 1-150
+app/composables/useCopilotChat.ts
+  s_ab52e4a851f7d3::t_3a87dd5c65faf2 1-105,114-186
+  s_526b9df8c7de73::t_52a47c49251545 106-113
+server/utils/rag.spec.ts
+  s_ab52e4a851f7d3::t_bdcf691a31558f 1-85
+app/components/organisms/CopilotSheet.stories.ts
+  s_ab52e4a851f7d3::t_27c5f467dae850 1-69
+server/utils/rag.ts
+  s_ab52e4a851f7d3::t_08199e5638db80 1-51,54,61-63
+  s_526b9df8c7de73::t_681de84a2176f6 52-53,55-60
+app/components/molecules/SettingsListItem.stories.ts
+  s_ab52e4a851f7d3::t_b0bde7c47f10bb 1-36
+server/utils/gemini.ts
+  s_ab52e4a851f7d3::t_f1f7b986ed9037 42-43,47-48
+  s_ab52e4a851f7d3::t_3e3e2eaa409008 1-41,44-46,49-86
+app/layouts/default.vue
+  s_ab52e4a851f7d3::t_5ba2f113fb8ca4 37-40
+  s_61cd6ec399c6c5::t_4b28358ca97611 32
+app/composables/useCopilotChat.spec.ts
+  s_ab52e4a851f7d3::t_4030c3f1a5d3d7 1-157
+app/composables/useLogbookEntries.ts
+  s_ab52e4a851f7d3::t_af73f12ed34dbb 1-18,20-35,44-60,63-115,152-168,185-192,196,200-211,213,216
+  s_ab52e4a851f7d3::t_d44dd9fec3e236 193-195,197-198
+  s_5b182757b437d4::t_9bdea604509fb7 212,214
+  s_5b182757b437d4::t_91cb15d5f83744 215
+  s_5b182757b437d4::t_a369d713771ae9 121-122,124-146
+  s_5b182757b437d4::t_8d25da93b79097 147-151,169-184,199
+  s_5b182757b437d4::t_3d792118989f4e 19
+  s_5b182757b437d4::t_accf7bbfd26298 36-43
+  s_5b182757b437d4::t_5d966a9d9202c6 61-62
+  s_1489494d9a78b3::t_4a5274e6f3c62c 116-120,123
+app/components/organisms/CopilotBubble.spec.ts
+  s_ab52e4a851f7d3::t_c29d2303c12d43 100
+  s_ab52e4a851f7d3::t_c80a42f7a1f81f 1-4,26-32,35-37,39-43,45-81,83-99,101-138,140-146,148-167
+  s_ab52e4a851f7d3::t_c37b45216f18a4 5-25,33-34,38
+  s_ab52e4a851f7d3::t_ea43385034747f 44
+  s_ab52e4a851f7d3::t_45d1f0445e0957 139,147
+  s_ab52e4a851f7d3::t_2cbfc1b0a3abc8 82
+app/composables/useLogbookEntries.spec.ts
+  s_ab52e4a851f7d3::t_3a74253a906b1a 1-2,5-66,68-72,76-77,80-114,116-120,123-135,219
+  s_ab52e4a851f7d3::t_d4fb42ced215a5 121-122
+  s_ab52e4a851f7d3::t_3fc234926bbd2c 67,73-75,78-79
+  s_ab52e4a851f7d3::t_c12cbcacdf2150 3
+  s_5b182757b437d4::t_30906295f48446 4
+  s_5b182757b437d4::t_2308c88ee8f940 115
+  s_5b182757b437d4::t_8d2c5eb6d73aad 136-218
+package-lock.json
+  s_ab52e4a851f7d3::t_fa3e57a324d6c0 10,1449-1472,5269-5325,6995-7000,9088-9096,9221-9226,10211-10219,10679-10687,11703-11708,11836-11858,12195-12206,12309-12354,12650-12675,15029-15037,15107-15127,15596-15601,16598-16617,17988-18009,18988-19010,23257-23265
+app/composables/usePersistedState.ts
+  s_c72a8dab9504f7::t_f12f3705a8d7e9 1-47
+app/components/organisms/BottomSheet.stories.ts
+  s_c72a8dab9504f7::t_c0483acfced12c 1-71
+app/composables/usePersistedState.spec.ts
+  s_c72a8dab9504f7::t_c85766b35076f6 48,75,85-86,96-97,101-103
+  s_c72a8dab9504f7::t_42f9e098d964b4 2,33-34,36-47,49-74,76-84,87-95,98-100,104-109
+  s_c72a8dab9504f7::t_05249d3303a882 1,3-32
+  s_c72a8dab9504f7::t_d5e28496ebafd3 35
+app/assets/data/mock-flight-legs.json
+  s_c72a8dab9504f7::t_6743c93f5b7c23 1-18,20,22-26,29,31-35,38,40-44,47,49-56,58,60-64,67,69-76,78,80-84,87,89-93,96,98-102,105,107-111,114,116-120,123,125-132,134,136-140,143,145-149,152,154-158,161,163-170,172,174-178,181,183-187,190,192-196,199,201-208,210,212-216,219,221-225,228,230-234,237,239-246,248,250-254,257,259-263,266,268-272,275,277-281,284,286-290,293,295-302,304,306-310,313,315-319,322,324-328,331,333-337,340,342-346,349,351-358,360,362-366,369,371-378,380,382-386,389,391-395,398,400-404,406-407,409-416,418,420-424,427,429-433,436-442,445,447-454,456,458-462,465,467-471,474,476-480,483,485-492,494,496-500,503,505-512,514,516-520,523,525-529,532,534-538,541,543-550,552,554-558,561,563-567,570,572-576,579,581-588,590,592-596,599,601-605,608,610-614,617,619-623,626,628-632,635,637-644,646,648-652,655,657-661,664,666-670,673,675-679,682,684-688,691,693-700,702,704-708,711,713-717,720,722-726,729,731-738,740,742-746,749,751-755,758,760-764,767,769-773,776,778-782,785,787-794,796,798-802,805,807-811,814,816-820,823,825-829,832,834-838,841,843-850,852,854-858,861,863-867,870,872-876,879,881-885,888,890-894,897,899-906,908,910-914,917,919-926,928,930-934,937,939-943,946,948-952,955,957-964,966,968-972,975,977-981,984,986-990,993,995-1002,1004,1006-1010,1013,1015-1019,1022,1024-1028,1031,1033-1037,1040,1042-1046,1049,1051-1058,1060,1062-1066,1069,1071-1075,1078,1080-1084,1087,1089-1093,1096,1098-1102,1105,1107-1114,1116,1118-1122,1125,1127-1134,1136,1138-1142,1145-1154,1156,1158-1162,1165,1167-1171,1174,1176-1180,1183-1192,1194,1196-1200,1203,1205-1212,1214,1216-1220,1223,1225-1229,1232,1234-1238,1241,1243-1247,1250,1252-1256,1259,1261-1268,1270,1272-1276,1279,1281-1285,1288,1290-1294,1297,1299-1303,1306,1308-1312,1315,1317-1324,1326,1328-1332,1335,1337-1341,1344,1346-1350,1353,1355-1362,1364,1366-1370,1373,1375-1379,1382,1384-1388,1391,1393-1397,1400,1402-1406,1409,1411-1418,1420,1422-1426,1429,1431-1435,1438,1440-1444,1447,1449-1453,1456,1458-1462,1465,1467-1474,1476,1478-1482,1485,1487-1491,1494,1496-1500,1503,1505-1512,1514,1516-1520,1523,1525-1529,1532,1534-1538,1541,1543-1550,1552,1554-1558,1561,1563-1567,1570,1572-1576,1579,1581-1588,1590,1592-1596,1599,1601-1605,1608,1610-1614,1617,1619-1623,1626,1628-1632,1635,1637-1644,1646,1648-1652,1655,1657-1660
+  s_c72a8dab9504f7::t_1fdbb03d93589f 19,21,27-28,30,36-37,39,45-46,48,57,59,65-66,68,77,79,85-86,88,94-95,97,103-104,106,112-113,115,121-122,124,133,135,141-142,144,150-151,153,159-160,162,171,173,179-180,182,188-189,191,197-198,200,209,211,217-218,220,226-227,229,235-236,238,247,249,255-256,258,264-265,267,273-274,276,282-283,285,291-292,294,303,305,311-312,314,320-321,323,329-330,332,338-339,341,347-348,350,359,361,367-368,370,379,381,387-388,390,396-397,399,405,408,417,419,425-426,428,434-435,443-444,446,455,457,463-464,466,472-473,475,481-482,484,493,495,501-502,504,513,515,521-522,524,530-531,533,539-540,542,551,553,559-560,562,568-569,571,577-578,580,589,591,597-598,600,606-607,609,615-616,618,624-625,627,633-634,636,645,647,653-654,656,662-663,665,671-672,674,680-681,683,689-690,692,701,703,709-710,712,718-719,721,727-728,730,739,741,747-748,750,756-757,759,765-766,768,774-775,777,783-784,786,795,797,803-804,806,812-813,815,821-822,824,830-831,833,839-840,842,851,853,859-860,862,868-869,871,877-878,880,886-887,889,895-896,898,907,909,915-916,918,927,929,935-936,938,944-945,947,953-954,956,965,967,973-974,976,982-983,985,991-992,994,1003,1005,1011-1012,1014,1020-1021,1023,1029-1030,1032,1038-1039,1041,1047-1048,1050,1059,1061,1067-1068,1070,1076-1077,1079,1085-1086,1088,1094-1095,1097,1103-1104,1106,1115,1117,1123-1124,1126,1135,1137,1143-1144,1155,1157,1163-1164,1166,1172-1173,1175,1181-1182,1193,1195,1201-1202,1204,1213,1215,1221-1222,1224,1230-1231,1233,1239-1240,1242,1248-1249,1251,1257-1258,1260,1269,1271,1277-1278,1280,1286-1287,1289,1295-1296,1298,1304-1305,1307,1313-1314,1316,1325,1327,1333-1334,1336,1342-1343,1345,1351-1352,1354,1363,1365,1371-1372,1374,1380-1381,1383,1389-1390,1392,1398-1399,1401,1407-1408,1410,1419,1421,1427-1428,1430,1436-1437,1439,1445-1446,1448,1454-1455,1457,1463-1464,1466,1475,1477,1483-1484,1486,1492-1493,1495,1501-1502,1504,1513,1515,1521-1522,1524,1530-1531,1533,1539-1540,1542,1551,1553,1559-1560,1562,1568-1569,1571,1577-1578,1580,1589,1591,1597-1598,1600,1606-1607,1609,1615-1616,1618,1624-1625,1627,1633-1634,1636,1645,1647,1653-1654,1656
+app/types/index.ts
+  s_c72a8dab9504f7::t_6187e1f60bc089 96-112
+  s_5b182757b437d4::t_b37928497ecd21 113-123
+app/components/organisms/BottomSheet.spec.ts
+  s_c72a8dab9504f7::t_f97fa4206811ad 1-207,218-219
+  s_c72a8dab9504f7::t_21eb75454027c1 208-217
+app/composables/flight-legs-data.spec.ts
+  s_c72a8dab9504f7::t_932fbe6570e85b 2-9
+  s_c72a8dab9504f7::t_dd9cf0f5117572 49,51-52
+  s_c72a8dab9504f7::t_835d8c958e1a63 1,10-48,50,53-99
+app/components/organisms/BottomSheet.vue
+  s_c72a8dab9504f7::t_eb81febcf80a16 1-303
+app/components/organisms/SignInForm.vue
+  s_c557a2c2f6308e::t_f615c15e26f2d6 62
+  s_c557a2c2f6308e::t_41772b2e0dd860 4-7,17,27
+  s_dde7a0fc16af56::t_d096170bae7f36 28
+app/stores/session.spec.ts
+  s_c557a2c2f6308e::t_0684a6f916e993 1,4-33
+  s_c557a2c2f6308e::t_5507c2b5b89ac3 2-3,34-40,42,44-46,48-49,51-53,55-57,59-70,72-82,84-86,88-90,92-93
+  s_1489494d9a78b3::t_edb73cc2bed5e9 41,43,47,50,54,58,71,83,87,91
+app/stores/session.ts
+  s_c557a2c2f6308e::t_f96cab8ef0e01f 1-13,15,17-18,20-22,24-25,27
+  s_1489494d9a78b3::t_e52cd803ce89eb 14,16,19,23,26
+app/middleware/resolveAuthRedirect.ts
+  s_c557a2c2f6308e::t_2668109ecc573d 1-16
+app/middleware/auth.global.spec.ts
+  s_c557a2c2f6308e::t_567ab2e464ef2c 1,3-26,28,32-34
+  s_c557a2c2f6308e::t_56f455319cb151 2,27,29-31
+app/middleware/auth.global.ts
+  s_c557a2c2f6308e::t_4f1f8606e42ca1 1-8,11-13,15-22
+  s_c557a2c2f6308e::t_4173ed3145b0d8 9-10,14
+app/pages/index.vue
+  s_c557a2c2f6308e::t_7a4c26b7171ba3 4-6,12-13,26-28,32-33
+app/components/organisms/SignInForm.spec.ts
+  s_c557a2c2f6308e::t_86369daedf868e 19-23
+app/components/organisms/DutyDetailSheet.spec.ts
+  s_5b182757b437d4::t_623b6a3d715208 1-175
+app/components/organisms/DutyDetailSheet.stories.ts
+  s_5b182757b437d4::t_da00e9e6ea5152 1-128
+app/stores/logbook.ts
+  s_5b182757b437d4::t_2ab3640713fd9c 1-35
+app/stores/logbook.spec.ts
+  s_5b182757b437d4::t_cfea258c93b9fe 2
+  s_5b182757b437d4::t_19497e9e17cc5d 8-33,36
+  s_5b182757b437d4::t_871653aaeae453 1,3-7,34-35,37,39-41,43-66,68-75,78-82,84-91,93,95,97-118
+  s_5b182757b437d4::t_c493113d09cdf8 38,42
+  s_5b182757b437d4::t_13905b326de619 67,76,83,92,94
+  s_5b182757b437d4::t_e5aa492d146040 77,96
+app/composables/useDutyDetail.ts
+  s_5b182757b437d4::t_2e52a3130df31c 1-73
+app/components/organisms/LogbookEntrySheet.stories.ts
+  s_5b182757b437d4::t_84cd9ca5350ccf 1-20
+app/components/organisms/DutyDetailSheet.vue
+  s_5b182757b437d4::t_a4e0e74b72bc11 1-28,33-82,86-227,229-233,235-269
+  s_5b182757b437d4::t_655d9297bf0903 228,234
+  s_5b182757b437d4::t_91cb15d5f83744 29-32,83-85
+app/composables/useDutyDetail.spec.ts
+  s_5b182757b437d4::t_2a6d4b481a0b0b 1-105
+app/components/organisms/LogbookEntrySheet.spec.ts
+  s_5b182757b437d4::t_c91dfb76440160 94,100-104
+  s_5b182757b437d4::t_56c91e0b5894a2 1-93,95-99,105-177
+app/components/organisms/LogbookEntrySheet.vue
+  s_5b182757b437d4::t_a34c707322661c 1-13,15-81,83-113,121-126,133-156,163-170,177-181,187-192,194-217
+  s_5b182757b437d4::t_91cb15d5f83744 114-119,127-132,157-162,171-176,182-186
+  s_1489494d9a78b3::t_1af648c13e7c27 193
+  s_1489494d9a78b3::t_77dbdcaa59ab91 14
+  s_1489494d9a78b3::t_35d95d89721690 120
+  s_1489494d9a78b3::t_ef4e5c2a546ee8 82
+app/components/atoms/OfflineBanner.vue
+  s_61cd6ec399c6c5::t_ea6ef81717305e 1-71
+app/components/atoms/OfflineBanner.spec.ts
+  s_61cd6ec399c6c5::t_e9e9a1b21d936c 1-75
+app/components/atoms/OfflineBanner.stories.ts
+  s_61cd6ec399c6c5::t_1e6d0906aef9e4 1,3-12,14-33,38-41
+  s_61cd6ec399c6c5::t_f0a4b31155ed9a 2,13,34-37
+app/components/molecules/CalendarDay.spec.ts
+  s_61cd6ec399c6c5::t_991b194f038484 97-138
+app/components/molecules/CalendarDay.vue
+  s_61cd6ec399c6c5::t_0df91faa11dc3c 99-104,120-123
+  s_61cd6ec399c6c5::t_b234129a6d8967 4-5,34-41,47-71,75-76,84,94
+  s_dde7a0fc16af56::t_1b2238c9b0675a 124
+  s_1489494d9a78b3::t_9b24dd7441cc37 42-46
+app/composables/useTheme.ts
+  s_49e4f93454f37a::t_de38631ecefe78 1-60,68-71,73-75,81-117
+  s_1489494d9a78b3::t_ec077e1106541f 61-67,72,76-80,118-121
+app/components/atoms/Skeleton.vue
+  s_49e4f93454f37a::t_53a32ba1c8cea3 47-51
+app/components/organisms/LicensesSheet.spec.ts
+  s_49e4f93454f37a::t_db77cf6c24f64f 3-4,21,26,28-49,51-58,60-67,69-75
+  s_49e4f93454f37a::t_e88fc1f2d44183 1-2,5-20,22-25,27,50,59,68
+app/composables/useTheme.spec.ts
+  s_49e4f93454f37a::t_13ce56370d9527 1-32
+app/components/organisms/AppearanceSheet.vue
+  s_49e4f93454f37a::t_f65aaa0f5f7d26 25-26
+  s_49e4f93454f37a::t_4641ed9c738f9e 1-17,19-24,27-58,59-157
+  s_cd2f43550c6c4a::t_0a18cb6b154fa7 18
+app/components/atoms/ToggleSwitch.spec.ts
+  s_49e4f93454f37a::t_17130d48cd8893 36-37
+  s_49e4f93454f37a::t_d5177b2a638b29 1-35,38-72
+app/components/organisms/AppearanceSheet.stories.ts
+  s_49e4f93454f37a::t_3e525d1e91725b 1-20
+app/components/organisms/LicensesSheet.stories.ts
+  s_49e4f93454f37a::t_65500b53d8a156 1-20
+app/composables/useDocumentFilter.spec.ts
+  s_49e4f93454f37a::t_d41db00360195e 1-77
+app/components/organisms/NotificationPrefsSheet.spec.ts
+  s_49e4f93454f37a::t_4e053b86f7c31f 3,47,54-59,61-67,69-79,81-97,99-105
+  s_49e4f93454f37a::t_9e128dc8d1bdb9 4-35,46
+  s_49e4f93454f37a::t_17615a27589bdb 48-53,60,68,80,98
+  s_49e4f93454f37a::t_fce17a21425ff5 1-2,36-45
+app/components/atoms/ToggleSwitch.vue
+  s_49e4f93454f37a::t_b163724f278266 1-113
+app/composables/useDocumentFilter.ts
+  s_49e4f93454f37a::t_cbf9913650fb93 1-23,30-34,37-58
+  s_49e4f93454f37a::t_249f9406278af7 24-29,35-36
+app/components/organisms/NotificationPrefsSheet.stories.ts
+  s_49e4f93454f37a::t_349dd22bcf5564 1-20
+app/components/organisms/LicensesSheet.vue
+  s_49e4f93454f37a::t_882ba6a1e40b29 1-111
+app/components/atoms/ToggleSwitch.stories.ts
+  s_49e4f93454f37a::t_91ef3565936288 1-51
+app/pages/documents.vue
+  s_49e4f93454f37a::t_64ff7582b4a34d 1-180
+app/components/organisms/DashboardHeader.spec.ts
+  s_49e4f93454f37a::t_19b9ba6d3acf32 1-2,37-48,50-52
+  s_49e4f93454f37a::t_5a16b8bb9aadae 49
+  s_49e4f93454f37a::t_909fb71ccdd296 5-36
+  s_49e4f93454f37a::t_2b55d00895cef6 55-72,74,79,85,89,95,109,115,128,134,146,152,157,165,172,179,185,193,200,208,218,228,230,232,237,242-244,246-270,272-284,286-308,310-321,323-330,332-336,338-349,353-356,358-371,373-386
+  s_49e4f93454f37a::t_5e965aa00dd237 350-352,357
+  s_49e4f93454f37a::t_18176484c8a4e1 53,245,271,285,309,322,331,337,372
+app/components/organisms/NotificationPrefsSheet.vue
+  s_49e4f93454f37a::t_215262a33acaea 35,47
+  s_49e4f93454f37a::t_0cb607c9b3ad5a 1-34,36-46,48-129
+app/components/organisms/AppearanceSheet.spec.ts
+  s_49e4f93454f37a::t_293804f3b92ebf 90-91,96-97,110,115
+  s_49e4f93454f37a::t_57f0318bde5055 1-2,39-48,57-61,84-86,98-99,109
+  s_49e4f93454f37a::t_5e89d6c4925692 38,62-63,65-79,82-83,87-89,93-95,100-104,106-108,111-114,116-119,121-127
+  s_49e4f93454f37a::t_aba3788b7165ef 3-37
+  s_1489494d9a78b3::t_684ea8e75d220d 49-56,64,80-81,92,105,120
+app/components/atoms/Badge.vue
+  s_49e4f93454f37a::t_ddf4a98349e3fe 42-43,47-48,52
+app/stores/flightLegs.spec.ts
+  s_1489494d9a78b3::t_bf1d60379ecb10 1-27
+app/stores/flightLegs.ts
+  s_1489494d9a78b3::t_948272981cbb7b 1-13
+app/components/atoms/BaseInput.vue
+  s_526b9df8c7de73::t_1e46eb02194d71 38-41
+app/middleware/page-transition.global.ts
+  s_da700fe4574a54::t_5ceb58bcf33cad 1-33
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.13",
+  "base_commit_sha": "afa5f40731e19c377160309e8d3a6e3d35b4430b",
+  "prompts": {},
+  "sessions": {
+    "s_1489494d9a78b3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09d7d43f5ffe6o1LHe0lG6jJbw",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_2abb5ed3dcad54": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dc1-378d-7d01-bf56-55e1cc34cda7",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_49e4f93454f37a": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b46b8ffew5oJ2W36MfjEvi",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_4df040f04916ee": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5deb-98a4-7c4c-a2fe-5465f6482811",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_526b9df8c7de73": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f083b808-47a9-47fa-a56f-acbf87a31d56",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_5973537a5c42e0": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0802370f-d25c-4ebb-acf4-c106a9038e83",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_5b182757b437d4": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b4777ffehVbGHyyQeLbIro",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_61cd6ec399c6c5": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b4626ffebMybR184xexJPf",
+        "model": "glm-5.2"
+      },
+      "human_author": null
+    },
+    "s_7dc098e76cd16d": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dfe-4ac8-74ba-9505-2920a9abbee4",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_8759ac076886df": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a25a5a75ffeoxOzUF2t34Rskr",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_ab52e4a851f7d3": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_0a1b995ccffeNH1Ma8AAYrqKs5",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_aee3fd39589610": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5e62-5006-7277-8f3f-4bc1cc0258d4",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_c557a2c2f6308e": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f6b47b5ffeoPqiibU7eKwaAi",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_c72a8dab9504f7": {
+      "agent_id": {
+        "tool": "opencode",
+        "id": "ses_09f7eaaa4ffe6CTOTiKLLSS83O",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_cd2f43550c6c4a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "a02b7b90-6402-4c34-8671-686154bc6b89",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_da700fe4574a54": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "624a5366-51f1-42f4-b20e-6458b821eba4",
+        "model": "claude-opus-4-8"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_db743caf0bb189": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "fe98da95-4070-4794-a5d5-7d5e11f8c9a1",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_dde7a0fc16af56": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d333cf2a-9ad0-4169-9df4-85c57ac47631",
+        "model": "claude-fable-5"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    },
+    "s_fef7d87784985a": {
+      "agent_id": {
+        "tool": "pi",
+        "id": "019f5dde-7af4-74bc-a892-2852b5afb3ed",
+        "model": "glm-5.2"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
