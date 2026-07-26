@@ -2,17 +2,17 @@
 
 > Mobile-first Nuxt 4 PWA for Susi Air pilots — Sign In, dashboard, calendar, logbook, profile, and a floating AI Copilot assistant. All data is mock JSON; no backend or auth. Built as a technical assessment.
 
-**Live demo:** <https://susi-air-pilot-app-assessment-nu.vercel.app/> · [Upstream app](https://susi-air-pilot-app-assessment.vercel.app/) · [Storybook](https://susi-air-pilot-app-assessment-story.vercel.app/)
+**Live demo:** <https://susi-air-pilot-app-assessment-nu.vercel.app/> · [Storybook](https://susi-air-pilot-app-assessment-story.vercel.app/)
 
-Builds on upstream `main` @ `f7181c7` (Sign In / Home / Schedule base, atomic design, brief-locked business rules). This fork adds a motion-design layer, icon tree-shaking, accessibility hardening, and three new surfaces.
+Originally built for a Susi Air technical assessment, then extended with the AI copilot, logbook, and motion/accessibility polish.
 
 ## Features
 
 **Core surfaces**
 
-- **Sign In** (`/`) — no auth; any input navigates to `/home` per brief.
+- **Sign In** (`/`) — demo-only; any input navigates to `/home` (no real authentication).
 - **Home dashboard** (`/home`) — upcoming flight, flight-hours trend chart (fixed ±7-day display window, 1w / 1m / 3m / 6m / 1y range toggle), hours-to-limit cards (28 / 90 / 365-day + annual thresholds), document list with expiry badges, latest news carousel.
-- **Schedule** (`/schedule`) — month calendar grid, tick-vs-number badges driven by the `legend[]` JSON prop (never hardcoded codes), tap-a-date detail modal, legend.
+- **Schedule** (`/schedule`) — month calendar grid with duty badges rendered from legend data (never hardcoded codes), tap-a-date detail modal, legend.
 - **Logbook** (`/logbook`) — month-grouped qualifying entries (`count_logbooks > 0`) derived from the schedules store via the pure `useLogbookEntries` composable. Each row shows date, duty badge tinted from the legend color, base, flight counts, and a verified / pending status. Summary strip: entries / verified / total flight hours.
 - **More** (`/more`) — pilot profile header (name, ID, total hours from the pilot store) + grouped settings menu (Account / Preferences / About) built from the `SettingsListItem` molecule. Sign out returns to `/`.
 
@@ -48,6 +48,8 @@ Other scripts: `build` · `preview` · `test:coverage` · `test:storybook:ci` ·
 2. Set `NUXT_GEMINI_API_KEYS` (comma-separated; round-robins, retries the next key only on HTTP 429). A single `NUXT_GEMINI_API_KEY` is supported as a fallback.
    - Keys map to **server-only** `runtimeConfig.gemini*` in `nuxt.config.ts` — they are **never** exposed to the client bundle. Do not move them to `.public`.
 3. *(Optional)* `npm run build-embeddings` precomputes the RAG corpus vectors into `server/data/embeddings.json`. Works without a key — it writes `embedding: null` per chunk and the chat endpoint falls back to full-corpus context.
+
+> Note: `server/data/embeddings.json` is a generated artifact produced by the `build-embeddings` script, not hand-authored data.
 
 With no keys configured the app runs normally; `/api/chat` returns `503 AI copilot is not configured` and the Copilot surfaces degrade gracefully.
 
@@ -103,7 +105,7 @@ scripts/build-embeddings.mjs  # precompute RAG vectors
 
 Three layers, each catching a different bug class:
 
-1. **Unit specs** (Vitest + happy-dom) — pure-function tests for the composables. `useRollingSum.spec.ts` hand-verifies the brief's ±7-day window example across all chart points.
+1. **Unit specs** (Vitest + happy-dom) — pure-function tests for the composables. `useRollingSum.spec.ts` hand-verifies the ±7-day rolling window across all chart points.
 2. **Component specs** (`@vue/test-utils`) — mount + assert on rendered output. `FlightHoursTrendChart` exposes `{ chartData, chartOptions }` via `defineExpose` so specs read structured data without parsing canvas pixels.
 3. **Story smoke tests** (`@storybook/test-runner` + Playwright) — every story visited in headless Chromium; catches integration bugs unit tests miss.
 
@@ -118,4 +120,4 @@ CI never runs `npm run build`; build regressions surface at deploy.
 
 ## License
 
-Technical test for Susi Air. Brand assets belong to PT ASI Pujiastuti Aviation. Source is unlicensed — evaluation only.
+No open-source license is granted. Source is shared for evaluation and portfolio purposes only — see [NOTICE](NOTICE). Susi Air brand assets belong to PT ASI Pujiastuti Aviation.
