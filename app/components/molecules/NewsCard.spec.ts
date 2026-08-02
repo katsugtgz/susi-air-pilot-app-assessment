@@ -29,10 +29,10 @@ describe('NewsCard', () => {
     expect(wrapper.find('img').attributes('src')).toBe('a.jpg')
   })
 
-  it('emits click on card click', async () => {
+  it('renders as static article content', () => {
     const wrapper = mount(NewsCard, { props: { title: 't' } })
-    await wrapper.trigger('click')
-    expect(wrapper.emitted('click')).toHaveLength(1)
+    expect(wrapper.element.tagName).toBe('ARTICLE')
+    expect(wrapper.attributes('tabindex')).toBeUndefined()
   })
 
   it('renders meta line when date or readTime given', () => {

@@ -7,8 +7,6 @@ interface Props {
 }
 const props = withDefaults(defineProps<Props>(), { title: 'Latest News' })
 
-defineEmits<{ (e: 'select', id: string): void }>()
-
 const scrollRef = ref<HTMLElement | null>(null)
 const activeIndex = ref(0)
 
@@ -45,7 +43,6 @@ function onScroll() {
           :date="item.date"
           :read-time="item.readTime"
           :eager="index === 0"
-          @click="$emit('select', item.id)"
         />
       </div>
     </div>

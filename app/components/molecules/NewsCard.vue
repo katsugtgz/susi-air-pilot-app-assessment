@@ -16,11 +16,10 @@ interface Props {
   eager?: boolean
 }
 defineProps<Props>()
-defineEmits<{ (e: 'click'): void }>()
 </script>
 
 <template>
-  <article class="news-card" @click="$emit('click')">
+  <article class="news-card">
     <div v-if="imageUrl || $slots.image" class="news-card__media">
       <slot name="image">
         <img
@@ -37,7 +36,7 @@ defineEmits<{ (e: 'click'): void }>()
           :loading="eager ? 'eager' : 'lazy'"
           :decoding="eager ? undefined : 'async'"
           :fetchpriority="eager ? 'high' : undefined"
-        />
+        >
       </slot>
     </div>
     <div class="news-card__body">
@@ -61,18 +60,8 @@ defineEmits<{ (e: 'click'): void }>()
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
-  cursor: pointer;
   width: 280px;
   flex-shrink: 0;
-  transition: box-shadow 0.15s ease, transform 0.1s ease;
-
-  &:hover {
-    box-shadow: var(--shadow-md);
-  }
-
-  &:active {
-    transform: translateY(0.5px);
-  }
 
   &__media {
     width: 100%;
