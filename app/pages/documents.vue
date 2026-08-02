@@ -43,15 +43,14 @@ function back() {
       <h1 class="documents-page__title">Documents</h1>
     </header>
 
-    <div class="documents-page__chips" role="tablist" aria-label="Document status filter">
+    <div class="documents-page__chips" role="group" aria-label="Document status filter">
       <button
         v-for="f in FILTERS"
         :key="f.key"
         type="button"
         class="documents-page__chip"
         :class="{ 'documents-page__chip--active': activeFilter === f.key }"
-        role="tab"
-        :aria-selected="activeFilter === f.key ? 'true' : 'false'"
+        :aria-pressed="activeFilter === f.key ? 'true' : 'false'"
         @click="activeFilter = f.key"
       >
         <span>{{ f.label }}</span>

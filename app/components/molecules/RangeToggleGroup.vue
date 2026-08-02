@@ -74,7 +74,7 @@ watch(
 </script>
 
 <template>
-  <div ref="containerRef" class="range-toggle-group" role="tablist" aria-label="Range">
+  <div ref="containerRef" class="range-toggle-group" role="group" aria-label="Range">
     <span ref="pillRef" class="t-tabs-pill" aria-hidden="true" />
     <button
       v-for="opt in options"
@@ -82,8 +82,7 @@ watch(
       type="button"
       class="range-toggle-group__option"
       :class="{ 'range-toggle-group__option--active': opt.value === modelValue }"
-      role="tab"
-      :aria-selected="opt.value === modelValue ? 'true' : 'false'"
+      :aria-pressed="opt.value === modelValue ? 'true' : 'false'"
       @click="select(opt.value)"
     >
       {{ opt.label }}
