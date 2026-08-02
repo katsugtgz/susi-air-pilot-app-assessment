@@ -1,0 +1,19 @@
+package-lock.json
+  s_20146d5d79664f::t_6254cd11422597 2979-3000,10521-10537
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "f6068c3b880aca030e063fd4511996b92b756615",
+  "prompts": {},
+  "sessions": {
+    "s_20146d5d79664f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc0f7-a4cd-7402-9e61-0438ecf03eb7",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
