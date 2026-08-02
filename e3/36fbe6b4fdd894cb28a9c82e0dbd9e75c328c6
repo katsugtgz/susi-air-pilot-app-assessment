@@ -1,0 +1,23 @@
+app/pages/documents.vue
+  s_20146d5d79664f::t_c2d1648443c0d1 46,53
+app/components/molecules/RangeToggleGroup.vue
+  s_20146d5d79664f::t_c2d1648443c0d1 77,85
+app/components/molecules/RangeToggleGroup.spec.ts
+  s_20146d5d79664f::t_c2d1648443c0d1 17-18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.20",
+  "base_commit_sha": "e336fbe6b4fdd894cb28a9c82e0dbd9e75c328c6",
+  "prompts": {},
+  "sessions": {
+    "s_20146d5d79664f": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019fc0f7-a4cd-7402-9e61-0438ecf03eb7",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Muhammad Naufal Mahdi <053792227@ecampus.ut.ac.id>"
+    }
+  }
+}
