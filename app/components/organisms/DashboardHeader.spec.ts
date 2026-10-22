@@ -240,8 +240,8 @@ describe('DashboardHeader', () => {
     })
   })
 
-  describe('notification read state (persisted)', () => {
-    it('clicking an item marks it read and removes it from the unread count', async () => {
+  describe('notification read state (emits, store owns persistence)', () => {
+    it('clicking an item emits mark-read with its id', async () => {
       const wrapper = mountHeader({
         props: {
           pilotName: 'X',
@@ -252,22 +252,15 @@ describe('DashboardHeader', () => {
         },
       })
       await wrapper.find('.dashboard-header__notif').trigger('click')
-      expect(wrapper.find('.dashboard-header__notif-badge').text()).toBe('2')
 
-      // Click the first notification item button.
       const items = wrapper.findAll('.dashboard-header__notif-item')
       expect(items.length).toBe(2)
       await items[0]!.trigger('click')
-      await wrapper.vm.$nextTick()
 
-      expect(wrapper.find('.dashboard-header__notif-badge').text()).toBe('1')
-      const stored = window.localStorage.getItem('susi:read-notification-ids')
-      expect(stored).not.toBeNull()
-      expect(JSON.parse(stored!)).toContain('a')
+      expect(wrapper.emitted('mark-read')).toEqual([['a']])
     })
 
-    it('survives reload — persisted read ids count as read on remount', async () => {
-      window.localStorage.setItem('susi:read-notification-ids', JSON.stringify(['a']))
+    it('re-renders the badge from props when the parent marks items read', async () => {
       const wrapper = mountHeader({
         props: {
           pilotName: 'X',
@@ -277,11 +270,18 @@ describe('DashboardHeader', () => {
           ],
         },
       })
-      // 'a' is persisted-as-read → only 'b' counts as unread.
+      expect(wrapper.find('.dashboard-header__notif-badge').text()).toBe('2')
+
+      await wrapper.setProps({
+        notifications: [
+          { id: 'a', title: 'A', read: true },
+          { id: 'b', title: 'B' },
+        ],
+      })
       expect(wrapper.find('.dashboard-header__notif-badge').text()).toBe('1')
     })
 
-    it('"Mark all as read" clears the unread count and persists every unread id', async () => {
+    it('"Mark all as read" button emits mark-all-read', async () => {
       const wrapper = mountHeader({
         props: {
           pilotName: 'X',
@@ -298,11 +298,8 @@ describe('DashboardHeader', () => {
       const markAll = wrapper.find('.dashboard-header__mark-all')
       expect(markAll.exists()).toBe(true)
       await markAll.trigger('click')
-      await wrapper.vm.$nextTick()
 
-      expect(wrapper.find('.dashboard-header__notif-badge').exists()).toBe(false)
-      const stored = JSON.parse(window.localStorage.getItem('susi:read-notification-ids')!) as string[]
-      expect(stored).toEqual(expect.arrayContaining(['a', 'c']))
+      expect(wrapper.emitted('mark-all-read')).toHaveLength(1)
     })
 
     it('does not show "Mark all as read" when there are no unread items', async () => {
@@ -314,6 +311,22 @@ describe('DashboardHeader', () => {
       })
       await wrapper.find('.dashboard-header__notif').trigger('click')
       expect(wrapper.find('.dashboard-header__mark-all').exists()).toBe(false)
+    })
+
+    it('renders store-resolved read items as read (badge counts unresolved only)', async () => {
+      // The notifications store folds legacy persisted read ids into the
+      // `read` flag before passing items down; the header stays dumb.
+      window.localStorage.setItem('susi:read-notification-ids', JSON.stringify(['a']))
+      const wrapper = mountHeader({
+        props: {
+          pilotName: 'X',
+          notifications: [
+            { id: 'a', title: 'A', read: true }, // as resolved by the store
+            { id: 'b', title: 'B' },
+          ],
+        },
+      })
+      expect(wrapper.find('.dashboard-header__notif-badge').text()).toBe('1')
     })
   })
 

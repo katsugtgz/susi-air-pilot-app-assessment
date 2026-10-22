@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { computeDocumentExpiry, useDocumentExpiry } from './useDocumentExpiry'
+import { computeDocumentExpiry } from './useDocumentExpiry'
 
 const TODAY = '2026-05-31' // brief §3.1 development "today" (mock-documents.json)
 const WARNING_DAYS = 30 // brief §3.1
@@ -87,10 +87,10 @@ describe('computeDocumentExpiry', () => {
   })
 })
 
-describe('useDocumentExpiry (reactive wrapper)', () => {
-  it('returns a ComputedRef with the same value as the pure function', async () => {
-    const ref = useDocumentExpiry('2026-06-11', TODAY, WARNING_DAYS)
-    expect(ref.value.status).toBe('soon')
-    expect(ref.value.daysRemaining).toBe(11)
+describe('reactive seam (former wrapper) — same args through the pure core', () => {
+  it('produces the same result the wrapper used to project', () => {
+    const r = computeDocumentExpiry({ expiryDate: '2026-06-11', today: TODAY, warningDays: WARNING_DAYS })
+    expect(r.status).toBe('soon')
+    expect(r.daysRemaining).toBe(11)
   })
 })

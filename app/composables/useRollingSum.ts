@@ -17,21 +17,10 @@
  * boundaries don't shift the day count.
  */
 import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
+import { parseUtcMidnight, isoDate } from '~/utils/dates'
 import type { FlightHour } from '~/types'
 
 const DAY_MS = 86_400_000
-
-function toUtcMidnight(d: Date): Date {
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
-}
-
-function parseUtc(date: string | Date): Date {
-  const d = typeof date === 'string' ? new Date(date) : date
-  if (Number.isNaN(d.getTime())) {
-    throw new Error(`useRollingSum: invalid date input: ${date}`)
-  }
-  return toUtcMidnight(d)
-}
 
 /**
  * Pure primitive. Sum of all `flightHours[].hours` where the entry's date
@@ -48,12 +37,12 @@ export function computeRollingSum(
   windowDays: number,
 ): number {
   if (windowDays <= 0) return 0
-  const target = parseUtc(targetDate).getTime()
+  const target = parseUtcMidnight(targetDate).getTime()
   const start = target - (windowDays - 1) * DAY_MS
 
   let sum = 0
   for (const entry of flightHours) {
-    const t = parseUtc(entry.date).getTime()
+    const t = parseUtcMidnight(entry.date).getTime()
     if (t >= start && t <= target) {
       sum += entry.hours
     }
@@ -75,7 +64,7 @@ export function computeRollingSumSeries(
   windowDays: number,
   displayRangeDays: number = 7,
 ): { date: string; value: number }[] {
-  const todayUtc = parseUtc(today)
+  const todayUtc = parseUtcMidnight(today)
   const series: { date: string; value: number }[] = []
   for (let offset = -displayRangeDays; offset <= displayRangeDays; offset++) {
     const d = new Date(todayUtc.getTime() + offset * DAY_MS)
@@ -100,12 +89,4 @@ export function useRollingSum(
       toValue(displayRangeDays) ?? 7,
     ),
   )
-}
-
-/** Format a UTC-midnight Date back to ISO yyyy-mm-dd (no timezone shift). */
-function isoDate(d: Date): string {
-  const y = d.getUTCFullYear()
-  const m = String(d.getUTCMonth() + 1).padStart(2, '0')
-  const day = String(d.getUTCDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
 }

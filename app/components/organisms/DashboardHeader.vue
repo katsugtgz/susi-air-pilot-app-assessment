@@ -10,8 +10,9 @@
  * Dropdowns close on outside click, Escape (which also restores focus to the
  * trigger), or option-specific action.
  *
- * Read state for notifications persists across reloads via usePersistedState
- * ('read-notification-ids'), so the unread badge survives a refresh.
+ * Dumb organism: receives notifications via props (an item is unread when
+ * `read !== true`) and emits `mark-read` / `mark-all-read`. Read-state
+ * persistence lives in the notifications store.
  *
  * a11y: dropdowns are labelled groups of buttons (NOT role=menu/menuitem —
  * those roles imply arrow-key navigation and a strict widget pattern this UI
@@ -26,6 +27,8 @@ import type { NotificationItem } from '~/types'
 interface Props {
   pilotName?: string
   pilotId?: string
+  /** Avatar fallback initials — caller supplies (pilot store computes + tests). */
+  initials?: string
   pilotAvatar?: string
   /** Total accumulated flight hours — surfaced as a glanceable stat. */
   totalFlightHours?: number
@@ -38,16 +41,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  (e: 'tap-notifications' | 'tap-avatar' | 'logout'): void
+  (e: 'tap-notifications' | 'tap-avatar' | 'logout' | 'mark-all-read'): void
+  (e: 'mark-read', id: string): void
 }>()
 
-const initials = computed(() => {
-  if (!props.pilotName) return '?'
-  const parts = props.pilotName.trim().split(/\s+/)
-  const first = parts[0]?.[0] ?? ''
-  const last = parts.length > 1 ? (parts[parts.length - 1]?.[0] ?? '') : ''
-  return (first + last).toUpperCase() || '?'
-})
+const initials = computed(() => props.initials ?? '?')
 
 const formattedHours = computed(() => {
   if (typeof props.totalFlightHours !== 'number') return ''
@@ -59,13 +57,9 @@ const formattedHours = computed(() => {
   return `${str}h`
 })
 
-// Persisted read-ids augment the per-item `read` flag from props. An item is
-// unread only if BOTH the prop says so AND it isn't in this list.
-const readIds = usePersistedState<string[]>('read-notification-ids', [])
-
-const unreadItems = computed(() =>
-  props.notifications.filter((n) => !n.read && !readIds.value.includes(n.id)),
-)
+// Dumb organism: an item is unread when its `read` prop flag is falsy. The
+// parent resolves legacy persisted read state via the notifications store.
+const unreadItems = computed(() => props.notifications.filter((n) => !n.read))
 const unreadCount = computed(() => unreadItems.value.length)
 
 type DropdownKey = 'profile' | 'notifications'
@@ -99,22 +93,12 @@ function onLogout() {
   emit('logout')
 }
 
-function markItemRead(id: string) {
-  if (!readIds.value.includes(id)) {
-    readIds.value = [...readIds.value, id]
-  }
-}
-
 function markAllRead() {
-  const next = new Set(readIds.value)
-  for (const n of props.notifications) {
-    if (!n.read) next.add(n.id)
-  }
-  readIds.value = Array.from(next)
+  emit('mark-all-read')
 }
 
 function onNotificationClick(item: NotificationItem) {
-  markItemRead(item.id)
+  emit('mark-read', item.id)
 }
 
 function onDocumentClick(event: MouseEvent) {
@@ -219,9 +203,9 @@ const headerClass = computed(() => ({
                     type="button"
                     class="dashboard-header__notif-item"
                     :class="{
-                      'dashboard-header__notif-item--unread': !item.read && !readIds.includes(item.id),
+                      'dashboard-header__notif-item--unread': !item.read,
                     }"
-                    :aria-label="`${item.title}${!item.read && !readIds.includes(item.id) ? ' (unread)' : ''}`"
+                    :aria-label="`${item.title}${!item.read ? ' (unread)' : ''}`"
                     @click="onNotificationClick(item)"
                   >
                     <span class="dashboard-header__notif-icon" :class="`dashboard-header__notif-icon--${item.variant ?? 'info'}`">
@@ -233,7 +217,7 @@ const headerClass = computed(() => ({
                       <span v-if="item.time" class="dashboard-header__notif-item-time">{{ item.time }}</span>
                     </span>
                     <span
-                      v-if="!item.read && !readIds.includes(item.id)"
+                      v-if="!item.read"
                       class="dashboard-header__notif-dot"
                       aria-hidden="true"
                     />

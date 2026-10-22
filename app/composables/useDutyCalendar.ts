@@ -13,6 +13,7 @@
  * before day 1 of `yearMonth`. Predictable grid size keeps CSS layout stable.
  */
 import { computed, toValue, type ComputedRef, type MaybeRefOrGetter } from 'vue'
+import { parseUtcMidnight, isoDate } from '~/utils/dates'
 import type { Legend, Schedule } from '~/types'
 
 const DAY_MS = 86_400_000
@@ -29,21 +30,6 @@ export interface DutyCalendarCell {
   isOutOfMonth: boolean
   /** True only when cell.date === today. */
   isToday: boolean
-}
-
-function parseUtcMidnight(date: string): Date {
-  const d = new Date(date)
-  if (Number.isNaN(d.getTime())) {
-    throw new Error(`useDutyCalendar: invalid date "${date}"`)
-  }
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
-}
-
-function isoDate(d: Date): string {
-  const y = d.getUTCFullYear()
-  const m = String(d.getUTCMonth() + 1).padStart(2, '0')
-  const day = String(d.getUTCDate()).padStart(2, '0')
-  return `${y}-${m}-${day}`
 }
 
 /**
