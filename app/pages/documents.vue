@@ -53,7 +53,7 @@ function back() {
         :aria-pressed="activeFilter === f.key ? 'true' : 'false'"
         @click="activeFilter = f.key"
       >
-        <span>{{ f.label }}</span>
+        <span class="documents-page__chip-label">{{ f.label }}</span>
         <span class="documents-page__chip-count">{{ counts[f.key] }}</span>
       </button>
     </div>
@@ -114,8 +114,15 @@ function back() {
 
   &__chips {
     display: flex;
-    flex-wrap: wrap;
     gap: var(--space-2);
+    // One line — "Expiring soon" wraps the row at 390px and breaks the rhythm.
+    overflow-x: auto;
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
+    // Give the 3px focus ring room to draw inside the scroll container.
+    padding: var(--space-1);
+    margin: calc(var(--space-1) * -1);
+    margin-bottom: 0;
   }
 
   &__chip {
@@ -130,6 +137,7 @@ function back() {
     font-family: inherit;
     font-size: var(--fs-base-sm);
     font-weight: var(--fw-medium);
+    white-space: nowrap;
     cursor: pointer;
     transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 
@@ -142,31 +150,29 @@ function back() {
       box-shadow: var(--shadow-focus);
     }
 
+    // Navy, not brand red — red is reserved for expired/danger semantics.
     &--active {
-      background: var(--color-red);
-      border-color: var(--color-red);
+      background: var(--color-text-primary);
+      border-color: var(--color-text-primary);
       color: var(--color-surface);
+    }
+
+    &--active:hover {
+      background: var(--color-text-primary);
     }
   }
 
+  // Count rides inline as a quiet number, not a nested pill-in-pill badge.
   &__chip-count {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    min-width: 18px;
-    height: 18px;
-    padding: 0 var(--space-1);
-    border-radius: var(--radius-full);
-    background: var(--color-surface-alt);
-    color: var(--color-text-secondary);
     font-size: var(--fs-xs);
-    font-weight: var(--fw-bold);
+    font-weight: var(--fw-semibold);
+    color: var(--color-text-muted);
     line-height: 1;
-  }
 
-  &__chip--active &__chip-count {
-    background: rgba(255, 255, 255, 0.2);
-    color: var(--color-surface);
+    .documents-page__chip--active & {
+      color: var(--color-surface);
+      opacity: 0.72;
+    }
   }
 
   &__empty {

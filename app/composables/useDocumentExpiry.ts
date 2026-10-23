@@ -2,8 +2,8 @@
  * useDocumentExpiry
  *
  * Pure function — exported as `computeDocumentExpiry` so it can be unit-tested
- * without any Vue context. The `useDocumentExpiry` wrapper is sugar for use
- * inside `<script setup>` that returns a `ComputedRef<DocumentExpiryResult>`.
+ * without any Vue context. Components (e.g. DocumentListItem) call it inside
+ * their own `computed`.
  *
  * Status rules (per brief §3.1):
  *   daysRemaining <= 0                                  -> "expired"  (red)
@@ -13,7 +13,7 @@
  * `daysRemaining = floor((expiryDate - today) / dayMs)` using UTC midnight
  * both sides, so daylight saving doesn't shift the day count.
  */
-import { computed, type MaybeRefOrGetter, toValue } from 'vue'
+import { toUtcMidnight } from '~/utils/dates'
 
 export type DocumentExpiryStatus = 'expired' | 'soon' | 'safe'
 
@@ -29,10 +29,6 @@ export interface DocumentExpiryResult {
 }
 
 const DAY_MS = 86_400_000
-
-function toUtcMidnight(d: Date): Date {
-  return new Date(Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate()))
-}
 
 export function computeDocumentExpiry(input: DocumentExpiryInput): DocumentExpiryResult {
   const warningDays = input.warningDays ?? 30
@@ -54,22 +50,4 @@ export function computeDocumentExpiry(input: DocumentExpiryInput): DocumentExpir
   else status = 'safe'
 
   return { daysRemaining, status }
-}
-
-/**
- * Reactive wrapper for use in components. Pass getters/refs so the result
- * recomputes when dependencies change.
- */
-export function useDocumentExpiry(
-  expiryDate: MaybeRefOrGetter<string | Date>,
-  today: MaybeRefOrGetter<string | Date> = '2026-05-31',
-  warningDays: MaybeRefOrGetter<number> = 30,
-) {
-  return computed<DocumentExpiryResult>(() =>
-    computeDocumentExpiry({
-      expiryDate: toValue(expiryDate),
-      today: toValue(today),
-      warningDays: toValue(warningDays),
-    }),
-  )
 }

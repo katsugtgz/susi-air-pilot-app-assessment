@@ -14,7 +14,7 @@ import { navigateTo } from '#app'
 import { useFlightHoursStore } from '~/stores/flightHours'
 import { useDocumentsStore } from '~/stores/documents'
 import { useNewsStore } from '~/stores/news'
-import type { NotificationItem } from '~/types'
+import { useNotificationsStore } from '~/stores/notifications'
 
 definePageMeta({ layout: 'default' })
 
@@ -23,45 +23,12 @@ const schedulesStore = useSchedulesStore()
 const flightHoursStore = useFlightHoursStore()
 const documentsStore = useDocumentsStore()
 const newsStore = useNewsStore()
+const notificationsStore = useNotificationsStore()
 
 function onLogout() {
   // No real auth — just return to the sign-in screen.
   navigateTo('/')
 }
-
-// Dummy notifications for the bell dropdown. No backend; the brief ships
-// with mock data only. Mixed read/unread so the unread badge is meaningful.
-const notifications: NotificationItem[] = [
-  {
-    id: 'n1',
-    title: 'Duty starts in 2 hours',
-    body: 'PDG → PLM, Airbus ATR 72-600. Report by 14:30 LT.',
-    time: '12m ago',
-    variant: 'info',
-  },
-  {
-    id: 'n2',
-    title: 'Schedule change',
-    body: 'PKU → BTH leg added to tomorrow\'s roster.',
-    time: '1h ago',
-    variant: 'warning',
-  },
-  {
-    id: 'n3',
-    title: 'Medical certificate expires soon',
-    body: '14 days remaining — renew before 22 July 2026.',
-    time: 'Yesterday',
-    variant: 'warning',
-  },
-  {
-    id: 'n4',
-    title: 'Flight log verified',
-    body: 'Cruise log for flight SJO-320 has been countersigned.',
-    time: '2 days ago',
-    read: true,
-    variant: 'success',
-  },
-]
 
 const loading = useLoadingDelay(200)
 
@@ -82,9 +49,12 @@ const upcomingArrival = computed(() => {
   <div class="home-page">
     <DashboardHeader
       :pilot-name="pilotStore.name"
+      :initials="pilotStore.initials"
       :pilot-id="pilotStore.pilotId"
       :total-flight-hours="pilotStore.totalFlightHours"
-      :notifications="notifications"
+      :notifications="notificationsStore.notifications"
+      @mark-read="notificationsStore.markRead"
+      @mark-all-read="notificationsStore.markAllRead"
       @logout="onLogout"
     />
 
@@ -123,16 +93,7 @@ const upcomingArrival = computed(() => {
 
     <section class="home-page__section">
       <Transition name="chart-crossfade" mode="out-in">
-        <div v-if="loading" key="skeleton" class="home-page__skeleton-hours">
-          <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-          <Skeleton variant="rect" :height="180" />
-          <div class="home-page__skeleton-cards">
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-          </div>
-        </div>
+        <HoursSkeleton v-if="loading" key="skeleton" />
         <LazyHoursToLimitSection
           v-else
           key="content"
@@ -142,16 +103,7 @@ const upcomingArrival = computed(() => {
           :today="FLIGHT_HOURS_TODAY"
         >
           <template #fallback>
-            <div class="home-page__skeleton-hours">
-              <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-              <Skeleton variant="rect" :height="180" />
-              <div class="home-page__skeleton-cards">
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-              </div>
-            </div>
+            <HoursSkeleton />
           </template>
         </LazyHoursToLimitSection>
       </Transition>
@@ -195,87 +147,10 @@ const upcomingArrival = computed(() => {
     overflow: hidden;
   }
 
-  &__skeleton-hours {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    background: var(--color-surface);
-    border-radius: var(--radius-card);
-    padding: var(--space-4);
-  }
-
-  &__skeleton-cards {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
-  }
+  /* __skeleton-hours / __skeleton-cards moved to HoursSkeleton.vue */
 }
 
-/*
- * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
- * The transition / opacity / filter logic + --reveal-* / --pulse-* tokens
- * follow the reference. The stacking primitive is a single grid cell
- * (grid-area: 1 / 1) instead of position:absolute so the in-flow content
- * always reserves the slot height → the skeleton ↔ content swap is
- * layout-free (no reflow on reveal). Content sits on z-index: 2.
- */
-.t-skel {
-  display: grid;
-}
-.t-skel-skeleton,
-.t-skel-content {
-  grid-area: 1 / 1;
-  min-width: 0;
-}
-.t-skel-skeleton {
-  z-index: 1;
-  opacity: 1;
-  filter: blur(0);
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel-content {
-  z-index: 2;
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-  transition:
-    opacity var(--reveal-dur) var(--reveal-ease),
-    filter  var(--reveal-dur) var(--reveal-ease);
-}
-.t-skel.is-revealed .t-skel-skeleton {
-  opacity: 0;
-  filter: blur(var(--reveal-blur));
-}
-.t-skel.is-revealed .t-skel-content {
-  opacity: 1;
-  filter: blur(0);
-}
-// The invisible layer must not swallow taps: content sits above the skeleton
-// (z-index 2) even while opacity: 0, and opacity doesn't disable hit-testing.
-.t-skel:not(.is-revealed) .t-skel-content,
-.t-skel.is-revealed .t-skel-skeleton {
-  pointer-events: none;
-}
-.t-skel.is-resetting .t-skel-skeleton,
-.t-skel.is-resetting .t-skel-content {
-  transition: none !important;
-}
-
-.t-skel-skeleton.is-pulsing > * {
-  animation: t-skel-pulse var(--pulse-dur) ease-in-out var(--pulse-count);
-}
-@keyframes t-skel-pulse {
-  0%, 100% { opacity: 1; }
-  50%      { opacity: var(--pulse-min); }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .t-skel-skeleton, .t-skel-content {
-    transition: none !important;
-  }
-  .t-skel-skeleton.is-pulsing > * { animation: none !important; }
-}
+/* t-skel reveal lives in transitions-root.css (global). */
 
 .chart-crossfade-enter-active,
 .chart-crossfade-leave-active {
