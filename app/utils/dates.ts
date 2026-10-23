@@ -1,6 +1,8 @@
 /**
  * UTC date helpers shared by the date-sensitive composables
- * (useRollingSum, useDutyCalendar, useDocumentExpiry) and display components.
+ * (useRollingSum, useDutyCalendar) and display components. The expiry
+ * composable (useDocumentExpiry) validates its dates separately and only
+ * uses `toUtcMidnight` (its error message is caller-specific).
  *
  * Why UTC midnight normalization: day counting across DST boundaries must not
  * shift by an hour, so every date comparison and day-count subtraction happens
@@ -46,5 +48,12 @@ export function isoDate(d: Date): string {
 export function formatDateGB(iso: string): string {
   const d = new Date(iso)
   if (Number.isNaN(d.getTime())) return iso
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
+  // timeZone UTC: d is UTC midnight; formatting in the local zone would show
+  // the previous day for any user west of UTC.
+  return d.toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'short',
+    year: 'numeric',
+    timeZone: 'UTC',
+  })
 }

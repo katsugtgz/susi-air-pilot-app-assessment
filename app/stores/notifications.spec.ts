@@ -1,35 +1,8 @@
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useNotificationsStore } from './notifications'
 
-// Node 22 + happy-dom: window.localStorage is undefined without
-// --localstorage-file. Install a Map-backed shim (same approach as
-// stores/session.spec.ts).
-beforeAll(() => {
-  if (typeof window === 'undefined' || window.localStorage) return
-  const store = new Map<string, string>()
-  const shim: Storage = {
-    get length() {
-      return store.size
-    },
-    clear() {
-      store.clear()
-    },
-    getItem(key) {
-      return store.has(key) ? (store.get(key) as string) : null
-    },
-    key(index) {
-      return Array.from(store.keys())[index] ?? null
-    },
-    removeItem(key) {
-      store.delete(key)
-    },
-    setItem(key, value) {
-      store.set(key, String(value))
-    },
-  }
-  Object.defineProperty(window, 'localStorage', { value: shim, configurable: true, writable: true })
-})
+// localStorage shim comes from tests/setup-local-storage.ts.
 
 describe('useNotificationsStore', () => {
   beforeEach(() => {
@@ -59,6 +32,16 @@ describe('useNotificationsStore', () => {
     store.markAllRead()
     expect(store.unreadCount).toBe(0)
     expect(store.notifications.every((n) => n.read)).toBe(true)
+  })
+
+  it('markAllRead persists every id under the legacy key (survives reload)', async () => {
+    const store = useNotificationsStore()
+    const unread = store.unreadItems.map((n) => n.id)
+    expect(unread.length).toBeGreaterThan(0)
+    store.markAllRead()
+    await nextTick()
+    const stored = JSON.parse(window.localStorage.getItem('susi:read-notification-ids')!) as string[]
+    expect(unread.every((id) => stored.includes(id))).toBe(true)
   })
 
   it('persists read ids under the legacy susi:read-notification-ids key', async () => {

@@ -1,35 +1,7 @@
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { usePersistedState } from './usePersistedState'
 
-// Node 22 declares an experimental `localStorage` global that shadows
-// happy-dom's window.localStorage and returns undefined unless
-// --localstorage-file is passed. The repo's vitest config doesn't set that
-// flag, so install a Map-backed shim when window.localStorage is missing.
-beforeAll(() => {
-  if (typeof window === 'undefined' || window.localStorage) return
-  const store = new Map<string, string>()
-  const shim: Storage = {
-    get length() {
-      return store.size
-    },
-    clear() {
-      store.clear()
-    },
-    getItem(key) {
-      return store.has(key) ? (store.get(key) as string) : null
-    },
-    key(index) {
-      return Array.from(store.keys())[index] ?? null
-    },
-    removeItem(key) {
-      store.delete(key)
-    },
-    setItem(key, value) {
-      store.set(key, String(value))
-    },
-  }
-  Object.defineProperty(window, 'localStorage', { value: shim, configurable: true, writable: true })
-})
+// localStorage shim comes from tests/setup-local-storage.ts.
 
 beforeEach(() => {
   window.localStorage.clear()

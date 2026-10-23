@@ -216,4 +216,46 @@ describe('BottomSheet', () => {
     expect(body).not.toBeNull()
     expect(body.querySelectorAll('li').length).toBe(40)
   })
+
+  it('applies the height prop as an inline style on the dialog', () => {
+    mount(BottomSheet, { props: { open: true, height: '400px' } })
+    const dialog = document.querySelector('.bottom-sheet') as HTMLElement
+    expect(dialog.style.height).toBe('400px')
+  })
+
+  it('unpadded adds the modifier class to the body', () => {
+    mount(BottomSheet, { props: { open: true, unpadded: true } })
+    expect(document.querySelector('.bottom-sheet__body--unpadded')).not.toBeNull()
+  })
+
+  it('hideHandle removes the drag handle', () => {
+    mount(BottomSheet, { props: { open: true, hideHandle: true } })
+    expect(document.querySelector('.bottom-sheet__handle')).toBeNull()
+  })
+
+  it('header slot replaces the built-in title header', () => {
+    mount(BottomSheet, {
+      props: { open: true },
+      slots: { header: '<p class="slot-header">Custom</p>' },
+    })
+    expect(document.querySelector('.slot-header')).not.toBeNull()
+    expect(document.querySelector('#bottom-sheet-title')).toBeNull()
+  })
+
+  it('drops aria-labelledby when title and header slot are both given', () => {
+    mount(BottomSheet, {
+      props: { open: true, title: 'T' },
+      slots: { header: '<p class="slot-header">Custom</p>' },
+    })
+    const dialog = document.querySelector('.bottom-sheet') as HTMLElement
+    expect(dialog.getAttribute('aria-labelledby')).toBeNull()
+  })
+
+  it('falls through class attrs onto the dialog element', () => {
+    mount(BottomSheet, {
+      props: { open: true },
+      attrs: { class: 'my-sheet' },
+    })
+    expect(document.querySelector('.bottom-sheet.my-sheet')).not.toBeNull()
+  })
 })

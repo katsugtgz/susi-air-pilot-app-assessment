@@ -71,9 +71,7 @@ export const useNotificationsStore = defineStore('notifications', () => {
   }
 
   function markAllRead() {
-    for (const n of items.value) {
-      if (!n.read) n.read = true
-    }
+    for (const n of unreadItems.value) markRead(n.id)
   }
 
   return { notifications, unreadItems, unreadCount, markRead, markAllRead }

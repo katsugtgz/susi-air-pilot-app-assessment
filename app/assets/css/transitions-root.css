@@ -205,8 +205,9 @@
 
 /*
  * transitions.dev — skeleton reveal (14-skeleton-reveal.md).
- * Shared .t-skel pattern (was copy-pasted per page; pages now only toggle
- * .is-revealed / .is-resetting on .t-skel and reuse these class names).
+ * Shared .t-skel pattern (was copy-pasted per page; pages toggle only
+ * .is-revealed on .t-skel — .is-resetting is kept as a reference hook for
+ * re-skeletonizing, unused by pages today).
  * Transition / opacity / filter logic + --reveal-* / --pulse-* tokens follow
  * the reference. The stacking primitive is a single grid cell
  * (grid-area: 1 / 1) instead of position:absolute so the in-flow content

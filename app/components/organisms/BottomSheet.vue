@@ -28,6 +28,7 @@ interface Props {
 }
 defineOptions({ inheritAttrs: false })
 const props = defineProps<Props>()
+const slots = useSlots()
 
 const emit = defineEmits<{
   (e: 'close'): void
@@ -60,12 +61,17 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
 function focusIn() {
   const dlg = dialogRef.value
   if (!dlg) return
+  // Caller may mark a preferred target (e.g. a chat input); else first
+  // focusable child; else the dialog itself so Tab has a start point.
+  const preferred = dlg.querySelector<HTMLElement>('[data-autofocus]')
+  if (preferred) {
+    preferred.focus()
+    return
+  }
   const focusable = getFocusable(dlg)
   if (focusable.length > 0) {
     focusable[0]?.focus()
   } else {
-    // No focusable child — focus the dialog itself so screen readers land
-    // inside the dialog and Tab has a starting point to wrap from.
     dlg.focus()
   }
 }
@@ -132,7 +138,11 @@ onBeforeUnmount(() => {
   }
 })
 
-const labelledBy = computed(() => (props.title ? 'bottom-sheet-title' : undefined))
+// Only point at the built-in h2 when it actually renders — a #header slot
+// replaces it (title + slot together would dangle the reference).
+const labelledBy = computed(() =>
+  props.title && !slots.header ? 'bottom-sheet-title' : undefined,
+)
 const dialogAriaLabel = computed(() => props.title ?? props.ariaLabel)
 </script>
 

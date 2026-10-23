@@ -32,8 +32,8 @@ interface Props {
   pilotAvatar?: string
   /** Total accumulated flight hours — surfaced as a glanceable stat. */
   totalFlightHours?: number
-  /** Bell dropdown entries. Items are unread when `read !== true` AND their
-   *  id is not in the persisted read-ids list. */
+  /** Bell dropdown entries. Unread when `read` is falsy — the notifications
+   *  store resolves legacy persisted read ids into `read: true`. */
   notifications?: NotificationItem[]
 }
 const props = withDefaults(defineProps<Props>(), {

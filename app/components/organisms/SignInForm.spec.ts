@@ -57,12 +57,14 @@ describe('SignInForm', () => {
     expect(wrapper.find('.sign-in-form__error').attributes('role')).toBe('alert')
   })
 
-  it('fills demo credentials when "Fill demo ID" is clicked', async () => {
+  it('fills demo credentials when "Fill demo credentials" is clicked', async () => {
     const wrapper = mount(SignInForm)
     await wrapper.find('.sign-in-form__demo-fill').trigger('click')
     expect((wrapper.find('input[name="pilotId"]').element as HTMLInputElement).value).toBe(
       'PSA-1042',
     )
-    expect((wrapper.find('input[name="password"]').element as HTMLInputElement).value).not.toBe('')
+    expect((wrapper.find('input[name="password"]').element as HTMLInputElement).value).toBe(
+      'demo-password',
+    )
   })
 })

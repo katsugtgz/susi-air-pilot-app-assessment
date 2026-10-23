@@ -5,37 +5,12 @@ import { useLogbookStore } from './logbook'
 
 const STORAGE_KEY = 'susi:logbook-entries'
 
-/**
- * happy-dom (under Node) does not provide window.localStorage, but
- * usePersistedState reads it. Install an in-memory Storage before each test so
- * the store hydrates/persists deterministically without leaking across files.
- */
-function installLocalStorage(): void {
-  const store = new Map<string, string>()
-  const ls: Storage = {
-    getItem: (k: string) => store.get(k) ?? null,
-    setItem: (k: string, v: string) => {
-      store.set(k, String(v))
-    },
-    removeItem: (k: string) => {
-      store.delete(k)
-    },
-    clear: () => {
-      store.clear()
-    },
-    key: (_index: number) => null,
-    get length() {
-      return store.size
-    },
-  }
-  Object.defineProperty(window, 'localStorage', { value: ls, configurable: true })
-}
+// localStorage shim comes from tests/setup-local-storage.ts.
 
 describe('useLogbookStore', () => {
   beforeEach(() => {
-    installLocalStorage()
-    setActivePinia(createPinia())
     window.localStorage.clear()
+    setActivePinia(createPinia())
   })
 
   afterEach(() => {

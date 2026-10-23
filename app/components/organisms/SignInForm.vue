@@ -70,7 +70,7 @@ function onSubmit() {
 
     <!-- Demo shortcut — auth accepts any input; this just saves typing. -->
     <button type="button" class="sign-in-form__demo-fill" @click="fillDemo">
-      Fill demo ID
+      Fill demo credentials
     </button>
 
     <!-- CRD helper link — REQUIRED per brief §5. NOT decorative. -->

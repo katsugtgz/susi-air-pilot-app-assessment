@@ -54,7 +54,7 @@ function back() {
         @click="activeFilter = f.key"
       >
         <span class="documents-page__chip-label">{{ f.label }}</span>
-        <span class="documents-page__chip-count" aria-hidden="true">{{ counts[f.key] }}</span>
+        <span class="documents-page__chip-count">{{ counts[f.key] }}</span>
       </button>
     </div>
 
@@ -119,7 +119,10 @@ function back() {
     overflow-x: auto;
     scrollbar-width: none;
     &::-webkit-scrollbar { display: none; }
-    padding-bottom: var(--space-1);
+    // Give the 3px focus ring room to draw inside the scroll container.
+    padding: var(--space-1);
+    margin: calc(var(--space-1) * -1);
+    margin-bottom: 0;
   }
 
   &__chip {

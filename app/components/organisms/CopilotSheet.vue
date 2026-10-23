@@ -57,12 +57,14 @@ function onChip(prompt: string) {
   emit('send', prompt)
 }
 
-// Auto-scroll to the newest message as it streams in.
+// Auto-scroll to the newest message as it streams in. The scroll container is
+// BottomSheet's __body (the ul itself does not scroll).
 watch(
   () => props.messages.map((m) => m.text).join('|'),
   () => {
     const el = listRef.value
-    if (el) el.scrollTop = el.scrollHeight
+    const scroller = el?.closest('.bottom-sheet__body')
+    if (scroller) scroller.scrollTop = scroller.scrollHeight
   },
 )
 </script>
@@ -131,6 +133,7 @@ watch(
           placeholder="Ask the copilot…"
           autocomplete="off"
           :disabled="isStreaming"
+          data-autofocus
         >
         <button
           type="submit"
