@@ -75,8 +75,8 @@ describe('DashboardHeader', () => {
     expect(wrapper.find('img[src="/susi-air-logo.png"]').exists()).toBe(true)
   })
 
-  it('renders Avatar with the pilot name', () => {
-    const wrapper = mountHeader({ props: { pilotName: 'John Doe' } })
+  it('renders Avatar with the pilot initials', () => {
+    const wrapper = mountHeader({ props: { pilotName: 'John Doe', initials: 'JD' } })
     expect(wrapper.find('.avatar').exists()).toBe(true)
     expect(wrapper.find('.avatar__fallback').text()).toBe('JD')
   })
