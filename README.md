@@ -4,36 +4,17 @@
 
 **Live demo:** <https://susi-air-pilot-app-assessment-nu.vercel.app/> · [Storybook](https://susi-air-pilot-app-assessment-story.vercel.app/)
 
-Originally built for a Susi Air technical assessment, then extended with the AI copilot, logbook, motion/accessibility polish, a Remote Ops Briefing design system, and a transparent demo-provenance layer.
-
-## Product story
-
-This app is built to read like a **Remote Ops Briefing** — one screen that answers *"what next, what changed, what needs attention"* before the pilot scrolls. Every surface surfaces data freshness and demo status honestly, so an interviewer can trust what they see in 30 seconds.
-
-**Design contract** lives in [`DESIGN.md`](./DESIGN.md) — 8 sections covering the navy/red/cyan palette, typography scale, spacing tokens, motion system, responsive breakpoints (375 / 768 / 1280), accessibility constraints (WCAG 2.2 AA, keyboard nav, reduced-motion), and the banned patterns that keep the codebase clean.
-
-**Truthful demo layer** — three composables derive all dynamic content from the existing mock JSON, so nothing is faked:
-
-- `useDemoTimeline` — computes data provenance (latest snapshot date, source count, human status text) so every page can show *when* this data is from.
-- `useUpcomingDutyPreview` — derives the next duty's route, STD/STA, flight number, and aircraft from the real `flightLegs` store, replacing the upstream hardcoded placeholder route.
-- `useActionItems` — ranks a pilot's open actions (next duty, expiring/expired documents, incomplete logbook) into a single actionable list.
-
-Three primitives render that truth:
-
-- `DataFreshnessStrip` — compact banner showing data source + snapshot date.
-- `SyncStatusPill` — honest status badge (`demo` / `synced` / `syncing` / `offline` / `stale` / `failed`) with timestamp.
-- `ActionCenter` — ranked action list with typed navigation intents (open duty detail, go to documents, open logbook).
+Originally built for a Susi Air technical assessment, then extended with the AI copilot, logbook, and motion/accessibility polish.
 
 ## Features
 
 **Core surfaces**
 
-- **Sign In** (`/`) — demo-only; any input navigates to `/home` (no real authentication). A visible **Demo mode** alert upfront sets honest expectations.
-- **Home dashboard** (`/home`) — Remote Ops Briefing layout: data freshness strip, sync status pill, next duty (real route + times from flight legs), ranked action center, flight-hours trend chart (fixed ±7-day display window, 1w / 1m / 3m / 6m / 1y range toggle), hours-to-limit cards (28 / 90 / 365-day + annual thresholds), document list with expiry badges, latest news carousel. Desktop gets a 2-column operations grid (≥768px) while preserving mobile reading order.
-- **Schedule** (`/schedule`) — month calendar grid with duty badges rendered from legend data (never hardcoded codes), tap-a-date detail modal, legend, data freshness header with viewing-month context.
+- **Sign In** (`/`) — demo-only; any input navigates to `/home` (no real authentication). Includes a Demo mode notice and "Fill demo credentials" shortcut.
+- **Home dashboard** (`/home`) — actionable upcoming flight (real route + times from flight legs, opens `DutyDetailSheet`), ranked Action Center, derived bell notifications, flight-hours trend chart (fixed ±7-day display window, 1w / 1m / 3m / 6m / 1y range toggle), hours-to-limit cards (28 / 90 / 365-day + annual thresholds), document list with expiry badges, latest news carousel. Desktop (`≥768px`) pairs Next duty and Action center in a 2-column grid.
+- **Schedule** (`/schedule`) — month calendar grid with duty badges rendered from legend data (never hardcoded codes), tap-a-date detail modal, legend.
 - **Logbook** (`/logbook`) — month-grouped qualifying entries (`count_logbooks > 0`) derived from the schedules store via the pure `useLogbookEntries` composable. Each row shows date, duty badge tinted from the legend color, base, flight counts, and a verified / pending status. Summary strip: entries / verified / total flight hours.
-- **More** (`/more`) — pilot profile header (name, ID, total hours from the pilot store) + transparent Demo & data status section + grouped settings menu (Account / Preferences / About) built from the `SettingsListItem` molecule. Sign out returns to `/`.
-- **Documents** (`/documents`) — filterable document list with expiry badges and warning windows.
+- **More** (`/more`) — pilot profile header (name, ID, total hours from the pilot store) + grouped settings menu (Account / Preferences / About) built from the `SettingsListItem` molecule. Sign out returns to `/`.
 
 **AI Copilot** — floating, draggable assistant bubble that opens a chat sheet. Powered by Gemini via `@google/genai`:
 
@@ -47,18 +28,16 @@ Three primitives render that truth:
 **Polish**
 
 - Token-driven motion system (vendored transitions.dev layer) across page transitions, limit-card digits, skeleton → content crossfades, range-toggle pill, badges, modals, and chart redraws — every animation has a `prefers-reduced-motion` fallback.
-- Shared skeleton-reveal CSS (`app/assets/css/transitions-root.css`) + chart-crossfade CSS (`app/assets/css/chart-crossfade.css`).
 - Icon tree-shaking restored (named-import map replaces the full `@lucide/vue` namespace).
 - Lazy-loaded, async-decoded news images.
 - Hand-rolled installable PWA (cache-first shell + network-first nav).
-- `UpcomingFlightCard` keeps `<article>` semantics with an overlay `<button>` when `actionable`, opening the duty detail sheet on select.
 
 ## Quick start
 
 ```bash
 npm install        # Node 22+
 npm run dev        # http://localhost:3000 (lands on Sign In at /)
-npm test           # Vitest one-shot (593 specs)
+npm test           # Vitest one-shot (581 specs)
 ```
 
 Other scripts: `build` · `preview` · `test:coverage` · `test:storybook:ci` · `storybook` · `build-storybook` · `typecheck` · `lint` · `format` · `generate-pwa-icons`.
@@ -93,63 +72,44 @@ With no keys configured the app runs normally; `/api/chat` returns `503 AI copil
 **Atomic design** — three layers with strict contracts:
 
 - **Atoms** (13) — presentational primitives; props in, emits out; never touch stores or composables.
-- **Molecules** (14) — atom compositions + at most one pure composable; no store access.
+- **Molecules** (12) — atom compositions + at most one pure composable; no store access.
 - **Organisms** (19) — section-level; receive data via props (semi-smart), consume pure composables.
 
 **Folder layout**
 
-```text
+```
 app/
-├── components/{atoms,molecules,organisms}/  # 13 / 14 / 19 — atomic design
-├── composables/          # 14 composables (10 pure-compute + 4 stateful/integration), co-located with *.spec.ts
+├── components/{atoms,molecules,organisms}/  # 13 / 12 / 19 — atomic design
+├── composables/          # 12 composables (8 pure-compute + 4 stateful/integration), co-located with *.spec.ts
 ├── stores/               # 9 Pinia setup stores — ONLY JSON consumers
 ├── pages/                # index(Sign In), home, schedule, logbook, more, documents
 ├── layouts/              # default.vue (BottomNav), auth.vue (bare)
-├── assets/{data,scss,css}/  # 4 JSON mocks + tokens.scss + shared CSS utilities
+├── assets/{data,scss}/   # 5 JSON mocks + tokens.scss (CSS custom props)
 └── plugins/pwa.client.ts # SW registration (skips dev)
 server/
 ├── api/chat.post.ts      # SSE streaming endpoint
 └── utils/{gemini,rag}.ts # key rotation + RAG
 public/                   # manifest.webmanifest, sw.js, logo, pwa-*.png
 scripts/build-embeddings.mjs  # precompute RAG vectors
-DESIGN.md                 # Remote Ops Briefing design system contract
 ```
 
 **Pages are the composition root** — they pull from Pinia stores and pass data as props, keeping organisms Storybook-friendly and store-mock-free.
 
-- **14 composables**:
-  - **10 pure-compute** (`useRollingSum`, `useDocumentExpiry` exporting `computeDocumentExpiry`, `useDocumentFilter`, `useFlightLimits`, `useDutyCalendar`, `useDutyDetail`, `useLogbookEntries`, `useDemoTimeline`, `useUpcomingDutyPreview`, `useActionItems`) — unit-tested independently of Vue.
-  - **4 stateful / integration** (`useCopilotChat`, `usePersistedState`, `useTheme`, `useLoadingDelay`) — manage local reactive state, browser storage/theme state, or streaming API calls at page, shell, or store boundaries.
-- **9 Pinia stores** (including `notifications`) are the **only** consumers of `assets/data/*.json` (stories / specs excepted).
+- **12 composables** — 8 pure-compute (`useRollingSum`, `useDocumentExpiry` exporting `computeDocumentExpiry`, `useDocumentFilter`, `useFlightLimits`, `useDutyCalendar`, `useDutyDetail`, `useLogbookEntries`, `useOpsBriefing`) plus 4 stateful/integration (`useCopilotChat`, `usePersistedState`, `useTheme`, `useLoadingDelay`).
+- **9 Pinia stores** are the **only** consumers of `assets/data/*.json` (stories / specs excepted).
 - **Nitro server routes** power the Copilot: `server/api/chat.post.ts` (SSE streaming), `server/utils/gemini.ts` (key rotation + retry-on-429), `server/utils/rag.ts` (embed + retrieve).
 - **Auto-imports** (`ref` / `computed` / components / composables / stores) are mirrored into Vitest and Storybook via `unplugin-auto-import` + `unplugin-vue-components`; `components: pathPrefix:false` registers by bare filename.
 - **Hand-rolled PWA** (~80 lines across `public/manifest.webmanifest`, `public/sw.js`, `plugins/pwa.client.ts`) — `@vite-pwa/nuxt` was rejected for Nuxt 4 `@nuxt/kit` dedup conflicts.
-
-## Demo-provenance layer
-
-Three composables + three primitives make the mock-data provenance transparent and the dashboard feel alive without faking live integrations:
-
-| Composable | Responsibility |
-|---|---|
-| `useDemoTimeline` | Derives latest snapshot date + source count + status text across the three mock sources (`schedule`, `documents`, `flight-hours`), which share two locked snapshot dates (schedule `2026-05-15`; documents and flight hours `2026-05-31`). |
-| `useUpcomingDutyPreview` | Finds the next duty on/after `today`, then resolves the first leg's departure/arrival ICAO, STD/STA, flight number, and aircraft from the `flightLegs` store. |
-| `useActionItems` | Ranks open actions: next duty (opens detail sheet), expiring/expired documents (→ `/documents`), incomplete logbook (→ `/logbook`). Emits typed navigation intents. |
-
-| Primitive | Role |
-|---|---|
-| `DataFreshnessStrip` | Compact banner: data sources + snapshot date. |
-| `SyncStatusPill` | Honest status badge: `demo` / `synced` / `syncing` / `offline` / `stale` / `failed` + timestamp. |
-| `ActionCenter` | Ranked action list with typed `(navigate, payload)` events. |
 
 ## Testing
 
 Three layers, each catching a different bug class:
 
-1. **Unit specs** (Vitest + happy-dom) — pure-function tests for the composables. `useRollingSum.spec.ts` hand-verifies the ±7-day rolling window across all chart points. `brief-verification.spec.ts` is a cross-cutting canary asserting the assessment's worked examples.
+1. **Unit specs** (Vitest + happy-dom) — pure-function tests for the composables. `useRollingSum.spec.ts` hand-verifies the ±7-day rolling window across all chart points.
 2. **Component specs** (`@vue/test-utils`) — mount + assert on rendered output. `FlightHoursTrendChart` exposes `{ chartData, chartOptions }` via `defineExpose` so specs read structured data without parsing canvas pixels.
 3. **Story smoke tests** (`@storybook/test-runner` + Playwright) — every story visited in headless Chromium; catches integration bugs unit tests miss.
 
-**593 specs across 73 files**, ~98% statement coverage (scoped to `app/components/**` + `app/composables/**`). CI (`.github/workflows/ci.yml`) runs lint + typecheck + coverage + storybook smoke.
+**581 specs across 69 files**, ~98% statement coverage (scoped to `app/components/**` + `app/composables/**`). CI (`.github/workflows/ci.yml`) runs lint + typecheck + coverage + storybook smoke.
 
 ## Deployment (Vercel)
 
@@ -157,15 +117,6 @@ Three layers, each catching a different bug class:
 - **Storybook:** second Vercel project, build command `npm run build-storybook`, output dir `storybook-static/`.
 
 CI never runs `npm run build`; build regressions surface at deploy.
-
-## Interviewer walkthrough
-
-1. **Sign In** (`/`) — read the Demo mode alert. Enter anything, land on Home.
-2. **Home** (`/home`) — top to bottom: data freshness strip (sources + snapshot date), sync status pill (`demo`), next duty card (real route + times from flight legs, not a placeholder), action center (ranked: next duty → docs → logbook), flight-hours chart, hours-to-limit cards, documents, news. Tap the next duty card → duty detail sheet opens with full leg breakdown. Resize to ≥768px → operations grid goes 2-column.
-3. **Schedule** (`/schedule`) — freshness header with viewing-month context. Tap any dated cell → duty detail modal with legs. Legend drives badge colors (no hardcoded codes).
-4. **Logbook** (`/logbook`) — month-grouped entries with verified/pending status and summary strip.
-5. **More** (`/more`) — Demo & data status section (transparency), profile, settings sheets. App version badge.
-6. **AI Copilot** — floating bubble (bottom-right). Opens chat sheet. Ask "what's my next flight?" → Gemini reads the schedules mock via function calling.
 
 ## License
 

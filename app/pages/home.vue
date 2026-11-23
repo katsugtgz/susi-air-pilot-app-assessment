@@ -1,15 +1,17 @@
 <script setup lang="ts">
-// Dashboard — composes dashboard organisms with Pinia stores. Mock data only.
+/**
+ * Dashboard (Home) — composes dashboard organisms with Pinia stores and
+ * derives next-duty route, action items, and notifications via useOpsBriefing.
+ */
 import { usePilotStore } from '~/stores/pilot'
 import { useSchedulesStore } from '~/stores/schedules'
 import { navigateTo } from '#app'
 import { useFlightHoursStore } from '~/stores/flightHours'
 import { useDocumentsStore } from '~/stores/documents'
 import { useNewsStore } from '~/stores/news'
-import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 import { useFlightLegsStore } from '~/stores/flightLegs'
 import { useNotificationsStore } from '~/stores/notifications'
-import type { ActionItem } from '~/composables/useActionItems'
+import type { ActionItem } from '~/composables/useOpsBriefing'
 import type { Schedule } from '~/types'
 
 definePageMeta({ layout: 'default' })
@@ -29,19 +31,10 @@ function onLogout() {
 
 const loading = useLoadingDelay(200)
 
-const demoTimeline = useDemoTimeline(() => ({
-  scheduleToday: schedulesStore.today,
-  documentsToday: documentsStore.today,
-  flightHoursToday: FLIGHT_HOURS_TODAY,
-}))
+// Per brief §3.2, the chart's dev "today" is 2026-05-31.
+const FLIGHT_HOURS_TODAY = '2026-05-31'
 
-const upcomingDuty = useUpcomingDutyPreview(() => ({
-  schedules: schedulesStore.schedules,
-  legsByDate: flightLegsStore.legsByDate,
-  today: schedulesStore.today,
-}))
-
-const actionItems = useActionItems(() => ({
+const briefing = useOpsBriefing(() => ({
   schedules: schedulesStore.schedules,
   legsByDate: flightLegsStore.legsByDate,
   documents: documentsStore.documents,
@@ -51,11 +44,13 @@ const actionItems = useActionItems(() => ({
 }))
 
 const notifications = computed(() =>
-  notificationsStore.resolveNotifications(actionItems.value.notifications),
+  notificationsStore.resolveNotifications(briefing.value.notifications),
 )
+
 function onMarkAllRead() {
   notificationsStore.markAllRead(notifications.value.map((n) => n.id))
 }
+
 const selectedSchedule = ref<Schedule | null>(null)
 const detailOpen = computed(() => selectedSchedule.value !== null)
 
@@ -67,8 +62,10 @@ function onDetailClose() {
 }
 
 const flightData = computed(() => {
-  const duty = upcomingDuty.value
-  if (duty.kind !== 'ready') return { departure: '—', arrival: schedulesStore.nextUpcomingSchedule?.base_name ?? '—' }
+  const duty = briefing.value.nextDuty
+  if (duty.kind !== 'ready') {
+    return { departure: '—', arrival: schedulesStore.nextUpcomingSchedule?.base_name ?? '—' }
+  }
   return {
     departure: duty.departureCode,
     arrival: duty.arrivalCode,
@@ -79,9 +76,13 @@ const flightData = computed(() => {
 })
 
 function onActionNavigate(payload: { item: ActionItem; to: string }) {
-  if (payload.item.kind === 'next-duty' && schedulesStore.nextUpcomingSchedule) {
-    selectedSchedule.value = schedulesStore.nextUpcomingSchedule
-    return
+  if (payload.item.kind === 'next-duty') {
+    const target =
+      schedulesStore.scheduleByDate.get(payload.item.date) ?? schedulesStore.nextUpcomingSchedule
+    if (target) {
+      selectedSchedule.value = target
+      return
+    }
   }
   navigateTo(payload.to)
 }
@@ -100,13 +101,9 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
       @logout="onLogout"
     />
 
-    <section class="home-page__section">
-      <DataFreshnessStrip :timeline="demoTimeline" />
-    </section>
-
-    <section class="home-page__section home-page__section--status">
-      <SyncStatusPill status="demo" :timestamp="demoTimeline.latestDataDate" />
-    </section>
+    <p class="home-page__snapshot" role="status">
+      Demo snapshot · Schedule {{ schedulesStore.today }} · Docs &amp; hours {{ FLIGHT_HOURS_TODAY }}
+    </p>
 
     <section class="home-page__operations">
       <div class="t-skel" :class="{ 'is-revealed': !loading }">
@@ -130,7 +127,7 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
         </div>
       </div>
 
-      <ActionCenter :items="actionItems.items" @navigate="onActionNavigate" />
+      <ActionCenter :items="briefing.items" @navigate="onActionNavigate" />
     </section>
 
     <section class="home-page__section">
@@ -191,19 +188,21 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
   gap: var(--space-4);
   padding: 0 var(--space-4);
 
-  &__section {
-    width: 100%;
-
-    &--status {
-      display: flex;
-      justify-content: flex-end;
-    }
+  &__snapshot {
+    margin: 0;
+    font-size: var(--fs-xs);
+    color: var(--color-text-muted);
+    text-align: right;
   }
 
   &__operations {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: var(--space-4);
+  }
+
+  &__section {
+    width: 100%;
   }
 
   &__skeleton-card {
@@ -222,14 +221,28 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
     gap: var(--space-3);
     overflow: hidden;
   }
-
-  /* __skeleton-hours / __skeleton-cards moved to HoursSkeleton.vue */
 }
 
 @media (min-width: 768px) {
   .home-page__operations {
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: start;
+  }
+}
+
+.chart-crossfade-enter-active,
+.chart-crossfade-leave-active {
+  transition: opacity var(--reveal-dur) var(--reveal-ease);
+}
+.chart-crossfade-enter-from,
+.chart-crossfade-leave-to {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chart-crossfade-enter-active,
+  .chart-crossfade-leave-active {
+    transition: none;
   }
 }
 </style>

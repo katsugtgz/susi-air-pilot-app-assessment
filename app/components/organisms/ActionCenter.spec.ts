@@ -1,17 +1,9 @@
 import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import ActionCenter from './ActionCenter.vue'
-import type { ActionItem } from '~/composables/useActionItems'
+import type { ActionItem } from '~/composables/useOpsBriefing'
 
 const items: readonly ActionItem[] = [
-  {
-    id: 'next-duty-2026-05-31',
-    kind: 'next-duty',
-    title: 'Next duty PDG to MKW',
-    body: 'SSI-2204 at 08:15, 2 leg(s) planned',
-    severity: 'info',
-    date: '2026-05-31',
-  },
   {
     id: 'document-expired-license',
     kind: 'document-expired',
@@ -28,55 +20,48 @@ const items: readonly ActionItem[] = [
     severity: 'warning',
     date: '2026-05-29',
   },
+  {
+    id: 'next-duty-2026-05-31',
+    kind: 'next-duty',
+    title: 'Next duty MKW → INX',
+    body: 'SI 257 at 06:45, 2 leg(s) planned',
+    severity: 'info',
+    date: '2026-05-31',
+  },
 ]
 
 describe('ActionCenter', () => {
-  it('groups next duty and attention without claiming live ops', () => {
+  it('renders ranked action items with open count badge', () => {
     const wrapper = mount(ActionCenter, { props: { items } })
 
-    expect(wrapper.find('section[aria-labelledby="action-center-next"]').text()).toContain(
-      'Next duty PDG to MKW',
-    )
-    expect(wrapper.find('section[aria-labelledby="action-center-attention"]').text()).toContain(
-      'License expired',
-    )
-    expect(wrapper.text()).toContain('Demo briefing from mock data')
+    expect(wrapper.text()).toContain('3 open')
+    expect(wrapper.findAll('button.action-center__row')).toHaveLength(3)
+    expect(wrapper.text()).toContain('License expired')
+    expect(wrapper.text()).toContain('Next duty MKW → INX')
   })
 
-  it('renders an empty briefing state', () => {
+  it('renders an empty state when no actions are open', () => {
     const wrapper = mount(ActionCenter, { props: { items: [] } })
 
-    expect(wrapper.text()).toContain('No action items in this demo snapshot')
+    expect(wrapper.text()).toContain('All clear')
+    expect(wrapper.text()).toContain('No open actions right now.')
+    expect(wrapper.find('ul.action-center__list').exists()).toBe(false)
   })
 
-  it('emits default navigation intent by item kind', async () => {
+  it('emits default route by item kind', async () => {
     const wrapper = mount(ActionCenter, { props: { items } })
 
     await wrapper.find('[data-action-id="document-expired-license"]').trigger('click')
 
-    expect(wrapper.emitted('navigate')).toEqual([
-      [{ item: items[1], to: '/documents', source: 'action-center' }],
-    ])
+    expect(wrapper.emitted('navigate')).toEqual([[{ item: items[0], to: '/documents' }]])
   })
 
   it('prefers explicit route when supplied', async () => {
-    const routedItems = [
-      {
-        id: 'next-duty-2026-05-31',
-        kind: 'next-duty',
-        title: 'Next duty PDG to MKW',
-        body: 'SSI-2204 at 08:15, 2 leg(s) planned',
-        severity: 'info',
-        date: '2026-05-31',
-        to: '/more',
-      },
-    ] as const
-    const wrapper = mount(ActionCenter, { props: { items: routedItems } })
+    const routed = [{ ...items[2]!, to: '/more' }]
+    const wrapper = mount(ActionCenter, { props: { items: routed } })
 
     await wrapper.find('[data-action-id="next-duty-2026-05-31"]').trigger('click')
 
-    expect(wrapper.emitted('navigate')).toEqual([
-      [{ item: routedItems[0], to: '/more', source: 'action-center' }],
-    ])
+    expect(wrapper.emitted('navigate')).toEqual([[{ item: routed[0], to: '/more' }]])
   })
 })

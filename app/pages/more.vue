@@ -15,22 +15,10 @@
  */
 import { navigateTo } from '#app'
 import { usePilotStore } from '~/stores/pilot'
-import { useSchedulesStore } from '~/stores/schedules'
-import { useDocumentsStore } from '~/stores/documents'
-import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 
 definePageMeta({ layout: 'default' })
 
 const pilotStore = usePilotStore()
-const schedulesStore = useSchedulesStore()
-const documentsStore = useDocumentsStore()
-const demoTimeline = useDemoTimeline(() => ({
-  scheduleToday: schedulesStore.today,
-  documentsToday: documentsStore.today,
-  flightHoursToday: FLIGHT_HOURS_TODAY,
-}))
-
-const appVersion = 'v1.0.0'
 
 function onSignOut() {
   useSessionStore().signOut()
@@ -61,12 +49,6 @@ function openDocuments() {
           {{ pilotStore.totalFlightHours.toLocaleString('en-US') }} total flight hours
         </span>
       </div>
-    </section>
-
-    <section class="more-page__group" aria-label="Demo and data status">
-      <h2 class="more-page__group-title">Demo & data status</h2>
-      <DataFreshnessStrip :timeline="demoTimeline" />
-      <SyncStatusPill status="demo" :timestamp="demoTimeline.latestDataDate" />
     </section>
 
     <section class="more-page__group" aria-label="Account settings">
@@ -101,9 +83,8 @@ function openDocuments() {
           label="App version"
           icon="info"
           trailing="badge"
-          :badge-label="appVersion"
+          badge-label="v1.0.0"
           badge-variant="neutral"
-          disabled
         />
         <SettingsListItem
           label="Licenses"

@@ -1,15 +1,15 @@
 import type { Meta, StoryObj } from '@storybook/vue3'
 import ActionCenter from './ActionCenter.vue'
-import type { ActionItem } from '~/composables/useActionItems'
+import type { ActionItem } from '~/composables/useOpsBriefing'
 
 const items: readonly ActionItem[] = [
   {
-    id: 'next-duty-2026-05-31',
-    kind: 'next-duty',
-    title: 'Next duty PDG to MKW',
-    body: 'SSI-2204 at 08:15, 2 leg(s) planned',
-    severity: 'info',
-    date: '2026-05-31',
+    id: 'document-expired-license',
+    kind: 'document-expired',
+    title: 'License expired',
+    body: 'Review by 2026-05-28',
+    severity: 'danger',
+    date: '2026-05-28',
   },
   {
     id: 'logbook-incomplete-2026-05-29',
@@ -20,12 +20,12 @@ const items: readonly ActionItem[] = [
     date: '2026-05-29',
   },
   {
-    id: 'document-expired-license',
-    kind: 'document-expired',
-    title: 'License expired',
-    body: 'Review by 2026-05-28',
-    severity: 'danger',
-    date: '2026-05-28',
+    id: 'next-duty-2026-05-31',
+    kind: 'next-duty',
+    title: 'Next duty MKW → INX',
+    body: 'SI 257 at 06:45, 2 leg(s) planned',
+    severity: 'info',
+    date: '2026-05-31',
   },
 ]
 
@@ -38,7 +38,7 @@ export default meta
 
 type Story = StoryObj<typeof ActionCenter>
 
-export const Normal: Story = {
+export const Default: Story = {
   args: { items },
 }
 
@@ -47,5 +47,5 @@ export const Empty: Story = {
 }
 
 export const AttentionOnly: Story = {
-  args: { items: items.slice(2) },
+  args: { items: items.slice(0, 1) },
 }

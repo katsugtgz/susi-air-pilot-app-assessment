@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ActionItem, ActionItemKind, ActionItemSeverity } from '~/composables/useActionItems'
+import type { ActionItem, ActionItemKind, ActionItemSeverity } from '~/composables/useOpsBriefing'
 
 type ActionCenterItem = ActionItem & { readonly to?: string }
 type ActionRoute = '/home' | '/schedule' | '/logbook' | '/more' | '/documents'
@@ -7,10 +7,10 @@ type ActionRoute = '/home' | '/schedule' | '/logbook' | '/more' | '/documents'
 interface Props {
   items: readonly ActionCenterItem[]
 }
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const emit = defineEmits<{
-  (e: 'navigate', payload: { item: ActionCenterItem; to: string; source: 'action-center' }): void
+  (e: 'navigate', payload: { item: ActionCenterItem; to: string }): void
 }>()
 
 const ROUTE_BY_KIND: Record<ActionItemKind, ActionRoute> = {
@@ -26,63 +26,43 @@ const ICON_BY_SEVERITY: Record<ActionItemSeverity, string> = {
   info: 'info',
 }
 
-const nextItems = computed(() => props.items.filter((item) => item.kind === 'next-duty'))
-const changedItems = computed(() => props.items.filter((item) => item.kind === 'logbook-incomplete'))
-const attentionItems = computed(() =>
-  props.items.filter((item) => item.kind === 'document-expired' || item.kind === 'document-soon'),
-)
-
-const groups = computed(() => [
-  { labelId: 'action-center-next', title: 'Next duty', fallback: 'No next duty flagged.', items: nextItems.value },
-  { labelId: 'action-center-changed', title: 'Changed', fallback: 'No changed items flagged.', items: changedItems.value },
-  { labelId: 'action-center-attention', title: 'Needs attention', fallback: 'No attention items flagged.', items: attentionItems.value },
-])
-
 function navigate(item: ActionCenterItem) {
-  emit('navigate', { item, to: item.to ?? ROUTE_BY_KIND[item.kind], source: 'action-center' })
+  emit('navigate', { item, to: item.to ?? ROUTE_BY_KIND[item.kind] })
 }
 </script>
 
 <template>
   <article class="action-center" aria-labelledby="action-center-title">
     <header class="action-center__header">
-      <div>
-        <p class="action-center__eyebrow">Remote ops briefing</p>
-        <h2 id="action-center-title" class="action-center__title">Action center</h2>
-      </div>
-      <Badge variant="neutral" label="Demo" />
+      <h2 id="action-center-title" class="action-center__title">Action center</h2>
+      <Badge
+        :variant="items.length > 0 ? 'neutral' : 'safe'"
+        :label="items.length > 0 ? `${items.length} open` : 'All clear'"
+      />
     </header>
 
-    <p class="action-center__note">Demo briefing from mock data. No live dispatch sync.</p>
-
     <p v-if="items.length === 0" class="action-center__empty">
-      No action items in this demo snapshot.
+      No open actions right now.
     </p>
 
-    <section
-      v-for="group in groups"
-      :key="group.labelId"
-      class="action-center__group"
-      :aria-labelledby="group.labelId"
-    >
-      <h3 :id="group.labelId" class="action-center__group-title">{{ group.title }}</h3>
-      <p v-if="group.items.length === 0" class="action-center__fallback">{{ group.fallback }}</p>
-      <button
-        v-for="item in group.items"
-        :key="item.id"
-        type="button"
-        class="action-center__row"
-        :class="`action-center__row--${item.severity}`"
-        :data-action-id="item.id"
-        @click="navigate(item)"
-      >
-        <Icon :name="ICON_BY_SEVERITY[item.severity]" :size="18" decorative />
-        <span class="action-center__copy">
-          <span class="action-center__row-title">{{ item.title }}</span>
-          <span class="action-center__row-body">{{ item.body }}</span>
-        </span>
-      </button>
-    </section>
+    <ul v-else class="action-center__list">
+      <li v-for="item in items" :key="item.id">
+        <button
+          type="button"
+          class="action-center__row"
+          :class="`action-center__row--${item.severity}`"
+          :data-action-id="item.id"
+          @click="navigate(item)"
+        >
+          <Icon :name="ICON_BY_SEVERITY[item.severity]" :size="18" decorative />
+          <span class="action-center__copy">
+            <span class="action-center__row-title">{{ item.title }}</span>
+            <span class="action-center__row-body">{{ item.body }}</span>
+          </span>
+          <Icon name="chevron-right" :size="16" decorative class="action-center__chevron" />
+        </button>
+      </li>
+    </ul>
   </article>
 </template>
 
@@ -94,97 +74,94 @@ function navigate(item: ActionCenterItem) {
   border-radius: var(--radius-card);
   background: var(--color-surface);
   box-shadow: var(--shadow-sm);
-}
 
-.action-center__header {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-3);
-}
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-3);
+  }
 
-.action-center__eyebrow,
-.action-center__group-title {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-xs);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
+  &__title {
+    margin: 0;
+    color: var(--color-text-primary);
+    font-size: var(--fs-xl);
+    line-height: 1.25;
+  }
 
-.action-center__title {
-  margin: var(--space-1) 0 0;
-  color: var(--color-text-primary);
-  font-size: var(--fs-xl);
-  line-height: 1.25;
-}
+  &__empty {
+    margin: 0;
+    color: var(--color-text-secondary);
+    font-size: var(--fs-base-sm);
+  }
 
-.action-center__note,
-.action-center__fallback,
-.action-center__empty {
-  margin: 0;
-  color: var(--color-text-secondary);
-  font-size: var(--fs-base-sm);
-}
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-2);
+  }
 
-.action-center__group {
-  display: grid;
-  gap: var(--space-2);
-}
+  &__row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    min-height: var(--control-height-lg);
+    padding: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    background: var(--color-surface-alt);
+    color: var(--color-chart-accent);
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
 
-.action-center__row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  width: 100%;
-  min-height: var(--control-height-lg);
-  padding: var(--space-3);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface-alt);
-  color: var(--color-chart-accent);
-  cursor: pointer;
-  font: inherit;
-  text-align: left;
-  transition: background 0.15s ease, box-shadow 0.15s ease, transform 0.05s ease;
-}
+    &:hover {
+      background: var(--color-overlay);
+    }
 
-.action-center__row:hover {
-  background: var(--color-overlay);
-}
+    &:active {
+      transform: translateY(0.5px);
+    }
 
-.action-center__row:active {
-  transform: translateY(0.5px);
-}
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
 
-.action-center__row:focus-visible {
-  outline: none;
-  box-shadow: var(--shadow-focus);
-}
+    &--warning {
+      color: var(--color-soon-fg);
+    }
 
-.action-center__row--warning {
-  color: var(--color-soon-fg);
-}
+    &--danger {
+      color: var(--color-danger);
+    }
+  }
 
-.action-center__row--danger {
-  color: var(--color-danger);
-}
+  &__copy {
+    flex: 1;
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
 
-.action-center__copy {
-  display: grid;
-  gap: var(--space-1);
-  min-width: 0;
-}
+  &__row-title {
+    color: var(--color-text-primary);
+    font-size: var(--fs-base);
+    font-weight: var(--fw-semibold);
+  }
 
-.action-center__row-title {
-  color: var(--color-text-primary);
-  font-size: var(--fs-base);
-  font-weight: var(--fw-semibold);
-}
+  &__row-body {
+    color: var(--color-text-secondary);
+    font-size: var(--fs-base-sm);
+  }
 
-.action-center__row-body {
-  color: var(--color-text-secondary);
-  font-size: var(--fs-base-sm);
+  &__chevron {
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+  }
 }
 </style>

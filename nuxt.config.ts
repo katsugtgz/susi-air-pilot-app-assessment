@@ -11,7 +11,7 @@ export default defineNuxtConfig({
   // instead of <OrganismsSignInForm />. Matches the convention the templates use.
   components: [{ path: '~/components', pathPrefix: false }],
 
-  css: ['~/assets/scss/tokens.scss', '~/assets/css/transitions-root.css', '~/assets/css/chart-crossfade.css'],
+  css: ['~/assets/scss/tokens.scss', '~/assets/css/transitions-root.css'],
 
   app: {
     // Native page transitions. Nuxt coordinates these with layout swaps

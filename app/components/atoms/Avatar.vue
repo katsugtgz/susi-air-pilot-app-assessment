@@ -34,7 +34,7 @@ const initials = computed(() => {
       :alt="alt || name || 'avatar'"
       class="avatar__img"
       @error="failed = true"
-    >
+    />
     <span v-else class="avatar__fallback">{{ initials }}</span>
   </span>
 </template>
