@@ -63,4 +63,33 @@ describe('useNotificationsStore', () => {
     const recreated = useNotificationsStore()
     expect(recreated.unreadCount).toBe(0)
   })
+
+  it('resolveNotifications marks persisted read ids on externally supplied items', async () => {
+    const store = useNotificationsStore()
+    const external = [
+      { id: 'action-1', title: 'Expiring medical', read: false },
+      { id: 'action-2', title: 'Next duty', read: false },
+    ]
+
+    store.markRead('action-1')
+    await nextTick()
+
+    const resolved = store.resolveNotifications(external)
+    expect(resolved[0]!.read).toBe(true)
+    expect(resolved[1]!.read).toBe(false)
+  })
+
+  it('markAllRead with explicit ids persists external notification ids across store re-creation', async () => {
+    const store = useNotificationsStore()
+    store.markAllRead(['ext-1', 'ext-2'])
+    await nextTick()
+
+    setActivePinia(createPinia())
+    const recreated = useNotificationsStore()
+    const resolved = recreated.resolveNotifications([
+      { id: 'ext-1', title: 'One', read: false },
+      { id: 'ext-2', title: 'Two', read: false },
+    ])
+    expect(resolved.every((n) => n.read)).toBe(true)
+  })
 })

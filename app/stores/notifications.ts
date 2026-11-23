@@ -55,9 +55,11 @@ export const useNotificationsStore = defineStore('notifications', () => {
   const readIds = usePersistedState<string[]>('read-notification-ids', [])
 
   /** Read-resolved view: legacy persisted ids fold into `read`. */
-  const notifications = computed<NotificationItem[]>(() =>
-    items.value.map((n) => (n.read || readIds.value.includes(n.id) ? { ...n, read: true } : n)),
-  )
+  function resolveNotifications(source: readonly NotificationItem[]): NotificationItem[] {
+    return source.map((n) => (n.read || readIds.value.includes(n.id) ? { ...n, read: true } : n))
+  }
+
+  const notifications = computed<NotificationItem[]>(() => resolveNotifications(items.value))
 
   const unreadItems = computed(() => notifications.value.filter((n) => !n.read))
   const unreadCount = computed(() => unreadItems.value.length)
@@ -70,9 +72,17 @@ export const useNotificationsStore = defineStore('notifications', () => {
     }
   }
 
-  function markAllRead() {
-    for (const n of unreadItems.value) markRead(n.id)
+  function markAllRead(ids?: readonly string[]) {
+    const targetIds = ids ?? unreadItems.value.map((n) => n.id)
+    for (const id of targetIds) markRead(id)
   }
 
-  return { notifications, unreadItems, unreadCount, markRead, markAllRead }
+  return {
+    notifications,
+    unreadItems,
+    unreadCount,
+    resolveNotifications,
+    markRead,
+    markAllRead,
+  }
 })

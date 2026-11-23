@@ -75,9 +75,30 @@ describe('UpcomingFlightCard', () => {
     expect(wrapper.find('.upcoming-flight-card__times').exists()).toBe(false)
   })
 
+  it('emits select when actionable card is clicked', async () => {
+    const wrapper = mount(UpcomingFlightCard, {
+      props: {
+        schedule: baseSchedule,
+        departure: { icao: 'MKW' },
+        arrival: { icao: 'INX' },
+        actionable: true,
+      },
+    })
+
+    await wrapper.find('button.upcoming-flight-card__action').trigger('click')
+
+    expect(wrapper.emitted('select')).toEqual([[baseSchedule]])
+  })
+
+  it('uses article semantics when the card is not actionable', () => {
+    const wrapper = mount(UpcomingFlightCard, { props: { schedule: baseSchedule } })
+
+    expect(wrapper.find('article.upcoming-flight-card').exists()).toBe(true)
+    expect(wrapper.find('button.upcoming-flight-card').exists()).toBe(false)
+  })
+
   it('falls back to schedule.base_name when departure/arrival not provided', () => {
     const wrapper = mount(UpcomingFlightCard, { props: { schedule: baseSchedule } })
-    // Both sides will show MKW (the schedule's base_name)
     const codes = wrapper.findAll('.flight-route__icao').map((n) => n.text())
     expect(codes).toEqual(['MKW', 'MKW'])
   })

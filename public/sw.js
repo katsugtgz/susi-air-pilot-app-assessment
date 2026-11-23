@@ -8,13 +8,13 @@
  * are evicted. Bump CACHE_VERSION when shipping breaking changes.
  */
 
-const CACHE_VERSION = 'v1'
+const CACHE_VERSION = 'v2'
 const SHELL_CACHE = `susi-air-shell-${CACHE_VERSION}`
 const RUNTIME_CACHE = `susi-air-runtime-${CACHE_VERSION}`
 
 // Resources precached on install. Hashed build assets (/_nuxt/*.{js,css})
 // are immutable so caching them aggressively is safe.
-const PRECACHE_URLS = ['/', '/manifest.webmanifest', '/susi-air-logo.png']
+const PRECACHE_URLS = ['/', '/manifest.webmanifest', '/susi-air-logo.png', '/susi-air-logo-dark.png']
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
