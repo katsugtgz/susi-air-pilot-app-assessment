@@ -8,6 +8,8 @@ interface Props {
   src?: string
   alt?: string
   name?: string
+  /** Explicit fallback initials; overrides name-derived ones when given. */
+  initials?: string
   size?: 'sm' | 'md' | 'lg'
 }
 const props = withDefaults(defineProps<Props>(), { size: 'md' })
@@ -15,6 +17,7 @@ const props = withDefaults(defineProps<Props>(), { size: 'md' })
 const failed = ref(false)
 const showImage = computed(() => !!props.src && !failed.value)
 const initials = computed(() => {
+  if (props.initials) return props.initials
   if (!props.name) return '?'
   const parts = props.name.trim().split(/\s+/)
   const first = parts[0]?.[0] ?? ''

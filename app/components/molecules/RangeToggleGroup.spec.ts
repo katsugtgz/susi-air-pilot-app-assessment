@@ -14,7 +14,8 @@ describe('RangeToggleGroup', () => {
     const active = wrapper.findAll('.range-toggle-group__option--active')
     expect(active).toHaveLength(1)
     expect(active[0]?.text()).toBe('3M')
-    expect(active[0]?.attributes('aria-selected')).toBe('true')
+    expect(active[0]?.attributes('aria-pressed')).toBe('true')
+    expect(wrapper.find('[role="group"]').attributes('aria-label')).toBe('Range')
   })
 
   it('emits update:modelValue on click of a different option', async () => {

@@ -25,10 +25,9 @@ describe('LatestNewsCarousel', () => {
     expect(wrapper.find('.latest-news-carousel__title').text()).toBe('Announcements')
   })
 
-  it('emits select with the item id when a card is clicked', async () => {
+  it('renders news as static articles without a dead click target', () => {
     const wrapper = mount(LatestNewsCarousel, { props: { items } })
-    await wrapper.findAll('.news-card')[0]?.trigger('click')
-    expect(wrapper.emitted('select')?.[0]).toEqual(['1'])
+    expect(wrapper.findAll('article.news-card')).toHaveLength(items.length)
   })
 
   it('renders the scroll container with region role + aria-label', () => {

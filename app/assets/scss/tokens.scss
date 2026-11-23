@@ -145,6 +145,9 @@ $control-height-lg: 48px;
   // white tint. Light value is the navy at low alpha; dark overrides below.
   --color-overlay: rgba(14, 33, 56, 0.06);
   --color-overlay-strong: rgba(14, 33, 56, 0.1);
+
+  --brand-logo-light-display: block;
+  --brand-logo-dark-display: none;
 }
 
 // =============================================================================
@@ -191,6 +194,9 @@ $control-height-lg: 48px;
   // Overlay flips to a white tint — subtle lightening on dark surfaces.
   --color-overlay: rgba(255, 255, 255, 0.05);
   --color-overlay-strong: rgba(255, 255, 255, 0.08);
+
+  --brand-logo-light-display: none;
+  --brand-logo-dark-display: block;
 
   // Re-tint the iOS status bar / chrome to match the dark shell.
   color-scheme: dark;

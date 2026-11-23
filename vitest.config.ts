@@ -25,7 +25,7 @@ export default defineConfig({
     environment: 'happy-dom',
     globals: true,
     include: ['app/**/*.spec.ts', 'server/**/*.spec.ts'],
-    setupFiles: ['./tests/setup-canvas-mock.ts'],
+    setupFiles: ['./tests/setup-canvas-mock.ts', './tests/setup-local-storage.ts'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

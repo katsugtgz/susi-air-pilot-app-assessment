@@ -8,6 +8,7 @@ import { useDocumentsStore } from '~/stores/documents'
 import { useNewsStore } from '~/stores/news'
 import { FLIGHT_HOURS_TODAY } from '~/utils/demo-source'
 import { useFlightLegsStore } from '~/stores/flightLegs'
+import { useNotificationsStore } from '~/stores/notifications'
 import type { ActionItem } from '~/composables/useActionItems'
 import type { Schedule } from '~/types'
 
@@ -19,8 +20,13 @@ const flightHoursStore = useFlightHoursStore()
 const documentsStore = useDocumentsStore()
 const newsStore = useNewsStore()
 const flightLegsStore = useFlightLegsStore()
+const notificationsStore = useNotificationsStore()
 
-function onLogout() { navigateTo('/') }
+function onLogout() {
+  // No real auth — just return to the sign-in screen.
+  navigateTo('/')
+}
+
 const loading = useLoadingDelay(200)
 
 const demoTimeline = useDemoTimeline(() => ({
@@ -44,7 +50,12 @@ const actionItems = useActionItems(() => ({
   documentWarningDays: documentsStore.warningDays,
 }))
 
-const notifications = computed(() => [...actionItems.value.notifications])
+const notifications = computed(() =>
+  notificationsStore.resolveNotifications(actionItems.value.notifications),
+)
+function onMarkAllRead() {
+  notificationsStore.markAllRead(notifications.value.map((n) => n.id))
+}
 const selectedSchedule = ref<Schedule | null>(null)
 const detailOpen = computed(() => selectedSchedule.value !== null)
 
@@ -80,9 +91,12 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
   <div class="home-page">
     <DashboardHeader
       :pilot-name="pilotStore.name"
+      :initials="pilotStore.initials"
       :pilot-id="pilotStore.pilotId"
       :total-flight-hours="pilotStore.totalFlightHours"
       :notifications="notifications"
+      @mark-read="notificationsStore.markRead"
+      @mark-all-read="onMarkAllRead"
       @logout="onLogout"
     />
 
@@ -136,16 +150,7 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
 
     <section class="home-page__section">
       <Transition name="chart-crossfade" mode="out-in">
-        <div v-if="loading" key="skeleton" class="home-page__skeleton-hours">
-          <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-          <Skeleton variant="rect" :height="180" />
-          <div class="home-page__skeleton-cards">
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-            <Skeleton variant="rect" :height="140" />
-          </div>
-        </div>
+        <HoursSkeleton v-if="loading" key="skeleton" />
         <LazyHoursToLimitSection
           v-else
           key="content"
@@ -155,16 +160,7 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
           :today="FLIGHT_HOURS_TODAY"
         >
           <template #fallback>
-            <div class="home-page__skeleton-hours">
-              <Skeleton variant="rect" :height="40" radius="24" :width="220" />
-              <Skeleton variant="rect" :height="180" />
-              <div class="home-page__skeleton-cards">
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-                <Skeleton variant="rect" :height="140" />
-              </div>
-            </div>
+            <HoursSkeleton />
           </template>
         </LazyHoursToLimitSection>
       </Transition>
@@ -227,20 +223,7 @@ function onActionNavigate(payload: { item: ActionItem; to: string }) {
     overflow: hidden;
   }
 
-  &__skeleton-hours {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    background: var(--color-surface);
-    border-radius: var(--radius-card);
-    padding: var(--space-4);
-  }
-
-  &__skeleton-cards {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-3);
-  }
+  /* __skeleton-hours / __skeleton-cards moved to HoursSkeleton.vue */
 }
 
 @media (min-width: 768px) {

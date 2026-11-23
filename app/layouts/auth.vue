@@ -7,7 +7,7 @@
 <template>
   <div class="auth-layout">
     <div class="auth-layout__brand">
-      <img src="/susi-air-logo.png" alt="Susi Air" class="auth-layout__logo" >
+      <BrandLogo :height="32" />
     </div>
     <main class="auth-layout__main">
       <slot />
@@ -30,11 +30,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-  }
-
-  &__logo {
-    height: 32px;
-    width: auto;
   }
 
   &__main {

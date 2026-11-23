@@ -100,7 +100,8 @@ describe('CopilotSheet', () => {
 
   it('emits close on backdrop click', async () => {
     const wrapper = mount(CopilotSheet, { props: baseProps })
-    const backdrop = document.querySelector('.copilot-sheet__backdrop') as HTMLElement
+    // Backdrop markup is owned by BottomSheet.
+    const backdrop = document.querySelector('.bottom-sheet__backdrop') as HTMLElement
     // click on backdrop itself (not inside the dialog)
     backdrop.dispatchEvent(new MouseEvent('click', { bubbles: true }))
     await flushPromises()
@@ -112,6 +113,30 @@ describe('CopilotSheet', () => {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }))
     await flushPromises()
     expect(wrapper.emitted('close')).toBeDefined()
+  })
+
+  it('traps Tab inside the dialog (wraps last to first)', async () => {
+    mount(CopilotSheet, {
+      props: { ...baseProps, messages: [{ id: 'm1', role: 'user', text: 'hi' }] },
+    })
+    await flushPromises()
+    await new Promise((r) => setTimeout(r, 0))
+
+    // Focusables inside the sheet: close button, input, send.
+    const closeBtn = document.querySelector('.copilot-sheet__close') as HTMLButtonElement
+    const input = document.querySelector('.copilot-sheet__input') as HTMLInputElement
+    const send = document.querySelector('.copilot-sheet__send') as HTMLButtonElement
+    input.value = 'hello'
+    input.dispatchEvent(new Event('input', { bubbles: true }))
+    await flushPromises()
+    send.focus()
+    expect(document.activeElement).toBe(send)
+
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Tab', bubbles: true, cancelable: true }),
+    )
+    await flushPromises()
+    expect(document.activeElement).toBe(closeBtn)
   })
 
   it('emits close on the close button click', async () => {

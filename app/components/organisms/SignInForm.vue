@@ -26,6 +26,12 @@ const password = ref('')
 
 const submitLabel = computed(() => (props.loading ? 'Signing in…' : 'Sign In'))
 
+// Demo-only: auth accepts any input, so this just saves typing for reviewers.
+function fillDemo() {
+  pilotId.value = 'PSA-1042'
+  password.value = 'demo-password'
+}
+
 function onSubmit() {
   emit('submit', { pilotId: pilotId.value, password: password.value })
 }
@@ -61,6 +67,11 @@ function onSubmit() {
     <BaseButton type="submit" variant="primary" size="lg" full-width :loading="loading">
       {{ submitLabel }}
     </BaseButton>
+
+    <!-- Demo shortcut — auth accepts any input; this just saves typing. -->
+    <button type="button" class="sign-in-form__demo-fill" @click="fillDemo">
+      Fill demo credentials
+    </button>
 
     <!-- CRD helper link — REQUIRED per brief §5. NOT decorative. -->
     <p class="sign-in-form__help">
@@ -110,6 +121,31 @@ function onSubmit() {
     color: var(--color-danger);
     font-size: var(--fs-base-sm);
     border-radius: var(--radius-sm);
+  }
+
+  &__demo-fill {
+    margin: var(--space-3) auto 0;
+    display: block;
+    background: transparent;
+    border: 0;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    color: var(--color-text-secondary);
+    font-family: inherit;
+    font-size: var(--fs-base-sm);
+    font-weight: var(--fw-medium);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      background: var(--color-overlay);
+      color: var(--color-text-primary);
+    }
+
+    &:focus-visible {
+      outline: none;
+      box-shadow: var(--shadow-focus);
+    }
   }
 
   &__help {

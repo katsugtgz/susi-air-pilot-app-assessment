@@ -21,7 +21,7 @@ This app is built to read like a **Remote Ops Briefing** — one screen that ans
 Three primitives render that truth:
 
 - `DataFreshnessStrip` — compact banner showing data source + snapshot date.
-- `SyncStatusPill` — honest status badge (`demo` / `cached` / `offline`) with timestamp.
+- `SyncStatusPill` — honest status badge (`demo` / `synced` / `syncing` / `offline` / `stale` / `failed`) with timestamp.
 - `ActionCenter` — ranked action list with typed navigation intents (open duty detail, go to documents, open logbook).
 
 ## Features
@@ -47,18 +47,18 @@ Three primitives render that truth:
 **Polish**
 
 - Token-driven motion system (vendored transitions.dev layer) across page transitions, limit-card digits, skeleton → content crossfades, range-toggle pill, badges, modals, and chart redraws — every animation has a `prefers-reduced-motion` fallback.
-- Shared skeleton-reveal + chart-crossfade CSS utilities (`app/assets/css/`).
+- Shared skeleton-reveal CSS (`app/assets/css/transitions-root.css`) + chart-crossfade CSS (`app/assets/css/chart-crossfade.css`).
 - Icon tree-shaking restored (named-import map replaces the full `@lucide/vue` namespace).
 - Lazy-loaded, async-decoded news images.
 - Hand-rolled installable PWA (cache-first shell + network-first nav).
-- `UpcomingFlightCard` is now keyboard-accessible (renders as `<button>` when `actionable`) and opens the duty detail sheet on select.
+- `UpcomingFlightCard` keeps `<article>` semantics with an overlay `<button>` when `actionable`, opening the duty detail sheet on select.
 
 ## Quick start
 
 ```bash
 npm install        # Node 22+
 npm run dev        # http://localhost:3000 (lands on Sign In at /)
-npm test           # Vitest one-shot (561 specs)
+npm test           # Vitest one-shot (593 specs)
 ```
 
 Other scripts: `build` · `preview` · `test:coverage` · `test:storybook:ci` · `storybook` · `build-storybook` · `typecheck` · `lint` · `format` · `generate-pwa-icons`.
@@ -93,16 +93,16 @@ With no keys configured the app runs normally; `/api/chat` returns `503 AI copil
 **Atomic design** — three layers with strict contracts:
 
 - **Atoms** (13) — presentational primitives; props in, emits out; never touch stores or composables.
-- **Molecules** (13) — atom compositions + at most one pure composable; no store access.
+- **Molecules** (14) — atom compositions + at most one pure composable; no store access.
 - **Organisms** (19) — section-level; receive data via props (semi-smart), consume pure composables.
 
 **Folder layout**
 
 ```text
 app/
-├── components/{atoms,molecules,organisms}/  # 13 / 13 / 19 — atomic design
-├── composables/          # 14 pure-compute fns, each co-located with *.spec.ts
-├── stores/               # 8 Pinia setup stores — ONLY JSON consumers
+├── components/{atoms,molecules,organisms}/  # 13 / 14 / 19 — atomic design
+├── composables/          # 14 composables (10 pure-compute + 4 stateful/integration), co-located with *.spec.ts
+├── stores/               # 9 Pinia setup stores — ONLY JSON consumers
 ├── pages/                # index(Sign In), home, schedule, logbook, more, documents
 ├── layouts/              # default.vue (BottomNav), auth.vue (bare)
 ├── assets/{data,scss,css}/  # 4 JSON mocks + tokens.scss + shared CSS utilities
@@ -117,8 +117,10 @@ DESIGN.md                 # Remote Ops Briefing design system contract
 
 **Pages are the composition root** — they pull from Pinia stores and pass data as props, keeping organisms Storybook-friendly and store-mock-free.
 
-- **14 pure-compute composables** (`useRollingSum`, `useDocumentExpiry`, `useDocumentFilter`, `useFlightLimits`, `useDutyCalendar`, `useDutyDetail`, `useLoadingDelay`, `useLogbookEntries`, `useCopilotChat`, `usePersistedState`, `useTheme`, `useDemoTimeline`, `useUpcomingDutyPreview`, `useActionItems`) — unit-tested independently of Vue.
-- **8 Pinia stores** are the **only** consumers of `assets/data/*.json` (stories / specs excepted).
+- **14 composables**:
+  - **10 pure-compute** (`useRollingSum`, `useDocumentExpiry` exporting `computeDocumentExpiry`, `useDocumentFilter`, `useFlightLimits`, `useDutyCalendar`, `useDutyDetail`, `useLogbookEntries`, `useDemoTimeline`, `useUpcomingDutyPreview`, `useActionItems`) — unit-tested independently of Vue.
+  - **4 stateful / integration** (`useCopilotChat`, `usePersistedState`, `useTheme`, `useLoadingDelay`) — manage local reactive state, browser storage/theme state, or streaming API calls at page, shell, or store boundaries.
+- **9 Pinia stores** (including `notifications`) are the **only** consumers of `assets/data/*.json` (stories / specs excepted).
 - **Nitro server routes** power the Copilot: `server/api/chat.post.ts` (SSE streaming), `server/utils/gemini.ts` (key rotation + retry-on-429), `server/utils/rag.ts` (embed + retrieve).
 - **Auto-imports** (`ref` / `computed` / components / composables / stores) are mirrored into Vitest and Storybook via `unplugin-auto-import` + `unplugin-vue-components`; `components: pathPrefix:false` registers by bare filename.
 - **Hand-rolled PWA** (~80 lines across `public/manifest.webmanifest`, `public/sw.js`, `plugins/pwa.client.ts`) — `@vite-pwa/nuxt` was rejected for Nuxt 4 `@nuxt/kit` dedup conflicts.
@@ -129,14 +131,14 @@ Three composables + three primitives make the mock-data provenance transparent a
 
 | Composable | Responsibility |
 |---|---|
-| `useDemoTimeline` | Derives latest snapshot date + source count + status text from the three locked mock dates (schedule `2026-05-15`, documents/hours `2026-05-31`). |
+| `useDemoTimeline` | Derives latest snapshot date + source count + status text across the three mock sources (`schedule`, `documents`, `flight-hours`), which share two locked snapshot dates (schedule `2026-05-15`; documents and flight hours `2026-05-31`). |
 | `useUpcomingDutyPreview` | Finds the next duty on/after `today`, then resolves the first leg's departure/arrival ICAO, STD/STA, flight number, and aircraft from the `flightLegs` store. |
 | `useActionItems` | Ranks open actions: next duty (opens detail sheet), expiring/expired documents (→ `/documents`), incomplete logbook (→ `/logbook`). Emits typed navigation intents. |
 
 | Primitive | Role |
 |---|---|
 | `DataFreshnessStrip` | Compact banner: data sources + snapshot date. |
-| `SyncStatusPill` | Honest status badge: `demo` / `cached` / `offline` + timestamp. |
+| `SyncStatusPill` | Honest status badge: `demo` / `synced` / `syncing` / `offline` / `stale` / `failed` + timestamp. |
 | `ActionCenter` | Ranked action list with typed `(navigate, payload)` events. |
 
 ## Testing
@@ -147,7 +149,7 @@ Three layers, each catching a different bug class:
 2. **Component specs** (`@vue/test-utils`) — mount + assert on rendered output. `FlightHoursTrendChart` exposes `{ chartData, chartOptions }` via `defineExpose` so specs read structured data without parsing canvas pixels.
 3. **Story smoke tests** (`@storybook/test-runner` + Playwright) — every story visited in headless Chromium; catches integration bugs unit tests miss.
 
-**561 specs across 71 files**, ~98% statement coverage (scoped to `app/components/**` + `app/composables/**`). CI (`.github/workflows/ci.yml`) runs lint + typecheck + coverage + storybook smoke.
+**593 specs across 73 files**, ~98% statement coverage (scoped to `app/components/**` + `app/composables/**`). CI (`.github/workflows/ci.yml`) runs lint + typecheck + coverage + storybook smoke.
 
 ## Deployment (Vercel)
 

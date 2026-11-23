@@ -105,19 +105,23 @@ function onSelect() {
   }
 
   &:has(.upcoming-flight-card__action:focus-visible) {
-    outline: none;
     box-shadow: var(--shadow-focus);
   }
 
   &__action {
     position: absolute;
     inset: 0;
+    z-index: 1;
     border: 0;
     padding: 0;
     margin: 0;
     background: transparent;
     border-radius: inherit;
     cursor: pointer;
+
+    &:focus-visible {
+      outline: none;
+    }
   }
 
   &__header {

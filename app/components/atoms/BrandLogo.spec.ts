@@ -23,4 +23,13 @@ describe('BrandLogo', () => {
     const wrapper = mount(BrandLogo, { props: { variant: 'mark' } })
     expect(wrapper.classes()).toContain('brand-logo--mark')
   })
+
+  it('renders the dark-theme logo variant with matching alt and height', () => {
+    const wrapper = mount(BrandLogo, { props: { height: 32 } })
+    const darkImg = wrapper.find('img.brand-logo__img--dark')
+    expect(darkImg.exists()).toBe(true)
+    expect(darkImg.attributes('src')).toBe('/susi-air-logo-dark.png')
+    expect(darkImg.attributes('alt')).toBe('Susi Air')
+    expect(darkImg.attributes('style')).toContain('height: 32px')
+  })
 })

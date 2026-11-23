@@ -9,13 +9,26 @@
  *
  * Focus management follows the WCAG 2.1 dialog pattern (same approach as
  * CopilotSheet, generalised for arbitrary slotted content).
+ *
+ * The header is either the built-in `title` header (with close button) or
+ * arbitrary markup via the `header` slot. Because the root is a Teleport,
+ * fallthrough attrs (e.g. `class`) are forwarded manually onto the dialog
+ * element — Vue cannot inherit them through a Teleport root.
  */
 interface Props {
   open: boolean
   title?: string
   ariaLabel?: string
+  /** Fixed sheet height (any CSS height value). Default: content-driven. */
+  height?: string
+  /** Drops body padding for sheets that manage their own spacing. */
+  unpadded?: boolean
+  /** Hides the drag handle bar. */
+  hideHandle?: boolean
 }
+defineOptions({ inheritAttrs: false })
 const props = defineProps<Props>()
+const slots = useSlots()
 
 const emit = defineEmits<{
   (e: 'close'): void
@@ -48,12 +61,17 @@ function getFocusable(container: HTMLElement): HTMLElement[] {
 function focusIn() {
   const dlg = dialogRef.value
   if (!dlg) return
+  // Caller may mark a preferred target (e.g. a chat input); else first
+  // focusable child; else the dialog itself so Tab has a start point.
+  const preferred = dlg.querySelector<HTMLElement>('[data-autofocus]')
+  if (preferred) {
+    preferred.focus()
+    return
+  }
   const focusable = getFocusable(dlg)
   if (focusable.length > 0) {
     focusable[0]?.focus()
   } else {
-    // No focusable child — focus the dialog itself so screen readers land
-    // inside the dialog and Tab has a starting point to wrap from.
     dlg.focus()
   }
 }
@@ -120,7 +138,11 @@ onBeforeUnmount(() => {
   }
 })
 
-const labelledBy = computed(() => (props.title ? 'bottom-sheet-title' : undefined))
+// Only point at the built-in h2 when it actually renders — a #header slot
+// replaces it (title + slot together would dangle the reference).
+const labelledBy = computed(() =>
+  props.title && !slots.header ? 'bottom-sheet-title' : undefined,
+)
 const dialogAriaLabel = computed(() => props.title ?? props.ariaLabel)
 </script>
 
@@ -134,28 +156,32 @@ const dialogAriaLabel = computed(() => props.title ?? props.ariaLabel)
       >
         <section
           ref="dialogRef"
+          v-bind="$attrs"
           class="bottom-sheet"
           role="dialog"
           aria-modal="true"
           :aria-label="dialogAriaLabel"
           :aria-labelledby="labelledBy"
           tabindex="-1"
+          :style="height ? { height } : undefined"
         >
-          <span class="bottom-sheet__handle" aria-hidden="true" />
+          <span v-if="!hideHandle" class="bottom-sheet__handle" aria-hidden="true" />
 
-          <header v-if="title" class="bottom-sheet__header">
-            <h2 id="bottom-sheet-title" class="bottom-sheet__title">{{ title }}</h2>
-            <button
-              type="button"
-              class="bottom-sheet__close"
-              aria-label="Close"
-              @click="close"
-            >
-              <Icon name="x" :size="18" decorative />
-            </button>
+          <header v-if="title || $slots.header" class="bottom-sheet__header">
+            <slot name="header">
+              <h2 id="bottom-sheet-title" class="bottom-sheet__title">{{ title }}</h2>
+              <button
+                type="button"
+                class="bottom-sheet__close"
+                aria-label="Close"
+                @click="close"
+              >
+                <Icon name="x" :size="18" decorative />
+              </button>
+            </slot>
           </header>
 
-          <div class="bottom-sheet__body">
+          <div class="bottom-sheet__body" :class="{ 'bottom-sheet__body--unpadded': unpadded }">
             <slot />
           </div>
 
@@ -255,6 +281,10 @@ const dialogAriaLabel = computed(() => props.title ?? props.ariaLabel)
     padding: var(--space-4);
     background: var(--color-bg);
     -webkit-overflow-scrolling: touch;
+
+    &--unpadded {
+      padding: 0;
+    }
   }
 
   &__footer {

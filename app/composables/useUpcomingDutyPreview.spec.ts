@@ -102,6 +102,17 @@ describe('computeUpcomingDutyPreview', () => {
     if (result.kind === 'invalid') expect(result.reason).toContain('YYYY-MM-DD')
   })
 
+  it('rejects calendar-invalid ISO-shaped dates such as 2026-02-30 and 2026-13-01', () => {
+    const schedules = [schedule({ count_logbooks: 6 })]
+    const legsByDate = { '2026-05-15': [FIRST_LEG] }
+
+    for (const badDate of ['2026-02-30', '2026-13-01']) {
+      const result = computeUpcomingDutyPreview({ schedules, legsByDate, today: badDate })
+      expect(result.kind).toBe('invalid')
+      if (result.kind === 'invalid') expect(result.reason).toContain(badDate)
+    }
+  })
+
   it('returns a reactive wrapper with the pure result', () => {
     // Given: plain values accepted by the wrapper.
     const input = {

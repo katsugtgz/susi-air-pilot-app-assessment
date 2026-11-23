@@ -1,36 +1,8 @@
-import { describe, it, expect, beforeAll, beforeEach } from 'vitest'
+import { describe, it, expect, beforeEach } from 'vitest'
 import { setActivePinia, createPinia } from 'pinia'
 import { useSessionStore } from './session'
 
-// Node 22 declares an experimental `localStorage` global that shadows
-// happy-dom's window.localStorage and returns undefined unless
-// --localstorage-file is passed. Install a Map-backed shim so the persisted
-// session store has real storage under Vitest (mirrors usePersistedState.spec).
-beforeAll(() => {
-  if (typeof window === 'undefined' || window.localStorage) return
-  const store = new Map<string, string>()
-  const shim: Storage = {
-    get length() {
-      return store.size
-    },
-    clear() {
-      store.clear()
-    },
-    getItem(key) {
-      return store.has(key) ? (store.get(key) as string) : null
-    },
-    key(index) {
-      return Array.from(store.keys())[index] ?? null
-    },
-    removeItem(key) {
-      store.delete(key)
-    },
-    setItem(key, value) {
-      store.set(key, String(value))
-    },
-  }
-  Object.defineProperty(window, 'localStorage', { value: shim, configurable: true, writable: true })
-})
+// localStorage shim comes from tests/setup-local-storage.ts.
 
 describe('useSessionStore', () => {
   beforeEach(() => {

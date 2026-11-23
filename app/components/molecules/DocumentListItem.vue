@@ -4,6 +4,7 @@
  * Row showing a document label + expiry date + status badge. Status is derived
  * from useDocumentExpiry (pure function under the hood, easy to test).
  */
+import { formatDateGB } from '~/utils/dates'
 
 interface Props {
   label: string
@@ -24,11 +25,7 @@ const expiry = computed(() =>
   }),
 )
 
-const formattedDate = computed(() => {
-  const d = new Date(props.expiryDate)
-  if (Number.isNaN(d.getTime())) return props.expiryDate
-  return d.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })
-})
+const formattedDate = computed(() => formatDateGB(props.expiryDate))
 
 const statusLabel = computed(() => {
   const { status, daysRemaining } = expiry.value

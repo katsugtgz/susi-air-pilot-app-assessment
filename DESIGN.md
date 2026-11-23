@@ -142,7 +142,7 @@ The base unit is `4px`. Use the existing spacing tokens. Raw browser mechanics s
 
 ## 5. Components
 
-Document components before implementation. Existing components keep their atomic contracts: atoms are presentational only, molecules compose atoms and at most one pure composable, organisms receive data by props, pages pull from stores. No component below a page imports Pinia stores or mock JSON.
+Document components before implementation. Existing components keep their atomic contracts: atoms are presentational only, molecules compose atoms and at most one pure composable, organisms receive data by props, pages pull from stores. No component below a page imports Pinia stores or mock JSON. Approved stateful or integration composables (`useCopilotChat`, `usePersistedState`, `useTheme`, `useLoadingDelay`) are restricted to page, layout/shell, or store boundaries (with `useCopilotChat` consumed by `CopilotSheet` and `useTheme` consumed by `AppearanceSheet` as explicit shell exceptions).
 
 ### BaseButton
 
@@ -236,11 +236,11 @@ Document components before implementation. Existing components keep their atomic
 
 ### RangeToggleGroup
 
-- **Structure**: `role="tablist"`, button tabs, measured active pill.
+- **Structure**: `role="group"`, pressed buttons, measured active pill.
 - **Variants**: default options 1W, 1M, 3M, 6M, 1Y; active/inactive.
 - **Spacing**: track padding `2px`, option padding `--space-2` and `--space-3`.
 - **States**: hover inactive, active, focus-visible.
-- **Accessibility**: `aria-selected` per tab. Add arrow-key navigation if this becomes a full tab widget across panels.
+- **Accessibility**: `aria-pressed` per button. Add arrow-key navigation if this becomes a full tab widget across panels.
 - **Motion**: active pill transform and width using transition tokens; reduced motion removes transitions.
 - **Layout**: segmented control.
 
@@ -280,7 +280,7 @@ Document components before implementation. Existing components keep their atomic
 - **Variants**: demo, synced, syncing, offline, stale, failed.
 - **Spacing**: `--space-1` gap, `--space-2` horizontal padding, `--radius-full`.
 - **States**: syncing, success, warning, error, focus if clickable.
-- **Accessibility**: visible text says `Demo data`, `Synced`, `Offline`, `Stale`, or `Failed`. `aria-live="polite"` only when status can change live.
+- **Accessibility**: visible text says `Demo data`, `Synced`, `Syncing`, `Offline`, `Stale`, or `Failed`. `aria-live="polite"` only when status can change live.
 - **Motion**: syncing spinner may rotate; respect reduced motion. Static demo state doesn't animate.
 - **Layout**: inline cluster for header, strip, or card footer.
 
